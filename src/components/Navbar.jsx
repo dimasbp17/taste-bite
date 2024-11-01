@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../../public/images/logo-taste.png';
 import { Button } from '@material-tailwind/react';
+import Search from './Search';
 
 const Navbar = () => {
   return (
@@ -15,14 +16,15 @@ const Navbar = () => {
           <div>
             <ul className="flex items-center gap-10 font-medium">
               <li>Homepage</li>
-              <li>Recipe</li>
-              <li>HomePage</li>
+              <li>Recipe Page</li>
+              {/* <li>HomePage</li> */}
             </ul>
           </div>
 
-          <div>
+          <div className="flex items-center gap-2">
+            <Search />
             <Button
-              className="capitalize border rounded-none border-abu"
+              className="capitalize border rounded-none border-oren text-oren"
               variant="outlined"
               size="md"
             >
