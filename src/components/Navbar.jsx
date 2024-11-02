@@ -2,6 +2,7 @@ import React from 'react';
 import logo from '../../public/images/logo-taste.png';
 import { Button } from '@material-tailwind/react';
 import Search from './Search';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
@@ -14,22 +15,24 @@ const Navbar = () => {
             className="w-28"
           />
           <div>
-            <ul className="flex items-center gap-10 font-medium">
+            <ul className="flex items-center gap-8 font-medium">
               <li>Homepage</li>
               <li>Recipe Page</li>
-              {/* <li>HomePage</li> */}
+              <li>About</li>
             </ul>
           </div>
 
           <div className="flex items-center gap-2">
             <Search />
-            <Button
-              className="capitalize border rounded-none border-oren text-oren"
-              variant="outlined"
-              size="md"
-            >
-              Login
-            </Button>
+            <Link to={'/login'}>
+              <Button
+                className="capitalize border rounded-none border-oren text-oren"
+                variant="outlined"
+                size="md"
+              >
+                Login
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

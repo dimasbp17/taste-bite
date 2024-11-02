@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/home/HomePage';
 import DetailRecipes from './pages/recipes/DetailRecipes';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
 
 const App = () => {
   return (
@@ -11,6 +13,14 @@ const App = () => {
           <Route
             path="/"
             element={<HomePage />}
+          />
+          <Route
+            path="/login"
+            element={<Login />}
+          />
+          <Route
+            path="/register"
+            element={<Register />}
           />
           <Route
             path="/detail-recipes"
