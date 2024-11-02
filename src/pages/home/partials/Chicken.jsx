@@ -54,7 +54,9 @@ const Chicken = () => {
                     alt={iwak.strMeal}
                     className="object-cover w-full h-60"
                   />
-                  <h1 className="mt-2 font-bold">{iwak.strMeal}</h1>
+                  <h1 className="mt-2 font-medium font-inter">
+                    {iwak.strMeal}
+                  </h1>
                 </div>
               </Link>
             ))}
@@ -77,7 +79,9 @@ const Chicken = () => {
                     alt={desert.strMeal}
                     className="object-cover w-full h-60"
                   />
-                  <h1 className="mt-2 font-bold">{desert.strMeal}</h1>
+                  <h1 className="mt-2 font-medium font-inter">
+                    {desert.strMeal}
+                  </h1>
                 </div>
               </Link>
             ))}
