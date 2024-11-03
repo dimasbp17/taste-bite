@@ -25,7 +25,6 @@ const Chicken = () => {
 
   useEffect(() => {
     setLoading(true);
-
     const fetchDessert = async () => {
       try {
         const response = await axios.get(
@@ -51,7 +50,7 @@ const Chicken = () => {
               className="animate-pulse"
             >
               <div>
-                <div className="w-full bg-gray-300 h-60"></div>
+                <div className="w-full bg-gray-300 rounded-md h-60"></div>
                 <div className="mt-2 bg-gray-400 h-7 w-60"></div>
               </div>
             </div>
@@ -63,7 +62,7 @@ const Chicken = () => {
   return (
     <>
       <div className="w-full px-4 lg:px-24">
-        <div>
+        <div className="mt-5">
           <h1 className="my-2 text-2xl font-bold font-playfair">
             Chicken Sundries
           </h1>
@@ -82,7 +81,7 @@ const Chicken = () => {
                     <img
                       src={iwak.strMealThumb}
                       alt={iwak.strMeal}
-                      className="object-cover w-full h-60"
+                      className="object-cover w-full rounded-md h-60"
                     />
                     <h1 className="mt-2 font-medium font-inter">
                       {iwak.strMeal}
@@ -113,7 +112,7 @@ const Chicken = () => {
                     <img
                       src={desert.strMealThumb}
                       alt={desert.strMeal}
-                      className="object-cover w-full h-60"
+                      className="object-cover w-full rounded-md h-60"
                     />
                     <h1 className="mt-2 font-medium font-inter">
                       {desert.strMeal}

@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar';
 import Chicken from './partials/Chicken';
 import Categories from './partials/Categories';
 import { Button } from '@material-tailwind/react';
+import Jumbotron from './partials/Jumbotron';
 
 const HomePage = () => {
   return (
@@ -10,6 +11,9 @@ const HomePage = () => {
       <div className="">
         <div>
           <Navbar />
+        </div>
+        <div>
+          <Jumbotron />
         </div>
         <div>
           <Chicken />
