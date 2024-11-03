@@ -4,6 +4,7 @@ import HomePage from './pages/home/HomePage';
 import DetailRecipes from './pages/recipes/DetailRecipes';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import About from './pages/about/About';
 
 const App = () => {
   return (
@@ -23,7 +24,11 @@ const App = () => {
             element={<Register />}
           />
           <Route
-            path="/detail-recipes"
+            path="/about"
+            element={<About />}
+          />
+          <Route
+            path="/detail-recipes/:id"
             element={<DetailRecipes />}
           />
         </Routes>

@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const DetailRecipes = () => {
+  const { id } = useParams();
   const [detailMeals, setDetailMeals] = useState([]);
 
   useEffect(() => {
     const fetchDetailMeals = async () => {
       try {
         const response = await axios.get(
-          'https://www.themealdb.com/api/json/v1/1/lookup.php?i=53085'
+          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
         );
         setDetailMeals(response.data.meals);
         console.log(response.data.meals);
@@ -44,7 +46,6 @@ const DetailRecipes = () => {
                   const measure = detail[`strMeasure${i + 1}`];
                   const ingredient = detail[`strIngredient${i + 1}`];
 
-                  // Memastikan untuk hanya menampilkan jika ingredient ada
                   if (ingredient && ingredient.trim()) {
                     return (
                       <li
@@ -66,8 +67,8 @@ const DetailRecipes = () => {
               </h1>
               <ol className="pl-5 list-decimal ">
                 {detail.strInstructions
-                  .split(/STEP \d+/) // Memisahkan berdasarkan pola "STEP" diikuti angka
-                  .filter((step) => step.trim()) // Menghilangkan elemen kosong
+                  .split(/STEP \d+/)
+                  .filter((step) => step.trim())
                   .map((step, index) => (
                     <li
                       key={index}

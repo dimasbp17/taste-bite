@@ -73,7 +73,7 @@ const Chicken = () => {
           ) : (
             <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
               {chicken.map((iwak, index) => (
-                <Link to={'/'}>
+                <Link to={`/detail-recipes/${iwak.idMeal}`}>
                   <div
                     key={index}
                     className="w-full border border-none"
