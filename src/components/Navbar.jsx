@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   return (
     <>
-      <div className="w-full py-2 border-b lg:px-24 font-inter">
+      <div className="w-full py-2 lg:px-24 font-inter">
         <div className="flex items-center justify-between">
           <img
             src={logo}
