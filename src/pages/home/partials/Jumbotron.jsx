@@ -1,6 +1,8 @@
 import { Button } from '@material-tailwind/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { BiSolidCategory, BiWorld } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 
 const Jumbotron = () => {
   const [allMeal, setAllMeal] = useState([]);
@@ -40,17 +42,29 @@ const Jumbotron = () => {
               <img
                 src={allMeal[currentIndex].strMealThumb}
                 alt={allMeal[currentIndex].strMeal}
-                className="object-cover w-full h-[400px] rounded-tl-md lg:rounded-l-md"
+                className="object-cover w-full h-[400px] rounded-t-md lg:rounded-tr-none lg:rounded-l-md"
               />
             </div>
-            <div className="col-span-full lg:col-span-4 bg-biru-muda">
-              <div className="flex flex-col items-start justify-center h-full p-10">
+            <div className="col-span-full lg:col-span-4 bg-biru-muda rounded-b-md lg:rounded-bl-none lg:rounded-r-md">
+              <div className="flex flex-col items-start justify-center h-full p-10 space-y-3">
                 <span className="text-3xl font-bold font-playfair">
                   {allMeal[currentIndex].strMeal}
                 </span>
-                <Button className="capitalize rounded-md bg-oren">
-                  To Recipes
-                </Button>
+                <div className="flex items-center gap-3">
+                  <span className="flex items-center gap-1">
+                    <BiSolidCategory className="text-oren" />{' '}
+                    {allMeal[currentIndex].strCategory}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <BiWorld className="text-oren" />{' '}
+                    {allMeal[currentIndex].strArea}
+                  </span>
+                </div>
+                <Link to={`/detail-recipes/${allMeal[currentIndex].idMeal}`}>
+                  <Button className="capitalize rounded-md bg-oren">
+                    To Recipes
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
