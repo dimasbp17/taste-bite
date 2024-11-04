@@ -6,6 +6,7 @@ import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import About from './pages/about/About';
 import CategoriesMeals from './pages/categories/CategoriesMeals';
+import CategoriesByArea from './pages/categories/CategoriesByArea';
 
 const App = () => {
   return (
@@ -35,6 +36,10 @@ const App = () => {
           <Route
             path="/meal-category/:category"
             element={<CategoriesMeals />}
+          />
+          <Route
+            path="/meal-category-area/:area"
+            element={<CategoriesByArea />}
           />
         </Routes>
       </BrowserRouter>

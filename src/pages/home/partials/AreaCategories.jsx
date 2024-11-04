@@ -31,13 +31,13 @@ const AreaCategories = () => {
           Meal Categories by Area
         </h1>
 
-        <div className="grid grid-cols-7 gap-3">
+        <div className="grid grid-cols-3 gap-3 lg:grid-cols-7">
           {categoriesArea
             .filter((area) => area.strArea !== 'Unknown')
             .map((area, index) => (
               <Link
                 key={index}
-                to={'/'}
+                to={`/meal-category-area/${area.strArea}`}
               >
                 <div className="text-black bg-white rounded-lg shadow-md">
                   <img
@@ -50,18 +50,6 @@ const AreaCategories = () => {
               </Link>
             ))}
         </div>
-        {/* <div className="flex w-full gap-4 overflow-x-scroll whitespace-nowrap scrollbar-hide">
-          <Link to={'/'}>
-            <div className="text-black bg-white rounded-lg shadow-md">
-              <img
-                src={italian}
-                alt=""
-                className="object-cover h-24 rounded-t-lg w-28"
-              />
-              <h1 className="p-1 text-center">Italian</h1>
-            </div>
-          </Link>
-        </div> */}
 
         {/* {loading ? (
           <div className="flex w-full gap-4 overflow-x-scroll whitespace-nowrap scrollbar-hide">

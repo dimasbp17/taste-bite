@@ -39,7 +39,7 @@ const Jumbotron = () => {
       <>
         <div className="grid grid-cols-12">
           <div className="col-span-full lg:col-span-8">
-            <div className="bg-gray-400 animate-pulse w-full h-[400px] rounded-t-md lg:rounded-tr-none lg:rounded-l-md"></div>
+            <div className="bg-gray-400 animate-pulse w-full h-[300px] lg:h-[400px] rounded-t-md lg:rounded-tr-none lg:rounded-l-md"></div>
           </div>
           <div className="bg-gray-300 animate-pulse col-span-full lg:col-span-4 rounded-b-md lg:rounded-bl-none lg:rounded-r-md">
             <div className="flex flex-col items-start justify-center h-full p-10 space-y-3">
@@ -77,7 +77,7 @@ const Jumbotron = () => {
                   <img
                     src={allMeal[currentIndex].strMealThumb}
                     alt={allMeal[currentIndex].strMeal}
-                    className="object-cover w-full h-[400px] rounded-t-md lg:rounded-tr-none lg:rounded-l-md"
+                    className="object-cover w-full h-[300px] lg:h-[400px] rounded-t-md lg:rounded-tr-none lg:rounded-l-md"
                   />
                 </div>
                 <div className="col-span-full lg:col-span-4 bg-biru-muda rounded-b-md lg:rounded-bl-none lg:rounded-r-md">
