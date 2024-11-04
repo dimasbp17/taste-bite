@@ -104,12 +104,12 @@ const DetailRecipes = () => {
             </div>
 
             <div className="mt-5">
-              <span className="font-bold">Source : </span>{' '}
+              <span className="font-bold">Source : </span>
               <a
                 href={detail.strSource}
                 target="blank"
               >
-                <span className="text-blue-500">{detail.strSource}</span>
+                <span className="text-blue-500">{detail.strSource || '-'}</span>
               </a>
             </div>
           </div>

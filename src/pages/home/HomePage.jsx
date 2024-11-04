@@ -5,6 +5,7 @@ import Categories from './partials/Categories';
 import { Button } from '@material-tailwind/react';
 import Jumbotron from './partials/Jumbotron';
 import AllMeals from './partials/AllMeal';
+import AreaCategories from './partials/AreaCategories';
 
 const HomePage = () => {
   return (
@@ -18,6 +19,9 @@ const HomePage = () => {
         </div>
         <div className="w-full my-10">
           <Categories />
+        </div>
+        <div>
+          <AreaCategories />
         </div>
         <div>
           <Chicken />
