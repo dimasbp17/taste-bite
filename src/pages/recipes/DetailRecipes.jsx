@@ -32,7 +32,7 @@ const DetailRecipes = () => {
       {detailMeals.map((detail, index) => (
         <div
           key={index}
-          className="grid grid-cols-12 my-10 lg:px-24"
+          className="grid grid-cols-12 px-4 my-10 lg:px-24"
         >
           <div className="col-span-full">
             <h1 className="mb-3 text-4xl font-bold font-playfair">
@@ -59,7 +59,7 @@ const DetailRecipes = () => {
               className="object-cover w-full h-[500px] rounded-md"
             />
           </div>
-          <div className="col-span-8 pr-4">
+          <div className="pr-4 col-span-full lg:col-span-8">
             <div>
               <h1 className="my-5 text-2xl font-bold font-playfair">
                 Ingredients
@@ -114,7 +114,7 @@ const DetailRecipes = () => {
             </div>
           </div>
 
-          <div className="col-span-4 pl-4">
+          <div className="lg:pl-4 col-span-full lg:col-span-4">
             <h1 className="my-5 text-2xl font-bold font-playfair">
               Recommendations
             </h1>
