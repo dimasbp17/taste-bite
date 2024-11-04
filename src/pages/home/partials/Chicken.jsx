@@ -83,7 +83,7 @@ const Chicken = () => {
                       alt={iwak.strMeal}
                       className="object-cover w-full rounded-md h-60"
                     />
-                    <h1 className="mt-2 font-medium font-inter">
+                    <h1 className="mt-2 font-semibold font-inter">
                       {iwak.strMeal}
                     </h1>
                   </div>
@@ -104,7 +104,7 @@ const Chicken = () => {
           ) : (
             <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
               {dessert.map((desert, index) => (
-                <Link to={'/'}>
+                <Link to={`/detail-recipes/${desert.idMeal}`}>
                   <div
                     key={index}
                     className="w-full border border-none"
@@ -114,7 +114,7 @@ const Chicken = () => {
                       alt={desert.strMeal}
                       className="object-cover w-full rounded-md h-60"
                     />
-                    <h1 className="mt-2 font-medium font-inter">
+                    <h1 className="mt-2 font-semibold font-inter">
                       {desert.strMeal}
                     </h1>
                   </div>

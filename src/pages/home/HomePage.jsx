@@ -4,6 +4,7 @@ import Chicken from './partials/Chicken';
 import Categories from './partials/Categories';
 import { Button } from '@material-tailwind/react';
 import Jumbotron from './partials/Jumbotron';
+import AllMeals from './partials/AllMeal';
 
 const HomePage = () => {
   return (
@@ -15,12 +16,13 @@ const HomePage = () => {
         <div>
           <Jumbotron />
         </div>
-        <div>
-          <Chicken />
-        </div>
         <div className="w-full my-10">
           <Categories />
         </div>
+        <div>
+          <Chicken />
+        </div>
+
         <div className="flex justify-center w-full px-4 py-20 bg-pink">
           <div className="flex flex-col gap-4 text-center">
             <h1 className="text-4xl font-bold font-playfair">
@@ -41,6 +43,9 @@ const HomePage = () => {
               By joining our newsletter you aggree to our Term and Conditions
             </h3>
           </div>
+        </div>
+        <div>
+          <AllMeals />
         </div>
       </div>
     </>
