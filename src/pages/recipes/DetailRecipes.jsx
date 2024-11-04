@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { BiSolidCategory, BiWorld } from 'react-icons/bi';
+import CardRecommendations from './partials/CardRecommendations';
+import { FaHashtag } from 'react-icons/fa';
 
 const DetailRecipes = () => {
   const { id } = useParams();
@@ -14,7 +17,7 @@ const DetailRecipes = () => {
           `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
         );
         setDetailMeals(response.data.meals);
-        console.log(response.data.meals);
+        // console.log(response.data.meals);
       } catch (error) {
         console.error('Error fetch categories', error);
       }
@@ -26,17 +29,37 @@ const DetailRecipes = () => {
       <div>
         <Navbar />
       </div>
-      <div className="w-full px-4 my-5 lg:px-24">
-        {detailMeals.map((detail, index) => (
-          <div key={index}>
+      {detailMeals.map((detail, index) => (
+        <div
+          key={index}
+          className="grid grid-cols-12 my-10 lg:px-24"
+        >
+          <div className="col-span-full">
             <h1 className="mb-3 text-4xl font-bold font-playfair">
               {detail.strMeal}
             </h1>
+            <div className="flex items-center gap-3">
+              <span className="flex items-center gap-1">
+                <BiSolidCategory className="text-oren" />
+                {detail.strCategory}
+              </span>
+              <span className="flex items-center gap-1">
+                <BiWorld className="text-oren" />
+                {detail.strArea}
+              </span>
+              <span className="flex items-center gap-1">
+                <FaHashtag className="text-oren" />
+                {detail.strTags || '-'}
+              </span>
+            </div>
+            <hr className="w-full my-5 border border-gray-300" />
             <img
               src={detail.strMealThumb}
               alt={detail.strMeal}
-              className="object-cover w-full h-[500px]"
+              className="object-cover w-full h-[500px] rounded-md"
             />
+          </div>
+          <div className="col-span-8 pr-4">
             <div>
               <h1 className="my-5 text-2xl font-bold font-playfair">
                 Ingredients
@@ -79,9 +102,28 @@ const DetailRecipes = () => {
                   ))}
               </ol>
             </div>
+
+            <div className="mt-5">
+              <span className="font-bold">Source : </span>{' '}
+              <a
+                href={detail.strSource}
+                target="blank"
+              >
+                <span className="text-blue-500">{detail.strSource}</span>
+              </a>
+            </div>
           </div>
-        ))}
-      </div>
+
+          <div className="col-span-4 pl-4">
+            <h1 className="my-5 text-2xl font-bold font-playfair">
+              Recommendations
+            </h1>
+            <div>
+              <CardRecommendations ingredients={detail.strIngredient1} />
+            </div>
+          </div>
+        </div>
+      ))}
     </>
   );
 };

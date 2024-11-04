@@ -33,7 +33,7 @@ const Categories = () => {
               className="flex flex-col items-center justify-center animate-pulse"
             >
               <div className="w-24 h-24 bg-gray-300 rounded-full "></div>
-              <div className="w-5 h-2 mt-2 bg-gray-400"></div>
+              <div className="w-10 h-3 mt-2 bg-gray-400 rounded-sm"></div>
             </div>
           ))}
       </>
@@ -54,7 +54,7 @@ const Categories = () => {
         ) : (
           <div className="flex w-full gap-4 overflow-x-scroll whitespace-nowrap scrollbar-hide">
             {categories.map((category, index) => (
-              <Link to={'/'}>
+              <Link to={`/meal-category/${category.strCategory}`}>
                 <div
                   key={index}
                   className="flex flex-col items-center w-24 border-none"
