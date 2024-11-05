@@ -6,6 +6,7 @@ import { Button } from '@material-tailwind/react';
 import Jumbotron from './partials/Jumbotron';
 import AllMeals from './partials/AllMeal';
 import AreaCategories from './partials/AreaCategories';
+import Footer from '../../components/Footer';
 
 const HomePage = () => {
   return (
@@ -50,6 +51,9 @@ const HomePage = () => {
         </div>
         <div>
           <AllMeals />
+        </div>
+        <div>
+          <Footer />
         </div>
       </div>
     </>
