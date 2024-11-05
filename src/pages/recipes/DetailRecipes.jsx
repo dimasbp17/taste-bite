@@ -56,7 +56,7 @@ const DetailRecipes = () => {
             <img
               src={detail.strMealThumb}
               alt={detail.strMeal}
-              className="object-cover w-full h-[500px] rounded-md"
+              className="object-cover w-full h-[300px] lg:h-[500px] rounded-md"
             />
           </div>
           <div className="pr-4 col-span-full lg:col-span-8">

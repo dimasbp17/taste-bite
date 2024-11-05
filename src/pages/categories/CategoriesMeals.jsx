@@ -43,10 +43,13 @@ const CategoriesMeals = () => {
       </div>
       <div className="px-4 lg:px-24">
         <div className="my-5">
-          <h1 className="text-2xl font-bold font-playfair">
-            Category : {category}
+          <h1 className="text-3xl font-bold font-playfair">
+            {category}{' '}
+            <span className="text-sm font-medium font-inter">
+              ({categories.length} recipes)
+            </span>
           </h1>
-          <h1 className="text-2xl font-bold font-playfair">Description :</h1>
+          <h1 className="text-xl font-bold font-inter">Description :</h1>
           <h3 className="font-medium text-justify">{description}</h3>
         </div>
         <div className="grid grid-cols-2 gap-5 lg:grid-cols-4 ">
