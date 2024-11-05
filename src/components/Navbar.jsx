@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import logo from '../../public/images/logo-taste.png';
 import { Button } from '@material-tailwind/react';
 import Search from './Search';
-import { Link } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa'; // Import icons for mobile menu
+import { Link, NavLink } from 'react-router-dom';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,11 +11,13 @@ const Navbar = () => {
   return (
     <div className="w-full px-4 py-2 bg-white shadow-md lg:shadow-none lg:px-24 font-inter">
       <div className="flex items-center justify-between">
-        <img
-          src={logo}
-          alt="Logo Taste Bite"
-          className="w-20 lg:w-28"
-        />
+        <Link to={'/'}>
+          <img
+            src={logo}
+            alt="Logo Taste Bite"
+            className="w-20 lg:w-28"
+          />
+        </Link>
 
         {/* Mobile Menu Button */}
         <div className="lg:hidden">
@@ -30,9 +32,9 @@ const Navbar = () => {
         {/* Main Menu for larger screens */}
         <div className={`hidden lg:flex items-center gap-8 font-medium`}>
           <ul className="flex items-center gap-8">
-            <li>Homepage</li>
+            <NavLink to={'/'}>Homepage</NavLink>
             <li>Recipe Page</li>
-            <li>About</li>
+            <NavLink to={'/about'}>About</NavLink>
           </ul>
         </div>
 
