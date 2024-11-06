@@ -34,7 +34,7 @@ const Search = () => {
         {showInput && (
           <input
             type="search"
-            className="absolute left-0 w-full p-2 transition-all duration-300 border top-20 border-abu focus:outline-none"
+            className="absolute w-1/2 max-w-[800px] py-3 px-4 transition-all duration-300 transform -translate-x-1/2 border left-1/2 top-20 border-abu focus:outline-none"
             placeholder="Search"
             style={{ zIndex: 10 }}
           />
