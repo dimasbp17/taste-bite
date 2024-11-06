@@ -57,9 +57,9 @@ const Navbar = () => {
       {isOpen && (
         <div className="absolute left-0 z-10 flex flex-col items-center w-full p-4 space-y-6 bg-white shadow-lg lg:hidden">
           <ul className="flex flex-col items-center gap-6 text-lg font-medium">
-            <li>Homepage</li>
+            <NavLink to={'/'}>Homepage</NavLink>
             <li>Recipe Page</li>
-            <li>About</li>
+            <NavLink to={'/about'}>About</NavLink>
           </ul>
 
           <div className="w-full">
@@ -73,7 +73,7 @@ const Navbar = () => {
             <Button
               className="w-full capitalize border rounded-none border-oren text-oren"
               variant="outlined"
-              size="md"
+              size="sm"
             >
               Login
             </Button>
