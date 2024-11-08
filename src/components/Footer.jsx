@@ -8,7 +8,7 @@ const Footer = () => {
     <>
       <div className="w-full px-4 lg:py-16 text-abu bg-abu3 lg:px-24">
         <div className="grid grid-cols-12">
-          <div className="col-span-6">
+          <div className="col-span-full lg:col-span-6">
             <img
               src={logo}
               alt=""
@@ -20,7 +20,7 @@ const Footer = () => {
               pleasure of the moment."
             </h3>
           </div>
-          <div className="flex justify-between col-span-6">
+          <div className="flex justify-between col-span-full lg:col-span-6">
             <div>
               <h1 className="mb-3 font-medium text-black">Tastebite</h1>
               <Link to={'/about'}>
