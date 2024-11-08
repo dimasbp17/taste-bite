@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 
 const CategoriesMeals = () => {
   const { category } = useParams();
@@ -60,7 +61,7 @@ const CategoriesMeals = () => {
           </h1>
           <h3 className="font-medium text-justify">{description}</h3>
         </div>
-        <div className="grid grid-cols-2 gap-5 lg:grid-cols-4 ">
+        <div className="grid grid-cols-2 gap-5 mb-5 lg:grid-cols-4">
           {categories.map((meal, index) => (
             <Link to={`/detail-recipes/${meal.idMeal}`}>
               <div
@@ -80,6 +81,7 @@ const CategoriesMeals = () => {
           ))}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

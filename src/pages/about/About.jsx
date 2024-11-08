@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../../components/Navbar';
 import about from '../../../public/images/about.jpg';
 import blueberry from '../../../public/images/blueberry.jpg';
+import Footer from '../../components/Footer';
 
 const About = () => {
   return (
@@ -48,6 +49,9 @@ const About = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <Footer />
       </div>
     </>
   );
