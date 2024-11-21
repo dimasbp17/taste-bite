@@ -70,15 +70,17 @@ const Search = () => {
         )}
 
         {showInput && (
-          <input
-            type="search"
-            className="absolute w-1/2 max-w-[800px] rounded-md py-3 px-4 transition-all duration-300 transform -translate-x-1/2 border left-1/2 top-20 border-abu focus:outline-none"
-            placeholder="Search"
-            style={{ zIndex: 10 }}
-            value={query}
-            onChange={handleInputChange}
-            // onKeyDown={handleKeyDown}
-          />
+          <div className="">
+            <input
+              type="search"
+              className="absolute w-full max-w-[800px] rounded-md py-3 px-4 transition-all duration-300 transform -translate-x-1/2 border left-1/2 top-20 border-abu focus:outline-none"
+              placeholder="Search meals"
+              style={{ zIndex: 10 }}
+              value={query}
+              onChange={handleInputChange}
+              // onKeyDown={handleKeyDown}
+            />
+          </div>
         )}
 
         {loading && (
@@ -93,7 +95,7 @@ const Search = () => {
             style={{ maxHeight: '400px', overflowY: 'auto' }}
           >
             <h2 className="mb-4 text-lg font-bold">Search Results:</h2>
-            <div className="space-y-3">
+            <div className="flex flex-col gap-4">
               {results.map((meal) => (
                 <Link
                   to={`detail-recipes/${meal.idMeal}`}
@@ -101,7 +103,7 @@ const Search = () => {
                 >
                   <div
                     key={meal.idMeal}
-                    className="flex items-center space-x-4"
+                    className="flex items-center space-x-4 hover:bg-abu3"
                   >
                     <img
                       src={meal.strMealThumb}

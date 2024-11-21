@@ -39,6 +39,7 @@ const CategoriesMeals = () => {
     };
     fetchCategoriesMeals();
   }, [category]);
+
   return (
     <>
       <div>
