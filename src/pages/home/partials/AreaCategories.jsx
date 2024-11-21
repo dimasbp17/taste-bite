@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import areaImages from './areaImages';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const AreaCategories = () => {
   const [categoriesArea, setCategoriesArea] = useState([]);
@@ -40,9 +42,11 @@ const AreaCategories = () => {
                 to={`/meal-category-area/${area.strArea}`}
               >
                 <div className="text-black bg-white rounded-lg shadow-md">
-                  <img
+                  <LazyLoadImage
                     src={areaImages[area.strArea]}
-                    alt=""
+                    alt={area.strArea}
+                    effect="blur"
+                    loading="lazy"
                     className="object-cover w-full h-24 rounded-t-lg"
                   />
                   <h1 className="p-1 text-sm text-center">{area.strArea}</h1>
