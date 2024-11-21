@@ -2,15 +2,20 @@ import { IconButton } from '@material-tailwind/react';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Search = () => {
   const [showInput, setShowInput] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [typingTimeout, setTypingTimeout] = useState(null);
 
-  const fetchMeals = async () => {
-    if (!query.trim()) return;
+  const fetchMeals = async (searchQuery) => {
+    if (!searchQuery.trim()) {
+      setResults([]);
+      return;
+    }
     setLoading(true);
     try {
       const response = await axios.get(
@@ -35,14 +40,15 @@ const Search = () => {
   };
 
   const handleInputChange = (e) => {
-    setQuery(e.target.value);
-  };
+    const value = e.target.value;
+    setQuery(value);
+    if (typingTimeout) clearTimeout(typingTimeout);
 
-  // Ketika tombol enter ditekan
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      fetchMeals();
-    }
+    setTypingTimeout(
+      setTimeout(() => {
+        fetchMeals(value);
+      }, 500) // Tunggu 500ms setelah mengetik
+    );
   };
 
   return (
@@ -71,8 +77,14 @@ const Search = () => {
             style={{ zIndex: 10 }}
             value={query}
             onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
+            // onKeyDown={handleKeyDown}
           />
+        )}
+
+        {loading && (
+          <p className="absolute z-10 text-white transform -translate-x-1/2 top-40 left-1/2">
+            Loading...
+          </p>
         )}
 
         {results.length > 0 && (
@@ -81,29 +93,36 @@ const Search = () => {
             style={{ maxHeight: '400px', overflowY: 'auto' }}
           >
             <h2 className="mb-4 text-lg font-bold">Search Results:</h2>
-            <ul className="space-y-3">
+            <div className="space-y-3">
               {results.map((meal) => (
-                <li
+                <Link
+                  to={`detail-recipes/${meal.idMeal}`}
                   key={meal.idMeal}
-                  className="flex items-center space-x-4"
                 >
-                  <img
-                    src={meal.strMealThumb}
-                    alt={meal.strMeal}
-                    className="object-cover w-16 h-16 rounded-md"
-                  />
-                  <div>
-                    <h3 className="font-semibold text-md">{meal.strMeal}</h3>
-                    <p className="text-sm text-gray-600">{meal.strCategory}</p>
+                  <div
+                    key={meal.idMeal}
+                    className="flex items-center space-x-4"
+                  >
+                    <img
+                      src={meal.strMealThumb}
+                      alt={meal.strMeal}
+                      className="object-cover w-16 h-16 rounded-md"
+                    />
+                    <div>
+                      <h3 className="font-semibold text-md">{meal.strMeal}</h3>
+                      <p className="text-sm text-gray-600">
+                        {meal.strCategory}
+                      </p>
+                    </div>
                   </div>
-                </li>
+                </Link>
               ))}
-            </ul>
+            </div>
           </div>
         )}
 
         {!loading && results.length === 0 && query.trim() && (
-          <p className="absolute text-gray-300 transform -translate-x-1/2 top-40 left-1/2">
+          <p className="absolute z-10 text-white transform -translate-x-1/2 top-40 left-1/2">
             No meals found.
           </p>
         )}
