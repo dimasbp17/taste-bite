@@ -39,7 +39,7 @@ const Jumbotron = () => {
       <>
         <div className="grid grid-cols-12">
           <div className="col-span-full lg:col-span-8">
-            <div className="bg-gray-400 animate-pulse w-full h-[300px] lg:h-[400px] rounded-t-md lg:rounded-tr-none lg:rounded-l-md"></div>
+            <div className="from-gray-400 animate-pulse via-gray-300 to-gray-400 bg-gradient-to-r w-full h-[300px] lg:h-[400px] rounded-t-md lg:rounded-tr-none lg:rounded-l-md"></div>
           </div>
           <div className="bg-gray-300 animate-pulse col-span-full lg:col-span-4 rounded-b-md lg:rounded-bl-none lg:rounded-r-md">
             <div className="flex flex-col items-start justify-center h-full p-10 space-y-3">

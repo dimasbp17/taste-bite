@@ -62,12 +62,12 @@ const AllMeals = () => {
           ) : (
             <>
               <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
-                {allMeals.slice(0, visibleMeals).map((meal, index) => (
-                  <Link to={`/detail-recipes/${meal.idMeal}`}>
-                    <div
-                      key={index}
-                      className="w-full border border-none"
-                    >
+                {allMeals.slice(0, visibleMeals).map((meal) => (
+                  <Link
+                    key={meal.idMeal}
+                    to={`/detail-recipes/${meal.idMeal}`}
+                  >
+                    <div className="w-full border border-none">
                       <img
                         src={meal.strMealThumb}
                         alt={meal.strMeal}

@@ -54,11 +54,11 @@ const Categories = () => {
         ) : (
           <div className="flex w-full gap-4 overflow-x-scroll whitespace-nowrap scrollbar-hide">
             {categories.map((category, index) => (
-              <Link to={`/meal-category/${category.strCategory}`}>
-                <div
-                  key={index}
-                  className="flex flex-col items-center w-24 border-none"
-                >
+              <Link
+                key={index}
+                to={`/meal-category/${category.strCategory}`}
+              >
+                <div className="flex flex-col items-center w-24 border-none">
                   <img
                     src={category.strCategoryThumb}
                     alt={category.strCategory}
