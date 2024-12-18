@@ -17,7 +17,6 @@ const AreaCategories = () => {
           'https://www.themealdb.com/api/json/v1/1/list.php?a=list'
         );
         setCategoriesArea(response.data.meals);
-        console.log(response.data.meals);
 
         // setLoading(false);
       } catch (error) {

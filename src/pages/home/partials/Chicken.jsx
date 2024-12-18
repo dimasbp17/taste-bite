@@ -73,11 +73,11 @@ const Chicken = () => {
           ) : (
             <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
               {chicken.map((iwak, index) => (
-                <Link to={`/detail-recipes/${iwak.idMeal}`}>
-                  <div
-                    key={index}
-                    className="w-full border border-none"
-                  >
+                <Link
+                  key={index}
+                  to={`/detail-recipes/${iwak.idMeal}`}
+                >
+                  <div className="w-full border border-none">
                     <img
                       src={iwak.strMealThumb}
                       alt={iwak.strMeal}
@@ -103,12 +103,12 @@ const Chicken = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
-              {dessert.map((desert, index) => (
-                <Link to={`/detail-recipes/${desert.idMeal}`}>
-                  <div
-                    key={index}
-                    className="w-full border border-none"
-                  >
+              {dessert.map((desert) => (
+                <Link
+                  key={desert.idMeal}
+                  to={`/detail-recipes/${desert.idMeal}`}
+                >
+                  <div className="w-full border border-none">
                     <img
                       src={desert.strMealThumb}
                       alt={desert.strMeal}

@@ -4,6 +4,15 @@ module.exports = withMT({
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      keyframes: {
+        shimer: {
+          '50%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+      },
+      animation: {
+        shimmer: 'shimmer 2s infinite',
+      },
       colors: {
         oren: '#ff642f',
         pink: '#ffd7c9',
