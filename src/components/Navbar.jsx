@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { FiMenu, FiSearch, FiX } from 'react-icons/fi';
+import { FaRegHeart } from 'react-icons/fa';
 import SearchDialog from './SearchDialog';
+import useFavorites from '../hooks/useFavorites';
 
 const links = [
   { to: '/', label: 'Home' },
@@ -19,6 +21,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { pathname } = useLocation();
+  const { favorites } = useFavorites();
 
   useEffect(() => {
     setMenuOpen(false);
@@ -66,6 +69,23 @@ const Navbar = () => {
             <FiSearch className="text-lg" />
             <span className="hidden sm:inline">Search</span>
           </button>
+          <NavLink
+            to="/saved"
+            className={({ isActive }) =>
+              `btn relative px-3 sm:px-4 ${
+                isActive ? 'bg-brand-50 text-brand' : 'text-ink hover:bg-cream-dark'
+              }`
+            }
+            aria-label={`Saved recipes (${favorites.length})`}
+          >
+            <FaRegHeart className="text-lg" />
+            <span className="hidden sm:inline">Saved</span>
+            {favorites.length > 0 && (
+              <span className="absolute -right-0.5 top-0.5 flex min-w-[1.25rem] items-center justify-center rounded-full bg-brand px-1 text-xs font-semibold leading-5 text-white sm:static sm:bg-brand-100 sm:text-brand">
+                {favorites.length}
+              </span>
+            )}
+          </NavLink>
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}

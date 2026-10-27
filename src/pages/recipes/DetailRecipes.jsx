@@ -20,6 +20,7 @@ import {
 import useFetch from '../../hooks/useFetch';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
 import StatusMessage from '../../components/StatusMessage';
+import FavoriteButton from '../../components/FavoriteButton';
 import CardRecommendations from './partials/CardRecommendations';
 import RecipeVideo from './partials/RecipeVideo';
 
@@ -249,6 +250,10 @@ const DetailRecipes = () => {
               >
                 <FiList aria-hidden /> Start cooking
               </a>
+              <FavoriteButton
+                meal={meal}
+                variant="button"
+              />
               {videoId && (
                 <a
                   href="#video"

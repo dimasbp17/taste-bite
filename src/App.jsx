@@ -5,6 +5,7 @@ import HomePage from './pages/home/HomePage';
 import RecipesPage from './pages/recipes/RecipesPage';
 import DetailRecipes from './pages/recipes/DetailRecipes';
 import CookWithIngredients from './pages/ingredients/CookWithIngredients';
+import SavedRecipes from './pages/saved/SavedRecipes';
 import About from './pages/about/About';
 import CategoriesMeals from './pages/categories/CategoriesMeals';
 import CategoriesByArea from './pages/categories/CategoriesByArea';
@@ -26,6 +27,10 @@ const App = () => {
           <Route
             path="/cook-with-ingredients"
             element={<CookWithIngredients />}
+          />
+          <Route
+            path="/saved"
+            element={<SavedRecipes />}
           />
           <Route
             path="/about"

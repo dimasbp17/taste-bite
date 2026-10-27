@@ -8,6 +8,7 @@ const columns = [
       { to: '/', label: 'Home' },
       { to: '/recipes', label: 'All recipes' },
       { to: '/cook-with-ingredients', label: 'Cook by ingredient' },
+      { to: '/saved', label: 'Saved recipes' },
       { to: '/about', label: 'About us' },
     ],
   },
