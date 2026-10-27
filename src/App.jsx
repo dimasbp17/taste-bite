@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
+import PageLoader from './components/PageLoader';
 import HomePage from './pages/home/HomePage';
-import RecipesPage from './pages/recipes/RecipesPage';
-import DetailRecipes from './pages/recipes/DetailRecipes';
-import CookWithIngredients from './pages/ingredients/CookWithIngredients';
-import SavedRecipes from './pages/saved/SavedRecipes';
-import ShoppingList from './pages/shopping/ShoppingList';
-import About from './pages/about/About';
-import CategoriesMeals from './pages/categories/CategoriesMeals';
-import CategoriesByArea from './pages/categories/CategoriesByArea';
-import NotFound from './pages/NotFound';
-import CookingMode from './pages/cook/CookingMode';
+
+// Home is where most visits start, so it ships in the main bundle.
+// Every other page is downloaded only when it is opened.
+const RecipesPage = lazy(() => import('./pages/recipes/RecipesPage'));
+const DetailRecipes = lazy(() => import('./pages/recipes/DetailRecipes'));
+const CookWithIngredients = lazy(() => import('./pages/ingredients/CookWithIngredients'));
+const SavedRecipes = lazy(() => import('./pages/saved/SavedRecipes'));
+const ShoppingList = lazy(() => import('./pages/shopping/ShoppingList'));
+const About = lazy(() => import('./pages/about/About'));
+const CategoriesMeals = lazy(() => import('./pages/categories/CategoriesMeals'));
+const CategoriesByArea = lazy(() => import('./pages/categories/CategoriesByArea'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const CookingMode = lazy(() => import('./pages/cook/CookingMode'));
 
 const App = () => {
   return (
@@ -61,7 +65,11 @@ const App = () => {
         </Route>
         <Route
           path="/cook/:id"
-          element={<CookingMode />}
+          element={
+            <Suspense fallback={<PageLoader fullScreen />}>
+              <CookingMode />
+            </Suspense>
+          }
         />
       </Routes>
     </BrowserRouter>

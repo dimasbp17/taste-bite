@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { FiCheck, FiX } from 'react-icons/fi';
 import { filterByIngredient, getIngredientImage, getIngredientList } from '../../lib/api';
@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 import useName from '../../i18n/useName';
 import MealCard, { MealCardSkeleton } from '../../components/MealCard';
 import StatusMessage from '../../components/StatusMessage';
+import ShowMore from '../../components/ShowMore';
+import usePaged from '../../hooks/usePaged';
 import IngredientPicker from './IngredientPicker';
 
 const MAX_INGREDIENTS = 6;
@@ -118,10 +120,7 @@ const CookWithIngredients = () => {
   const selected = params.getAll('i');
   const key = selected.join('|');
   const [onlyAll, setOnlyAll] = useState(false);
-  const [visible, setVisible] = useState(PAGE_SIZE);
   useDocumentTitle(t('ing.docTitle'));
-
-  useEffect(() => setVisible(PAGE_SIZE), [key, onlyAll]);
 
   const { data: allNames } = useFetch(getIngredientList);
   const { data, loading, error, retry } = useFetch(
@@ -137,6 +136,7 @@ const CookWithIngredients = () => {
   const results = (data || []).filter(
     (item) => !onlyAll || item.matched.length === selected.length
   );
+  const paged = usePaged(results, PAGE_SIZE, `${key}|${onlyAll}`);
   const full = selected.length >= MAX_INGREDIENTS;
 
   return (
@@ -288,7 +288,7 @@ const CookWithIngredients = () => {
               />
             ) : (
               <div className="grid grid-cols-2 gap-x-5 gap-y-8 lg:grid-cols-4">
-                {results.slice(0, visible).map(({ meal, matched }) => (
+                {paged.visible.map(({ meal, matched }) => (
                   <MealCard
                     key={meal.idMeal}
                     meal={meal}
@@ -303,17 +303,7 @@ const CookWithIngredients = () => {
               </div>
             )}
 
-            {!loading && visible < results.length && (
-              <div className="mt-12 flex justify-center">
-                <button
-                  type="button"
-                  onClick={() => setVisible((count) => count + PAGE_SIZE)}
-                  className="btn-outline px-8"
-                >
-                  {t('recipes.showMore')}
-                </button>
-              </div>
-            )}
+            {!loading && <ShowMore paged={paged} />}
           </>
         )}
       </section>

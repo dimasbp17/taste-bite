@@ -45,7 +45,8 @@
     "seeAll": "Lihat semua {{count}} hasil"
   },
   "status": {
-    "retry": "Coba lagi"
+    "retry": "Coba lagi",
+    "loading": "Memuat…"
   },
   "grid": {
     "errorTitle": "Resep gagal dimuat",
@@ -111,8 +112,7 @@
   "allMeals": {
     "eyebrow": "Ide baru",
     "title": "Resep lain untuk dicoba",
-    "browse": "Lihat semua resep",
-    "loadMore": "Muat lebih banyak"
+    "browse": "Lihat semua resep"
   },
   "recipes": {
     "eyebrow": "Daftar resep",
@@ -126,8 +126,7 @@
     "filterLabel": "Saring berdasarkan kategori",
     "allChip": "Semua",
     "clearSearch": "Hapus pencarian",
-    "empty": "Tidak ada resep yang cocok",
-    "showMore": "Tampilkan lebih banyak"
+    "empty": "Tidak ada resep yang cocok"
   },
   "detail": {
     "breadcrumb": "Navigasi halaman",
@@ -314,5 +313,9 @@
     "itemsLeft": "{{count}} belum dibeli",
     "shareTitle": "Daftar belanja Tastebite",
     "note": "Bahan dikelompokkan per resep karena takarannya tidak selalu bisa dijumlahkan."
+  },
+  "list": {
+    "showing": "Menampilkan {{shown}} dari {{total}} resep",
+    "showMore": "Tampilkan lebih banyak"
   }
 }

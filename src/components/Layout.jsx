@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import PageLoader from './PageLoader';
 import { useTranslation } from 'react-i18next';
 
 const Layout = () => {
@@ -27,7 +28,9 @@ const Layout = () => {
         id="main"
         className="flex-1"
       >
-        <Outlet />
+        <Suspense fallback={<PageLoader />}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
     </div>

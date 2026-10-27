@@ -7,6 +7,8 @@ import useDocumentTitle from '../../hooks/useDocumentTitle';
 import { useTranslation } from 'react-i18next';
 import useName from '../../i18n/useName';
 import MealGrid from '../../components/MealGrid';
+import ShowMore from '../../components/ShowMore';
+import usePaged from '../../hooks/usePaged';
 
 const PAGE_SIZE = 12;
 
@@ -17,12 +19,8 @@ const RecipesPage = () => {
   const q = params.get('q') || '';
   const category = params.get('category') || '';
   const [input, setInput] = useState(q);
-  const [visible, setVisible] = useState(PAGE_SIZE);
 
-  useEffect(() => {
-    setInput(q);
-    setVisible(PAGE_SIZE);
-  }, [q, category]);
+  useEffect(() => setInput(q), [q]);
 
   const { data: categories } = useFetch(getCategories);
   const { data, loading, error, retry } = useFetch(async () => {
@@ -35,6 +33,7 @@ const RecipesPage = () => {
   }, [q, category]);
 
   const meals = data || [];
+  const paged = usePaged(meals, PAGE_SIZE, `${q}|${category}`);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -129,7 +128,7 @@ const RecipesPage = () => {
 
       <div className="mt-10">
         <MealGrid
-          meals={meals.slice(0, visible)}
+          meals={paged.visible}
           loading={loading}
           error={error}
           onRetry={retry}
@@ -138,17 +137,7 @@ const RecipesPage = () => {
         />
       </div>
 
-      {!loading && visible < meals.length && (
-        <div className="mt-12 flex justify-center">
-          <button
-            type="button"
-            onClick={() => setVisible((count) => count + PAGE_SIZE)}
-            className="btn-outline px-8"
-          >
-            {t('recipes.showMore')}
-          </button>
-        </div>
-      )}
+      {!loading && <ShowMore paged={paged} />}
     </div>
   );
 };

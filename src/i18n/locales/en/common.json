@@ -45,7 +45,8 @@
     "seeAll": "See all {{count}} results"
   },
   "status": {
-    "retry": "Try again"
+    "retry": "Try again",
+    "loading": "Loading…"
   },
   "grid": {
     "errorTitle": "We couldn't load these recipes",
@@ -111,8 +112,7 @@
   "allMeals": {
     "eyebrow": "Fresh ideas",
     "title": "More recipes to try",
-    "browse": "Browse all recipes",
-    "loadMore": "Load more recipes"
+    "browse": "Browse all recipes"
   },
   "recipes": {
     "eyebrow": "Recipe index",
@@ -127,8 +127,7 @@
     "filterLabel": "Filter by category",
     "allChip": "All",
     "clearSearch": "Clear search",
-    "empty": "No recipes match your search",
-    "showMore": "Show more recipes"
+    "empty": "No recipes match your search"
   },
   "detail": {
     "breadcrumb": "Breadcrumb",
@@ -320,5 +319,9 @@
     "itemsLeft": "{{count}} left",
     "shareTitle": "Tastebite shopping list",
     "note": "Items are grouped by recipe because measures can't always be added together."
+  },
+  "list": {
+    "showing": "Showing {{shown}} of {{total}} recipes",
+    "showMore": "Show more recipes"
   }
 }

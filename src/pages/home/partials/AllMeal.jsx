@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { searchMeals } from '../../../lib/api';
 import useFetch from '../../../hooks/useFetch';
 import SectionHeader from '../../../components/SectionHeader';
 import MealGrid from '../../../components/MealGrid';
+import ShowMore from '../../../components/ShowMore';
+import usePaged from '../../../hooks/usePaged';
 import { useTranslation } from 'react-i18next';
 
 const PAGE_SIZE = 8;
@@ -10,8 +12,7 @@ const PAGE_SIZE = 8;
 const AllMeals = () => {
   const { t } = useTranslation();
   const { data, loading, error, retry } = useFetch(() => searchMeals(''));
-  const [visibleMeals, setVisibleMeals] = useState(PAGE_SIZE);
-  const meals = data || [];
+  const paged = usePaged(data || [], PAGE_SIZE);
 
   return (
     <section className="container-page py-16 lg:py-20">
@@ -21,22 +22,12 @@ const AllMeals = () => {
         link={{ to: '/recipes', label: t('allMeals.browse') }}
       />
       <MealGrid
-        meals={meals.slice(0, visibleMeals)}
+        meals={paged.visible}
         loading={loading}
         error={error}
         onRetry={retry}
       />
-      {!loading && visibleMeals < meals.length && (
-        <div className="mt-10 flex justify-center">
-          <button
-            type="button"
-            onClick={() => setVisibleMeals((count) => count + PAGE_SIZE)}
-            className="btn-outline px-8"
-          >
-            {t('allMeals.loadMore')}
-          </button>
-        </div>
-      )}
+      {!loading && <ShowMore paged={paged} />}
     </section>
   );
 };

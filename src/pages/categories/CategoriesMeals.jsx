@@ -7,6 +7,10 @@ import useDocumentTitle from '../../hooks/useDocumentTitle';
 import { useTranslation } from 'react-i18next';
 import useName from '../../i18n/useName';
 import MealGrid from '../../components/MealGrid';
+import ShowMore from '../../components/ShowMore';
+import usePaged from '../../hooks/usePaged';
+
+const PAGE_SIZE = 12;
 
 const CategoriesMeals = () => {
   const { category } = useParams();
@@ -24,6 +28,7 @@ const CategoriesMeals = () => {
 
   const details = categories?.find((item) => item.strCategory === category);
   const meals = (data || []).map((meal) => ({ ...meal, strCategory: category }));
+  const paged = usePaged(meals, PAGE_SIZE, category);
 
   return (
     <>
@@ -75,13 +80,14 @@ const CategoriesMeals = () => {
 
       <div className="container-page py-12">
         <MealGrid
-          meals={meals}
+          meals={paged.visible}
           loading={loading}
           error={error}
           onRetry={retry}
-          skeletonCount={12}
+          skeletonCount={PAGE_SIZE}
           emptyMessage={t('category.empty', { category: label })}
         />
+        {!loading && <ShowMore paged={paged} />}
       </div>
     </>
   );

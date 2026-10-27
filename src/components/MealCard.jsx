@@ -2,6 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FavoriteButton from './FavoriteButton';
 import useName from '../i18n/useName';
+import { getMealImageSrcSet } from '../lib/api';
+
+// Rendered card widths, matching the grids in MealGrid (max container 1280px).
+const IMAGE_SIZES = {
+  md: '(min-width: 1280px) 290px, (min-width: 1024px) 23vw, 46vw',
+  lg: '(min-width: 1280px) 400px, (min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw',
+};
 
 const MealCard = ({ meal, size = 'md', badge }) => {
   const name = useName();
@@ -21,7 +28,9 @@ const MealCard = ({ meal, size = 'md', badge }) => {
         <div className="relative overflow-hidden rounded-2xl bg-cream-dark shadow-card">
           {badge && <div className="absolute left-3 top-3 z-10">{badge}</div>}
           <img
-            src={meal.strMealThumb}
+            src={`${meal.strMealThumb}/medium`}
+            srcSet={getMealImageSrcSet(meal.strMealThumb)}
+            sizes={IMAGE_SIZES[size]}
             alt={meal.strMeal}
             loading="lazy"
             className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 ${

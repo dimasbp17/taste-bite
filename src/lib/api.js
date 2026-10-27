@@ -1,12 +1,10 @@
-import axios from 'axios';
+const BASE_URL = 'https://www.themealdb.com/api/json/v1/1';
 
-const client = axios.create({
-  baseURL: 'https://www.themealdb.com/api/json/v1/1',
-});
-
-const get = async (path, params) => {
-  const response = await client.get(path, { params });
-  return response.data;
+const get = async (path, params = {}) => {
+  const query = new URLSearchParams(params).toString();
+  const response = await fetch(`${BASE_URL}${path}${query ? `?${query}` : ''}`);
+  if (!response.ok) throw new Error(`TheMealDB request failed: ${response.status}`);
+  return response.json();
 };
 
 // TheMealDB returns `null` (or occasionally a string) instead of an empty list.
@@ -57,6 +55,10 @@ export const getSteps = (instructions = '') =>
         .replace(/^\d+[.)]\s+/, '')
     )
     .filter((line) => line && !/^\d+[.)]?$/.test(line));
+
+// TheMealDB serves each photo at 350 (/medium), 500 (/large) and 700px (original),
+// so cards can let the browser download only the size it needs.
+export const getMealImageSrcSet = (url) => `${url}/medium 350w, ${url}/large 500w, ${url} 700w`;
 
 export const getIngredientImage = (name) =>
   `https://www.themealdb.com/images/ingredients/${encodeURIComponent(name)}-small.png`;
