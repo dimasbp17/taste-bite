@@ -10,6 +10,7 @@ import About from './pages/about/About';
 import CategoriesMeals from './pages/categories/CategoriesMeals';
 import CategoriesByArea from './pages/categories/CategoriesByArea';
 import NotFound from './pages/NotFound';
+import CookingMode from './pages/cook/CookingMode';
 
 const App = () => {
   return (
@@ -53,6 +54,10 @@ const App = () => {
             element={<NotFound />}
           />
         </Route>
+        <Route
+          path="/cook/:id"
+          element={<CookingMode />}
+        />
       </Routes>
     </BrowserRouter>
   );

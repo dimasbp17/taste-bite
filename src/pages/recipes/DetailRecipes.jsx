@@ -244,12 +244,12 @@ const DetailRecipes = () => {
             </dl>
 
             <div className="mt-8 flex flex-wrap gap-3 print:hidden">
-              <a
-                href="#instructions"
+              <Link
+                to={`/cook/${meal.idMeal}`}
                 className="btn-primary"
               >
                 <FiList aria-hidden /> Start cooking
-              </a>
+              </Link>
               <FavoriteButton
                 meal={meal}
                 variant="button"
@@ -301,7 +301,15 @@ const DetailRecipes = () => {
             id="instructions"
             className="scroll-mt-28"
           >
-            <h2 className="text-3xl font-semibold">Instructions</h2>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <h2 className="text-3xl font-semibold">Instructions</h2>
+              <Link
+                to={`/cook/${meal.idMeal}`}
+                className="btn-outline print:hidden"
+              >
+                Step-by-step mode <FiChevronRight aria-hidden />
+              </Link>
+            </div>
             <ol className="mt-8 space-y-8">
               {steps.map((step, index) => (
                 <li
