@@ -23,14 +23,15 @@ export default [
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
     },
-    extends: {
-      react,
-    },
     rules: {
       ...js.configs.recommended.rules,
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
       ...reactHooks.configs.recommended.rules,
+      // Components keep the explicit `import React` convention.
+      'react/jsx-uses-react': 'error',
+      // The project doesn't use PropTypes.
+      'react/prop-types': 'off',
       'react/jsx-no-target-blank': 'off',
       'react-refresh/only-export-components': [
         'warn',

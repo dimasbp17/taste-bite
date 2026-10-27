@@ -1,79 +1,92 @@
 import React from 'react';
-import logo from '../../public/images/logo-taste.png';
-import { MdOutlineCopyright } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import useName from '../i18n/useName';
+
+const exploreLinks = [
+  { to: '/', label: 'nav.home' },
+  { to: '/recipes', label: 'footer.allRecipes' },
+  { to: '/cook-with-ingredients', label: 'footer.byIngredient' },
+  { to: '/saved', label: 'footer.saved' },
+  { to: '/shopping-list', label: 'footer.shopping' },
+  { to: '/about', label: 'footer.about' },
+];
+
+const popularCategories = ['Chicken', 'Vegetarian', 'Seafood', 'Dessert'];
+
+const linkClass = 'transition-colors hover:text-white';
 
 const Footer = () => {
+  const { t } = useTranslation();
+  const name = useName();
+
   return (
-    <>
-      <div className="w-full px-4 lg:py-16 text-abu bg-abu3 lg:px-24">
-        <div className="grid grid-cols-12">
-          <div className="col-span-full lg:col-span-6">
-            <img
-              src={logo}
-              alt=""
-              className="w-32"
-            />
-            <h3 className="max-w-[400px] text-justify">
-              "On the other hand, we denounce with righteous indignation and
-              dislike men who are so beguiled and demoralized by the charms of
-              pleasure of the moment."
-            </h3>
+    <footer className="mt-24 bg-ink text-white/70 print:hidden">
+      <div className="container-page grid gap-12 py-16 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <img
+            src="/images/logo-taste.png"
+            alt="Tastebite"
+            className="h-12 w-auto invert"
+          />
+          <p className="mt-4 max-w-sm">{t('footer.tagline')}</p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-8 lg:col-span-7">
+          <div>
+            <h2 className="font-sans text-sm font-semibold uppercase tracking-wider text-white">
+              {t('footer.explore')}
+            </h2>
+            <ul className="mt-4 space-y-3">
+              {exploreLinks.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className={linkClass}
+                  >
+                    {t(link.label)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="flex justify-between col-span-full lg:col-span-6">
-            <div>
-              <h1 className="mb-3 font-medium text-black">Tastebite</h1>
-              <Link to={'/about'}>
-                <h3>About Us</h3>
-              </Link>
-              <Link to={'/about'}>
-                <h3>Careers</h3>
-              </Link>
-              <Link to={'/about'}>
-                <h3>Contact Us</h3>
-              </Link>
-              <Link to={'/about'}>
-                <h3>Feedback</h3>
-              </Link>
-            </div>
-            <div>
-              <h1 className="mb-3 font-medium text-black">Legal</h1>
-              <Link to={'/about'}>
-                <h3>Term</h3>
-              </Link>
-              <Link to={'/about'}>
-                <h3>Condition</h3>
-              </Link>
-              <Link to={'/about'}>
-                <h3>Contact Us</h3>
-              </Link>
-              <Link to={'/about'}>
-                <h3>Feedback</h3>
-              </Link>
-            </div>
-            <div>
-              <h1 className="mb-3 font-medium text-black">Folloow</h1>
-              <Link to={'/about'}>
-                <h3>Instagram</h3>
-              </Link>
-              <Link to={'/about'}>
-                <h3>Facebook</h3>
-              </Link>
-              <Link to={'/about'}>
-                <h3>Youtube</h3>
-              </Link>
-              <Link to={'/about'}>
-                <h3>Twitter</h3>
-              </Link>
-            </div>
+          <div>
+            <h2 className="font-sans text-sm font-semibold uppercase tracking-wider text-white">
+              {t('footer.popular')}
+            </h2>
+            <ul className="mt-4 space-y-3">
+              {popularCategories.map((category) => (
+                <li key={category}>
+                  <Link
+                    to={`/meal-category/${category}`}
+                    className={linkClass}
+                  >
+                    {name(category)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-        <hr className="my-5 border border-gray-300" />
-        <h3 className="flex items-center gap-1">
-          <MdOutlineCopyright /> 2024 Tastebite - All rights reserved
-        </h3>
       </div>
-    </>
+
+      <div className="border-t border-white/10">
+        <div className="container-page flex flex-col gap-2 py-6 text-sm sm:flex-row sm:justify-between">
+          <p>{t('footer.rights', { year: new Date().getFullYear() })}</p>
+          <p>
+            {t('footer.dataBy')}{' '}
+            <a
+              href="https://www.themealdb.com"
+              target="_blank"
+              rel="noreferrer"
+              className="underline underline-offset-4 hover:text-white"
+            >
+              TheMealDB
+            </a>
+          </p>
+        </div>
+      </div>
+    </footer>
   );
 };
 

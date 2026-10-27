@@ -1,0 +1,321 @@
+{
+  "site": {
+    "defaultTitle": "Tastebite — Resep dari seluruh dunia"
+  },
+  "lang": {
+    "label": "Bahasa"
+  },
+  "nav": {
+    "main": "Menu utama",
+    "home": "Beranda",
+    "recipes": "Resep",
+    "byIngredient": "Dari Bahan",
+    "about": "Tentang",
+    "search": "Cari",
+    "searchRecipes": "Cari resep",
+    "saved": "Tersimpan",
+    "savedCount": "Resep tersimpan ({{count}})",
+    "openMenu": "Buka menu",
+    "closeMenu": "Tutup menu",
+    "logo": "Beranda Tastebite",
+    "shopping": "Belanja",
+    "shoppingCount": "Daftar belanja ({{count}} belum dibeli)"
+  },
+  "layout": {
+    "skip": "Langsung ke konten"
+  },
+  "footer": {
+    "tagline": "Resep sederhana dari dapur di seluruh dunia — ditulis agar siapa pun bisa memasaknya di rumah.",
+    "explore": "Jelajahi",
+    "popular": "Populer",
+    "allRecipes": "Semua resep",
+    "byIngredient": "Masak dari bahan",
+    "saved": "Resep tersimpan",
+    "about": "Tentang kami",
+    "rights": "© {{year}} Tastebite. Hak cipta dilindungi.",
+    "dataBy": "Data resep dari",
+    "shopping": "Daftar belanja"
+  },
+  "search": {
+    "label": "Cari masakan",
+    "placeholder": "Cari masakan, mis. lasagna",
+    "close": "Tutup pencarian",
+    "popular": "Pencarian populer",
+    "noResults": "Tidak ada resep untuk “{{term}}”. Coba nama masakan lain dalam bahasa Inggris, mis. “chicken”.",
+    "seeAll": "Lihat semua {{count}} hasil"
+  },
+  "status": {
+    "retry": "Coba lagi",
+    "loading": "Memuat…"
+  },
+  "grid": {
+    "errorTitle": "Resep gagal dimuat",
+    "errorMessage": "Periksa koneksi internet, lalu coba lagi.",
+    "empty": "Resep tidak ditemukan."
+  },
+  "fav": {
+    "save": "Simpan resep",
+    "saved": "Tersimpan",
+    "saveNamed": "Simpan {{name}}",
+    "removeNamed": "Hapus {{name}} dari tersimpan",
+    "removeTitle": "Hapus dari tersimpan"
+  },
+  "hero": {
+    "eyebrow": "Resep dari seluruh dunia",
+    "title1": "Masak sesuatu yang",
+    "titleEm": "istimewa",
+    "title2": "malam ini.",
+    "subtitle": "Resep langkah demi langkah yang jelas untuk semua orang — dari makan malam praktis sampai hidangan untuk acara spesial.",
+    "searchLabel": "Cari resep",
+    "placeholder": "Mau masak apa hari ini?",
+    "submit": "Cari resep",
+    "popular": "Populer:",
+    "todaysPick": "Pilihan hari ini",
+    "viewRecipe": "Lihat resep",
+    "another": "Ganti resep"
+  },
+  "categories": {
+    "eyebrow": "Jelajahi",
+    "title": "Lagi ingin makan apa?",
+    "scrollLeft": "Geser kategori ke kiri",
+    "scrollRight": "Geser kategori ke kanan"
+  },
+  "featured": {
+    "chickenEyebrow": "Favorit sehari-hari",
+    "chickenTitle": "Hidangan ayam yang menghangatkan",
+    "dessertEyebrow": "Yang manis-manis",
+    "dessertTitle": "Hidangan penutup yang sayang dilewatkan",
+    "viewAll": "Semua resep {{category}}"
+  },
+  "promo": {
+    "eyebrow": "Masak dari bahan yang ada",
+    "title": "Bingung mau masak apa?",
+    "text": "Pilih bahan yang sudah ada di dapurmu, kami carikan resep yang memakainya — lebih sedikit sisa, tanpa perlu belanja lagi.",
+    "cta": "Cari resep dari bahan"
+  },
+  "areas": {
+    "eyebrow": "Jelajah rasa",
+    "title": "Jelajahi masakan dunia",
+    "description": "Dari pasta Italia sampai kari Thailand — temukan masakan rumahan favorit dari berbagai negara.",
+    "showAll": "Tampilkan semua {{count}} negara",
+    "showFewer": "Tampilkan lebih sedikit"
+  },
+  "newsletter": {
+    "title": "Resep lezat langsung ke email-mu",
+    "text": "Resep pilihan dan tips memasak, seminggu sekali. Tanpa spam.",
+    "emailLabel": "Alamat email",
+    "placeholder": "kamu@contoh.com",
+    "submit": "Berlangganan",
+    "soon": "Fitur newsletter segera hadir — terima kasih atas minatmu!",
+    "terms": "Dengan berlangganan, kamu menyetujui syarat dan ketentuan kami."
+  },
+  "allMeals": {
+    "eyebrow": "Ide baru",
+    "title": "Resep lain untuk dicoba",
+    "browse": "Lihat semua resep"
+  },
+  "recipes": {
+    "eyebrow": "Daftar resep",
+    "all": "Semua resep",
+    "resultsFor": "Hasil untuk “{{q}}”",
+    "categoryTitle": "Resep {{category}}",
+    "count": "{{count}} resep ditemukan",
+    "searchLabel": "Cari resep",
+    "placeholder": "Cari nama masakan (bahasa Inggris)",
+    "search": "Cari",
+    "filterLabel": "Saring berdasarkan kategori",
+    "allChip": "Semua",
+    "clearSearch": "Hapus pencarian",
+    "empty": "Tidak ada resep yang cocok"
+  },
+  "detail": {
+    "breadcrumb": "Navigasi halaman",
+    "ingredients": "Bahan",
+    "ready": "{{done}} dari {{total}} siap",
+    "tapHint": "Ketuk bahan untuk mencentangnya sambil memasak.",
+    "steps": "Langkah",
+    "startCooking": "Mulai memasak",
+    "watchVideo": "Tonton video",
+    "print": "Cetak",
+    "instructions": "Cara membuat",
+    "stepMode": "Mode langkah demi langkah",
+    "step": "Langkah {{count}}",
+    "source": "Lihat sumber resep asli",
+    "englishNote": "Isi resep (nama, bahan, dan langkah) tersedia dalam bahasa Inggris.",
+    "loadError": "Resep gagal dimuat",
+    "loadErrorMsg": "Periksa koneksi internet, lalu coba lagi.",
+    "notFound": "Resep tidak ditemukan",
+    "notFoundMsg": "Mungkin resepnya sudah dihapus. Coba lihat resep lain.",
+    "browse": "Lihat resep lain",
+    "docTitle": "Resep"
+  },
+  "video": {
+    "title": "Tonton cara membuatnya",
+    "open": "Buka di YouTube",
+    "play": "Putar video",
+    "playLabel": "Putar video: cara membuat {{name}}",
+    "frameTitle": "Video: cara membuat {{name}}"
+  },
+  "rec": {
+    "eyebrow": "Masak lagi",
+    "title": "Mungkin kamu juga suka",
+    "description": "Resep lain yang memakai {{ingredient}}."
+  },
+  "category": {
+    "back": "Semua resep",
+    "eyebrow": "Kategori",
+    "count": "{{count}} resep",
+    "readMore": "Baca selengkapnya",
+    "showLess": "Tutup",
+    "empty": "Belum ada resep {{category}}"
+  },
+  "area": {
+    "back": "Semua negara",
+    "eyebrow": "Masakan dunia",
+    "title": "Dapur {{area}}",
+    "count": "{{count}} resep untuk dijelajahi",
+    "empty": "Belum ada resep {{area}}"
+  },
+  "about": {
+    "docTitle": "Tentang kami",
+    "eyebrow": "Tentang Tastebite",
+    "title": "Kami sekumpulan pencinta makanan yang suka memasak dan berbagi.",
+    "imageAlt": "Bahan-bahan segar di atas meja dapur",
+    "value1Title": "Mudah diikuti",
+    "value1Text": "Setiap resep dibagi menjadi langkah-langkah bernomor yang jelas, lengkap dengan daftar bahan yang bisa dicentang.",
+    "value2Title": "Dari seluruh dunia",
+    "value2Text": "Jelajahi hidangan dari 28 negara — dari teriyaki Jepang sampai tagine Maroko.",
+    "value3Title": "Untuk masak di rumah",
+    "value3Text": "Tanpa peralatan mahal. Cukup makanan enak yang bisa kamu buat di dapur sendiri.",
+    "storyTitle": "Resep sederhana untuk semua orang",
+    "story1": "Kami adalah tempat yang tepat untuk kamu yang suka memasak dan ingin menjelajahi resep dari seluruh dunia. Misi kami: menghadirkan hidangan terbaik yang mudah dibuat di rumah — dari hidangan pembuka sampai hidangan penutup.",
+    "story2": "Bersama Tastebite, memasak jadi lebih menyenangkan dan tidak rumit. Mulai petualangan kulinermu dan temukan inspirasi baru di setiap resep.",
+    "cta": "Mulai jelajahi resep",
+    "blueberryAlt": "Hidangan penutup blueberry"
+  },
+  "notFound": {
+    "docTitle": "Halaman tidak ditemukan",
+    "title": "Halaman ini tidak ada di menu",
+    "text": "Halaman yang kamu cari tidak ada atau sudah dipindahkan.",
+    "home": "Kembali ke beranda",
+    "browse": "Lihat resep"
+  },
+  "saved": {
+    "docTitle": "Resep tersimpan",
+    "eyebrow": "Koleksimu",
+    "title": "Resep tersimpan",
+    "count": "{{count}} resep tersimpan di perangkat ini.",
+    "hint": "Resep yang kamu simpan akan tersimpan di perangkat ini.",
+    "removeAll": "Hapus semua",
+    "confirm": "Hapus semua resep tersimpan? Tindakan ini tidak bisa dibatalkan.",
+    "emptyTitle": "Belum ada resep tersimpan",
+    "emptyText": "Ketuk ikon hati pada resep mana pun untuk menyimpannya di sini, supaya mudah dicari lagi.",
+    "browse": "Lihat resep",
+    "byIngredient": "Masak dari bahan"
+  },
+  "ing": {
+    "docTitle": "Masak dari bahan yang ada",
+    "eyebrow": "Masak dari bahan yang ada",
+    "title": "Ada bahan apa di dapurmu?",
+    "subtitle": "Sebutkan bahan yang sudah kamu punya, kami tunjukkan resep yang bisa kamu buat.",
+    "addLabel": "Tambah bahan",
+    "placeholder": "mis. ayam, telur, bawang putih",
+    "maxPlaceholder": "Maksimal {{count}} bahan",
+    "noMatch": "Tidak ada bahan “{{q}}”. Coba kata yang lebih umum, mis. “keju”.",
+    "yours": "Bahanmu ({{count}}/{{max}})",
+    "clearAll": "Hapus semua",
+    "remove": "Hapus {{name}}",
+    "quickAdd": "Tambah cepat",
+    "how1Title": "Masukkan bahanmu",
+    "how1Text": "Ketik atau ketuk bahan yang ada di dapurmu.",
+    "how2Title": "Kami carikan resepnya",
+    "how2Text": "Resep yang paling banyak memakai bahanmu muncul paling atas.",
+    "how3Title": "Mulai memasak",
+    "how3Text": "Buka resep untuk melihat daftar bahan dan langkah lengkap.",
+    "loadError": "Resep gagal dimuat",
+    "loadErrorMsg": "Periksa koneksi internet, lalu coba lagi.",
+    "finding": "Mencari resep…",
+    "found": "{{count}} resep ditemukan",
+    "sortedHint": "Resep yang paling banyak memakai bahanmu ditampilkan lebih dulu.",
+    "onlyAll": "Hanya resep yang memakai semua bahan",
+    "noneAll": "Belum ada resep yang memakai semua bahan ini",
+    "noneAllMsg": "Coba hapus salah satu bahan, atau matikan pilihan “Hanya resep yang memakai semua bahan”.",
+    "none": "Resep tidak ditemukan",
+    "noneMsg": "Coba bahan lain yang lebih umum.",
+    "usesOne": "Pakai {{name}}",
+    "usesAll": "Pakai semua {{count}}",
+    "usesSome": "Pakai {{count}} dari {{total}}",
+    "usesTitle": "Memakai: {{list}}"
+  },
+  "cook": {
+    "docTitle": "Memasak: {{name}}",
+    "docFallback": "Mode memasak",
+    "loading": "Menyiapkan resepmu…",
+    "exit": "Keluar",
+    "textSize": {
+      "normal": "Normal",
+      "large": "Besar",
+      "xlarge": "Sangat besar"
+    },
+    "textSizeLabel": "Ukuran teks: {{size}}. Ganti ukuran teks",
+    "progress": "Progres resep",
+    "timesUp": "Waktu habis!",
+    "ok": "OK",
+    "of": "dari {{duration}}",
+    "stopTimer": "Hentikan timer",
+    "beforeStart": "Sebelum mulai",
+    "gather": "Siapkan bahan-bahanmu",
+    "summary": "{{ingredients}} bahan · {{steps}} langkah",
+    "screenOn": "Layar akan tetap menyala",
+    "stepOf": "Langkah {{step}} dari {{total}}",
+    "startTimer": "Mulai timer {{duration}}",
+    "inThisStep": "Di langkah ini",
+    "done": "Selamat menikmati!",
+    "doneText": "Kamu sudah menyelesaikan {{steps}} langkah {{name}}.",
+    "backToRecipe": "Kembali ke resep",
+    "another": "Cari resep lain",
+    "stepNav": "Navigasi langkah",
+    "back": "Kembali",
+    "startStep1": "Mulai langkah 1",
+    "finish": "Selesai",
+    "next": "Lanjut: langkah {{count}}",
+    "doneButton": "Selesai",
+    "minutes": "{{count}} menit",
+    "hours": "{{count}} jam",
+    "hoursMinutes": "{{hours}} jam {{minutes}} menit"
+  },
+  "shop": {
+    "addButton": "Tambah {{count}} bahan ke daftar belanja",
+    "addHint": "Bahan yang belum dicentang akan dimasukkan ke daftar belanja.",
+    "allReady": "Semua bahan sudah siap — tidak ada yang perlu dibeli.",
+    "added": "Ditambahkan ke daftar belanja.",
+    "inList": "Resep ini ada di daftar belanjamu.",
+    "viewList": "Lihat daftar",
+    "docTitle": "Daftar belanja",
+    "eyebrow": "Siap ke pasar",
+    "title": "Daftar belanja",
+    "summary": "{{remaining}} dari {{total}} bahan belum dibeli",
+    "allBought": "Semua sudah dibeli. Selamat memasak!",
+    "emptyTitle": "Daftar belanjamu masih kosong",
+    "emptyText": "Buka resep, lalu ketuk “Tambah ke daftar belanja” untuk memasukkan bahan yang belum kamu punya.",
+    "browse": "Cari resep",
+    "share": "Bagikan",
+    "copy": "Salin daftar",
+    "copied": "Daftar disalin — tinggal tempel di chat.",
+    "copyFailed": "Gagal menyalin. Coba cetak daftarnya.",
+    "print": "Cetak",
+    "clearBought": "Hapus yang sudah dibeli",
+    "clearAll": "Hapus semua",
+    "confirmClear": "Hapus seluruh daftar belanja? Tindakan ini tidak bisa dibatalkan.",
+    "viewRecipe": "Lihat resep",
+    "removeRecipe": "Hapus {{name}} dari daftar",
+    "removeItem": "Hapus {{name}}",
+    "itemsLeft": "{{count}} belum dibeli",
+    "shareTitle": "Daftar belanja Tastebite",
+    "note": "Bahan dikelompokkan per resep karena takarannya tidak selalu bisa dijumlahkan."
+  },
+  "list": {
+    "showing": "Menampilkan {{shown}} dari {{total}} resep",
+    "showMore": "Tampilkan lebih banyak"
+  }
+}

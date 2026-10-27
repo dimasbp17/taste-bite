@@ -1,61 +1,69 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
+import { FiArrowLeft } from 'react-icons/fi';
+import { filterByArea } from '../../lib/api';
+import { getAreaImage } from '../../data/areas';
+import useFetch from '../../hooks/useFetch';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
+import { useTranslation } from 'react-i18next';
+import useName from '../../i18n/useName';
+import MealGrid from '../../components/MealGrid';
+import ShowMore from '../../components/ShowMore';
+import usePaged from '../../hooks/usePaged';
+
+const PAGE_SIZE = 12;
 
 const CategoriesByArea = () => {
   const { area } = useParams();
-  const [categoriesArea, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
+  const name = useName();
+  const label = name(area);
+  const image = getAreaImage(area);
+  useDocumentTitle(t('recipes.categoryTitle', { category: label }));
+  const { data, loading, error, retry } = useFetch(() => filterByArea(area), [area]);
+  const meals = (data || []).map((meal) => ({ ...meal, strArea: area }));
+  const paged = usePaged(meals, PAGE_SIZE, area);
 
-  useEffect(() => {
-    setLoading(true);
-    const fetchCategoriesArea = async () => {
-      try {
-        const response = await axios.get(
-          `https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`
-        );
-        setCategories(response.data.meals);
-
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetch categoriesArea', error);
-      }
-    };
-    fetchCategoriesArea();
-  }, [area]);
   return (
     <>
-      <div>
-        <Navbar />
-      </div>
-      <div className="px-4 lg:px-24">
-        <div className="my-5">
-          <h1 className="text-2xl font-bold font-playfair">Area : {area}</h1>
+      <section className="relative overflow-hidden bg-ink">
+        {image && (
+          <img
+            src={image}
+            alt=""
+            className="absolute inset-0 size-full object-cover opacity-50"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/60 to-transparent" />
+        <div className="container-page relative py-16 text-white lg:py-24">
+          <Link
+            to="/#cuisines"
+            className="inline-flex items-center gap-2 text-sm font-medium text-white/80 hover:text-white"
+          >
+            <FiArrowLeft aria-hidden /> {t('area.back')}
+          </Link>
+          <p className="mt-6 text-sm font-semibold uppercase tracking-[0.14em] text-brand-100">
+            {t('area.eyebrow')}
+          </p>
+          <h1 className="mt-2 text-4xl font-semibold text-white sm:text-6xl">
+            {t('area.title', { area: label })}
+          </h1>
+          {!loading && !error && (
+            <p className="mt-3 text-lg text-white/85">{t('area.count', { count: meals.length })}</p>
+          )}
         </div>
-        <div className="grid grid-cols-2 gap-5 mb-5 lg:grid-cols-4">
-          {categoriesArea.map((meal, index) => (
-            <Link to={`/detail-recipes/${meal.idMeal}`}>
-              <div
-                key={index}
-                className="w-full border border-none"
-              >
-                <img
-                  src={meal.strMealThumb}
-                  alt={meal.strMeal}
-                  className="object-cover w-full h-32 rounded-md lg:h-60"
-                />
-                <h1 className="mt-2 font-semibold font-inter">
-                  {meal.strMeal}
-                </h1>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-      <div>
-        <Footer />
+      </section>
+
+      <div className="container-page py-12">
+        <MealGrid
+          meals={paged.visible}
+          loading={loading}
+          error={error}
+          onRetry={retry}
+          skeletonCount={PAGE_SIZE}
+          emptyMessage={t('area.empty', { area: label })}
+        />
+        {!loading && <ShowMore paged={paged} />}
       </div>
     </>
   );
