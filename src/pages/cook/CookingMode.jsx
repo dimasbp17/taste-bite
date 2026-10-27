@@ -14,13 +14,17 @@ import { getIngredientImage, getIngredients, getMealById, getSteps } from '../..
 import useFetch from '../../hooks/useFetch';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
 import useWakeLock from '../../hooks/useWakeLock';
-import useLanguage from '../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
 import FavoriteButton from '../../components/FavoriteButton';
 import StatusMessage from '../../components/StatusMessage';
 import useTimer, { formatTime } from './useTimer';
-import { findDurations, findStepIngredients } from './cookHelpers';
+import { findDurations, findStepIngredients, formatDuration } from './cookHelpers';
 
-const TEXT_SIZES = ['text-2xl sm:text-3xl', 'text-3xl sm:text-4xl', 'text-4xl sm:text-5xl'];
+const TEXT_SIZES = [
+  { key: 'normal', className: 'text-2xl sm:text-3xl' },
+  { key: 'large', className: 'text-3xl sm:text-4xl' },
+  { key: 'xlarge', className: 'text-4xl sm:text-5xl' },
+];
 const TEXT_SIZE_KEY = 'tastebite:cook-text-size';
 
 const readTextSize = () => {
@@ -52,14 +56,14 @@ const IngredientChip = ({ item }) => (
 const CookingMode = () => {
   const { id } = useParams();
   const [params, setParams] = useSearchParams();
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const { data: meal, loading, error, retry } = useFetch(() => getMealById(id), [id]);
   const [textSize, setTextSize] = useState(readTextSize);
   const wakeLock = useWakeLock();
   const timer = useTimer();
   const touchStart = useRef(null);
 
-  useDocumentTitle(meal ? t('cook.docTitle', meal.strMeal) : t('cook.docFallback'));
+  useDocumentTitle(meal ? t('cook.docTitle', { name: meal.strMeal }) : t('cook.docFallback'));
 
   const ingredients = meal ? getIngredients(meal) : [];
   const steps = meal ? getSteps(meal.strInstructions) : [];
@@ -129,9 +133,9 @@ const CookingMode = () => {
   const stepIngredients = step ? findStepIngredients(step, ingredients) : [];
   const durations = step ? findDurations(step) : [];
   const progress = (screen / lastScreen) * 100;
-  const textSizeLabel = t('cook.textSizes')[textSize];
+  const textSizeLabel = t(`cook.textSize.${TEXT_SIZES[textSize].key}`);
 
-  let nextLabel = t('cook.next', screen + 1);
+  let nextLabel = t('cook.next', { count: screen + 1 });
   if (screen === 0) nextLabel = t('cook.startStep1');
   else if (screen === steps.length) nextLabel = t('cook.finish');
 
@@ -159,7 +163,7 @@ const CookingMode = () => {
             type="button"
             onClick={changeTextSize}
             className="btn-ghost shrink-0 px-3"
-            aria-label={t('cook.textSizeLabel', textSizeLabel)}
+            aria-label={t('cook.textSizeLabel', { size: textSizeLabel })}
           >
             <FiType
               className="text-xl"
@@ -217,7 +221,7 @@ const CookingMode = () => {
                   {formatTime(timer.remaining)}
                 </span>
                 <span className="ml-2 text-white/70">
-                  {t('cook.of', t('cook.duration', timer.timer.minutes))}
+                  {t('cook.of', { duration: formatDuration(t, timer.timer.minutes) })}
                 </span>
               </p>
               <button
@@ -244,7 +248,7 @@ const CookingMode = () => {
             <p className="eyebrow">{t('cook.beforeStart')}</p>
             <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">{t('cook.gather')}</h1>
             <p className="mt-3 text-lg text-ink-soft">
-              {t('cook.summary', ingredients.length, steps.length)}
+              {t('cook.summary', { ingredients: ingredients.length, steps: steps.length })}
               {wakeLock.active && (
                 <span className="ml-2 inline-flex items-center gap-1.5 text-sage">
                   <FiSun aria-hidden /> {t('cook.screenOn')}
@@ -264,10 +268,10 @@ const CookingMode = () => {
 
         {step && (
           <section>
-            <p className="eyebrow">{t('cook.stepOf', screen, steps.length)}</p>
+            <p className="eyebrow">{t('cook.stepOf', { step: screen, total: steps.length })}</p>
             <p
               lang="en"
-              className={`mt-5 font-medium leading-snug text-ink ${TEXT_SIZES[textSize]}`}
+              className={`mt-5 font-medium leading-snug text-ink ${TEXT_SIZES[textSize].className}`}
             >
               {step}
             </p>
@@ -281,7 +285,7 @@ const CookingMode = () => {
                     onClick={() => timer.start(minutes)}
                     className="btn border-2 border-brand bg-white px-6 text-lg text-brand hover:bg-brand-50"
                   >
-                    <FiClock aria-hidden /> {t('cook.startTimer', t('cook.duration', minutes))}
+                    <FiClock aria-hidden /> {t('cook.startTimer', { duration: formatDuration(t, minutes) })}
                   </button>
                 ))}
               </div>
@@ -310,7 +314,7 @@ const CookingMode = () => {
             </span>
             <h1 className="mt-6 text-4xl font-semibold sm:text-5xl">{t('cook.done')}</h1>
             <p className="mt-3 text-lg text-ink-soft">
-              {t('cook.doneText', steps.length, meal.strMeal)}
+              {t('cook.doneText', { steps: steps.length, name: meal.strMeal })}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <FavoriteButton

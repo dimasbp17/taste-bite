@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import useLanguage from '../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 const StatusMessage = ({ title, message, onRetry, action }) => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   return (
     <div className="rounded-3xl border border-dashed border-line bg-white/60 px-6 py-14 text-center">

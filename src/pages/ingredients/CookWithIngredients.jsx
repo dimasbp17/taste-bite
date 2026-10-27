@@ -4,7 +4,8 @@ import { FiCheck, FiX } from 'react-icons/fi';
 import { filterByIngredient, getIngredientImage, getIngredientList } from '../../lib/api';
 import useFetch from '../../hooks/useFetch';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
-import useLanguage from '../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
+import useName from '../../i18n/useName';
 import MealCard, { MealCardSkeleton } from '../../components/MealCard';
 import StatusMessage from '../../components/StatusMessage';
 import IngredientPicker from './IngredientPicker';
@@ -85,15 +86,21 @@ const findMatches = async (selected, allNames) => {
 };
 
 const MatchBadge = ({ matched, total }) => {
-  const { t, name } = useLanguage();
+  const { t } = useTranslation();
+  const name = useName();
   const all = matched.length === total;
 
-  let label = t('ing.usesSome', matched.length, total);
-  if (all) label = total === 1 ? t('ing.usesOne', name(matched[0])) : t('ing.usesAll', total);
+  let label = t('ing.usesSome', { count: matched.length, total });
+  if (all) {
+    label =
+      total === 1
+        ? t('ing.usesOne', { name: name(matched[0]).toLowerCase() })
+        : t('ing.usesAll', { count: total });
+  }
 
   return (
     <span
-      title={t('ing.usesTitle', matched.map(name).join(', '))}
+      title={t('ing.usesTitle', { list: matched.map(name).join(', ') })}
       className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-semibold shadow-card ${
         all ? 'bg-sage text-white' : 'bg-white text-ink'
       }`}
@@ -105,7 +112,8 @@ const MatchBadge = ({ matched, total }) => {
 };
 
 const CookWithIngredients = () => {
-  const { t, name } = useLanguage();
+  const { t } = useTranslation();
+  const name = useName();
   const [params, setParams] = useSearchParams();
   const selected = params.getAll('i');
   const key = selected.join('|');
@@ -152,7 +160,7 @@ const CookWithIngredients = () => {
           <div className="mt-6">
             <div className="flex items-center justify-between gap-4">
               <p className="font-medium text-ink">
-                {t('ing.yours', selected.length, MAX_INGREDIENTS)}
+                {t('ing.yours', { count: selected.length, max: MAX_INGREDIENTS })}
               </p>
               <button
                 type="button"
@@ -169,7 +177,7 @@ const CookWithIngredients = () => {
                     type="button"
                     onClick={() => remove(item)}
                     className="group inline-flex min-h-[44px] items-center gap-2 rounded-full bg-brand-50 py-1 pl-1.5 pr-3 font-medium text-ink ring-1 ring-brand/25 hover:bg-brand-100"
-                    aria-label={t('ing.remove', name(item))}
+                    aria-label={t('ing.remove', { name: name(item) })}
                   >
                     <img
                       src={getIngredientImage(item)}
@@ -248,7 +256,7 @@ const CookWithIngredients = () => {
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h2 className="text-3xl font-semibold">
-                  {loading ? t('ing.finding') : t('ing.found', results.length)}
+                  {loading ? t('ing.finding') : t('ing.found', { count: results.length })}
                 </h2>
                 {!loading && selected.length > 1 && (
                   <p className="mt-2 text-ink-soft">{t('ing.sortedHint')}</p>

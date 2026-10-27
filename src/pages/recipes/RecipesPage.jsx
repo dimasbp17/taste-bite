@@ -4,13 +4,15 @@ import { FiSearch, FiX } from 'react-icons/fi';
 import { filterByCategory, getCategories, searchMeals } from '../../lib/api';
 import useFetch from '../../hooks/useFetch';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
-import useLanguage from '../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
+import useName from '../../i18n/useName';
 import MealGrid from '../../components/MealGrid';
 
 const PAGE_SIZE = 12;
 
 const RecipesPage = () => {
-  const { t, name } = useLanguage();
+  const { t } = useTranslation();
+  const name = useName();
   const [params, setParams] = useSearchParams();
   const q = params.get('q') || '';
   const category = params.get('category') || '';
@@ -48,8 +50,8 @@ const RecipesPage = () => {
     }`;
 
   let heading = t('recipes.all');
-  if (q) heading = t('recipes.resultsFor', q);
-  else if (category) heading = t('recipes.categoryTitle', name(category));
+  if (q) heading = t('recipes.resultsFor', { q });
+  else if (category) heading = t('recipes.categoryTitle', { category: name(category) });
 
   useDocumentTitle(heading);
 
@@ -59,7 +61,7 @@ const RecipesPage = () => {
         <p className="eyebrow">{t('recipes.eyebrow')}</p>
         <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">{heading}</h1>
         {!loading && !error && (
-          <p className="mt-3 text-ink-soft">{t('recipes.count', meals.length)}</p>
+          <p className="mt-3 text-ink-soft">{t('recipes.count', { count: meals.length })}</p>
         )}
       </header>
 

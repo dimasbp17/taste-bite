@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import FavoriteButton from './FavoriteButton';
-import useLanguage from '../i18n/useLanguage';
+import useName from '../i18n/useName';
 
 const MealCard = ({ meal, size = 'md', badge }) => {
-  const { name } = useLanguage();
+  const name = useName();
   const meta = [meal.strCategory, meal.strArea].filter(Boolean).map(name).join(' · ');
 
   return (

@@ -4,10 +4,12 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { getCategories } from '../../../lib/api';
 import useFetch from '../../../hooks/useFetch';
 import SectionHeader from '../../../components/SectionHeader';
-import useLanguage from '../../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
+import useName from '../../../i18n/useName';
 
 const Categories = () => {
-  const { t, name } = useLanguage();
+  const { t } = useTranslation();
+  const name = useName();
   const { data: categories, loading } = useFetch(getCategories);
   const scrollerRef = useRef(null);
 

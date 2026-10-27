@@ -1,12 +1,14 @@
 import React, { useId, useMemo, useState } from 'react';
 import { FiPlus, FiSearch } from 'react-icons/fi';
 import { getIngredientImage } from '../../lib/api';
-import useLanguage from '../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
+import useName from '../../i18n/useName';
 
 const MAX_SUGGESTIONS = 8;
 
 const IngredientPicker = ({ options, selected, onAdd, disabled, maxCount }) => {
-  const { t, name } = useLanguage();
+  const { t } = useTranslation();
+  const name = useName();
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
   const [highlight, setHighlight] = useState(0);
@@ -85,7 +87,7 @@ const IngredientPicker = ({ options, selected, onAdd, disabled, maxCount }) => {
           onFocus={() => setOpen(true)}
           onBlur={() => setOpen(false)}
           onKeyDown={handleKeyDown}
-          placeholder={disabled ? t('ing.maxPlaceholder', maxCount) : t('ing.placeholder')}
+          placeholder={disabled ? t('ing.maxPlaceholder', { count: maxCount }) : t('ing.placeholder')}
           className="input h-14 rounded-2xl pl-11 text-lg"
         />
       </div>
@@ -141,7 +143,7 @@ const IngredientPicker = ({ options, selected, onAdd, disabled, maxCount }) => {
 
       {open && query.trim() && suggestions.length === 0 && (
         <p className="absolute inset-x-0 top-full z-20 mt-2 rounded-2xl bg-white p-4 text-ink-soft shadow-lift ring-1 ring-line">
-          {t('ing.noMatch', query.trim())}
+          {t('ing.noMatch', { q: query.trim() })}
         </p>
       )}
     </div>

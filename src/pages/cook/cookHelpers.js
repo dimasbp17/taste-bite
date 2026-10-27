@@ -28,3 +28,13 @@ export const findDurations = (step) => {
   );
   return [...new Set(minutes)].filter((value) => value > 0 && value <= 24 * 60).slice(0, 3);
 };
+
+/** "35 menit", "1 jam 30 menit" (or the English equivalent). */
+export const formatDuration = (t, minutes) => {
+  if (minutes < 60) return t('cook.minutes', { count: minutes });
+  const hours = Math.floor(minutes / 60);
+  const rest = minutes % 60;
+  return rest
+    ? t('cook.hoursMinutes', { hours, minutes: rest })
+    : t('cook.hours', { count: hours });
+};

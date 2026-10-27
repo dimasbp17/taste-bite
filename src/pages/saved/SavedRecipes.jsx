@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { FaRegHeart } from 'react-icons/fa';
 import useFavorites from '../../hooks/useFavorites';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
-import useLanguage from '../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
 import MealGrid from '../../components/MealGrid';
 
 const SavedRecipes = () => {
   const { favorites, clear } = useFavorites();
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   useDocumentTitle(t('saved.docTitle'));
 
   const handleClear = () => {
@@ -22,7 +22,7 @@ const SavedRecipes = () => {
           <p className="eyebrow">{t('saved.eyebrow')}</p>
           <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">{t('saved.title')}</h1>
           <p className="mt-3 text-ink-soft">
-            {favorites.length > 0 ? t('saved.count', favorites.length) : t('saved.hint')}
+            {favorites.length > 0 ? t('saved.count', { count: favorites.length }) : t('saved.hint')}
           </p>
         </div>
         {favorites.length > 0 && (

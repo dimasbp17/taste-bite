@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { FiExternalLink, FiPlay } from 'react-icons/fi';
-import useLanguage from '../../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 // Shows the YouTube thumbnail first and only loads the player when the user
 // presses play, so the page stays fast and nothing autoplays unexpectedly.
 const RecipeVideo = ({ videoId, title, url }) => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const [playing, setPlaying] = useState(false);
 
   return (
@@ -29,7 +29,7 @@ const RecipeVideo = ({ videoId, title, url }) => {
         {playing ? (
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`}
-            title={t('video.frameTitle', title)}
+            title={t('video.frameTitle', { name: title })}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             className="absolute inset-0 size-full"
@@ -39,7 +39,7 @@ const RecipeVideo = ({ videoId, title, url }) => {
             type="button"
             onClick={() => setPlaying(true)}
             className="group absolute inset-0 size-full"
-            aria-label={t('video.playLabel', title)}
+            aria-label={t('video.playLabel', { name: title })}
           >
             <img
               src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}

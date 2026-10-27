@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FiMail } from 'react-icons/fi';
-import useLanguage from '../../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 const Newsletter = () => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e) => {

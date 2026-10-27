@@ -1,11 +1,11 @@
 import React from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import useFavorites from '../hooks/useFavorites';
-import useLanguage from '../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 const FavoriteButton = ({ meal, variant = 'icon', className = '' }) => {
   const { isFavorite, toggle } = useFavorites();
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const saved = isFavorite(meal.idMeal);
   const Icon = saved ? FaHeart : FaRegHeart;
 
@@ -31,7 +31,7 @@ const FavoriteButton = ({ meal, variant = 'icon', className = '' }) => {
       type="button"
       onClick={() => toggle(meal)}
       aria-pressed={saved}
-      aria-label={saved ? t('fav.removeNamed', meal.strMeal) : t('fav.saveNamed', meal.strMeal)}
+      aria-label={saved ? t('fav.removeNamed', { name: meal.strMeal }) : t('fav.saveNamed', { name: meal.strMeal })}
       title={saved ? t('fav.removeTitle') : t('fav.save')}
       className={`flex size-11 items-center justify-center rounded-full bg-white/95 shadow-card backdrop-blur transition-transform hover:scale-110 ${className}`}
     >

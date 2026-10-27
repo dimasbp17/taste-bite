@@ -2,12 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiArrowRight } from 'react-icons/fi';
 import { getIngredientImage } from '../../../lib/api';
-import useLanguage from '../../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
+import useName from '../../../i18n/useName';
 
 const samples = ['Eggs', 'Tomatoes', 'Garlic', 'Cheese', 'Potatoes', 'Lemon'];
 
 const IngredientPromo = () => {
-  const { t, name } = useLanguage();
+  const { t } = useTranslation();
+  const name = useName();
 
   return (
     <section className="container-page py-16 lg:py-20">

@@ -4,15 +4,17 @@ import { FiArrowLeft } from 'react-icons/fi';
 import { filterByCategory, getCategories } from '../../lib/api';
 import useFetch from '../../hooks/useFetch';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
-import useLanguage from '../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
+import useName from '../../i18n/useName';
 import MealGrid from '../../components/MealGrid';
 
 const CategoriesMeals = () => {
   const { category } = useParams();
-  const { t, name } = useLanguage();
+  const { t } = useTranslation();
+  const name = useName();
   const [expanded, setExpanded] = useState(false);
   const label = name(category);
-  useDocumentTitle(t('recipes.categoryTitle', label));
+  useDocumentTitle(t('recipes.categoryTitle', { category: label }));
 
   const { data, loading, error, retry } = useFetch(
     () => filterByCategory(category),
@@ -38,7 +40,7 @@ const CategoriesMeals = () => {
             <h1 className="mt-2 text-4xl font-semibold sm:text-5xl">{label}</h1>
             {!loading && !error && (
               <p className="mt-2 font-medium text-ink-soft">
-                {t('category.count', meals.length)}
+                {t('category.count', { count: meals.length })}
               </p>
             )}
             {details?.strCategoryDescription && (
@@ -78,7 +80,7 @@ const CategoriesMeals = () => {
           error={error}
           onRetry={retry}
           skeletonCount={12}
-          emptyMessage={t('category.empty', label)}
+          emptyMessage={t('category.empty', { category: label })}
         />
       </div>
     </>

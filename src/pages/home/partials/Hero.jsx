@@ -3,14 +3,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FiArrowRight, FiGlobe, FiRefreshCw, FiSearch, FiTag } from 'react-icons/fi';
 import { getRandomMeal } from '../../../lib/api';
 import useFetch from '../../../hooks/useFetch';
-import useLanguage from '../../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
+import useName from '../../../i18n/useName';
 
 const quickLinks = ['Chicken', 'Pasta', 'Vegetarian', 'Seafood', 'Dessert'];
 
 const Hero = () => {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
-  const { t, name } = useLanguage();
+  const { t } = useTranslation();
+  const name = useName();
   const { data: meal, loading, retry } = useFetch(getRandomMeal);
 
   const handleSubmit = (e) => {

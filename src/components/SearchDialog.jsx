@@ -3,14 +3,16 @@ import { createPortal } from 'react-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiArrowRight, FiSearch, FiX } from 'react-icons/fi';
 import { searchMeals } from '../lib/api';
-import useLanguage from '../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
+import useName from '../i18n/useName';
 
 // Search terms stay in English (the recipe database is English);
 // only the button labels are translated.
 const suggestions = ['Chicken', 'Pasta', 'Soup', 'Cake', 'Salmon', 'Curry'];
 
 const SearchDialog = ({ open, onClose }) => {
-  const { t, name } = useLanguage();
+  const { t } = useTranslation();
+  const name = useName();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -140,7 +142,7 @@ const SearchDialog = ({ open, onClose }) => {
 
           {term && !loading && results.length === 0 && (
             <p className="p-6 text-center text-ink-soft">
-              {t('search.noResults', term)}
+              {t('search.noResults', { term })}
             </p>
           )}
 
@@ -176,7 +178,7 @@ const SearchDialog = ({ open, onClose }) => {
                 onClick={handleSubmit}
                 className="btn-ghost mt-1 w-full text-brand"
               >
-                {t('search.seeAll', results.length)}
+                {t('search.seeAll', { count: results.length })}
                 <FiArrowRight aria-hidden />
               </button>
             </>

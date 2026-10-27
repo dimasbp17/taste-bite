@@ -5,7 +5,7 @@ import { FaRegHeart } from 'react-icons/fa';
 import SearchDialog from './SearchDialog';
 import LanguageSwitch from './LanguageSwitch';
 import useFavorites from '../hooks/useFavorites';
-import useLanguage from '../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 const links = [
   { to: '/', label: 'nav.home' },
@@ -24,7 +24,7 @@ const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const { pathname } = useLocation();
   const { favorites } = useFavorites();
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   useEffect(() => {
     setMenuOpen(false);
@@ -79,7 +79,7 @@ const Navbar = () => {
                 isActive ? 'bg-brand-50 text-brand' : 'text-ink hover:bg-cream-dark'
               }`
             }
-            aria-label={t('nav.savedCount', favorites.length)}
+            aria-label={t('nav.savedCount', { count: favorites.length })}
           >
             <FaRegHeart className="text-lg" />
             <span className="hidden sm:inline">{t('nav.saved')}</span>

@@ -5,15 +5,17 @@ import { filterByArea } from '../../lib/api';
 import { getAreaImage } from '../../data/areas';
 import useFetch from '../../hooks/useFetch';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
-import useLanguage from '../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
+import useName from '../../i18n/useName';
 import MealGrid from '../../components/MealGrid';
 
 const CategoriesByArea = () => {
   const { area } = useParams();
-  const { t, name } = useLanguage();
+  const { t } = useTranslation();
+  const name = useName();
   const label = name(area);
   const image = getAreaImage(area);
-  useDocumentTitle(t('recipes.categoryTitle', label));
+  useDocumentTitle(t('recipes.categoryTitle', { category: label }));
   const { data, loading, error, retry } = useFetch(() => filterByArea(area), [area]);
   const meals = (data || []).map((meal) => ({ ...meal, strArea: area }));
 
@@ -39,10 +41,10 @@ const CategoriesByArea = () => {
             {t('area.eyebrow')}
           </p>
           <h1 className="mt-2 text-4xl font-semibold text-white sm:text-6xl">
-            {t('area.title', label)}
+            {t('area.title', { area: label })}
           </h1>
           {!loading && !error && (
-            <p className="mt-3 text-lg text-white/85">{t('area.count', meals.length)}</p>
+            <p className="mt-3 text-lg text-white/85">{t('area.count', { count: meals.length })}</p>
           )}
         </div>
       </section>
@@ -54,7 +56,7 @@ const CategoriesByArea = () => {
           error={error}
           onRetry={retry}
           skeletonCount={12}
-          emptyMessage={t('area.empty', label)}
+          emptyMessage={t('area.empty', { area: label })}
         />
       </div>
     </>

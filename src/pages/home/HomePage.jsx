@@ -7,10 +7,10 @@ import Newsletter from './partials/Newsletter';
 import IngredientPromo from './partials/IngredientPromo';
 import AllMeals from './partials/AllMeal';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
-import useLanguage from '../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 const HomePage = () => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   useDocumentTitle();
 
   return (

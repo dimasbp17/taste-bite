@@ -19,7 +19,8 @@ import {
 } from '../../lib/api';
 import useFetch from '../../hooks/useFetch';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
-import useLanguage from '../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
+import useName from '../../i18n/useName';
 import StatusMessage from '../../components/StatusMessage';
 import FavoriteButton from '../../components/FavoriteButton';
 import CardRecommendations from './partials/CardRecommendations';
@@ -48,7 +49,7 @@ const IngredientImage = ({ name }) => {
 };
 
 const IngredientList = ({ ingredients }) => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const [checked, setChecked] = useState(() => new Set());
 
   const toggle = (index) =>
@@ -67,7 +68,7 @@ const IngredientList = ({ ingredients }) => {
           className="text-sm text-ink-soft print:hidden"
           aria-live="polite"
         >
-          {t('detail.ready', checked.size, ingredients.length)}
+          {t('detail.ready', { done: checked.size, total: ingredients.length })}
         </p>
       </div>
       <p className="mt-1 text-sm text-ink-soft print:hidden">{t('detail.tapHint')}</p>
@@ -128,7 +129,8 @@ const DetailSkeleton = () => (
 
 const DetailRecipes = () => {
   const { id } = useParams();
-  const { t, name } = useLanguage();
+  const { t } = useTranslation();
+  const name = useName();
   const { data: meal, loading, error, retry } = useFetch(() => getMealById(id), [id]);
   useDocumentTitle(meal?.strMeal || t('detail.docTitle'));
 
@@ -329,7 +331,7 @@ const DetailRecipes = () => {
                     {index + 1}
                   </span>
                   <div className="pt-1.5">
-                    <p className="sr-only">{t('detail.step', index + 1)}</p>
+                    <p className="sr-only">{t('detail.step', { count: index + 1 })}</p>
                     <p
                       lang="en"
                       className="text-lg leading-relaxed text-ink"

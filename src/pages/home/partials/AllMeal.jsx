@@ -3,12 +3,12 @@ import { searchMeals } from '../../../lib/api';
 import useFetch from '../../../hooks/useFetch';
 import SectionHeader from '../../../components/SectionHeader';
 import MealGrid from '../../../components/MealGrid';
-import useLanguage from '../../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 const PAGE_SIZE = 8;
 
 const AllMeals = () => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const { data, loading, error, retry } = useFetch(() => searchMeals(''));
   const [visibleMeals, setVisibleMeals] = useState(PAGE_SIZE);
   const meals = data || [];

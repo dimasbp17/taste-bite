@@ -1,0 +1,290 @@
+{
+  "site": {
+    "defaultTitle": "Tastebite — Recipes from around the world"
+  },
+  "lang": {
+    "label": "Language"
+  },
+  "nav": {
+    "main": "Main",
+    "home": "Home",
+    "recipes": "Recipes",
+    "byIngredient": "By Ingredient",
+    "about": "About",
+    "search": "Search",
+    "searchRecipes": "Search recipes",
+    "saved": "Saved",
+    "savedCount": "Saved recipes ({{count}})",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "logo": "Tastebite home"
+  },
+  "layout": {
+    "skip": "Skip to content"
+  },
+  "footer": {
+    "tagline": "Simple, honest recipes from kitchens around the world — written so anyone can cook them at home.",
+    "explore": "Explore",
+    "popular": "Popular",
+    "allRecipes": "All recipes",
+    "byIngredient": "Cook by ingredient",
+    "saved": "Saved recipes",
+    "about": "About us",
+    "rights": "© {{year}} Tastebite. All rights reserved.",
+    "dataBy": "Recipe data by"
+  },
+  "search": {
+    "label": "Search a dish",
+    "placeholder": "Search a dish, e.g. lasagna",
+    "close": "Close search",
+    "popular": "Popular searches",
+    "noResults": "No recipes found for “{{term}}”. Try another dish or ingredient.",
+    "seeAll": "See all {{count}} results"
+  },
+  "status": {
+    "retry": "Try again"
+  },
+  "grid": {
+    "errorTitle": "We couldn't load these recipes",
+    "errorMessage": "Please check your connection and try again.",
+    "empty": "No recipes found."
+  },
+  "fav": {
+    "save": "Save recipe",
+    "saved": "Saved",
+    "saveNamed": "Save {{name}}",
+    "removeNamed": "Remove {{name}} from saved",
+    "removeTitle": "Remove from saved"
+  },
+  "hero": {
+    "eyebrow": "Recipes from around the world",
+    "title1": "Cook something",
+    "titleEm": "wonderful",
+    "title2": "tonight.",
+    "subtitle": "Clear, step-by-step recipes for every cook — from quick weeknight dinners to dishes worth celebrating.",
+    "searchLabel": "Search recipes",
+    "placeholder": "What would you like to cook?",
+    "submit": "Find recipes",
+    "popular": "Popular:",
+    "todaysPick": "Today's pick",
+    "viewRecipe": "View recipe",
+    "another": "Show another"
+  },
+  "categories": {
+    "eyebrow": "Browse",
+    "title": "What are you in the mood for?",
+    "scrollLeft": "Scroll categories left",
+    "scrollRight": "Scroll categories right"
+  },
+  "featured": {
+    "chickenEyebrow": "Weeknight favourites",
+    "chickenTitle": "Comforting chicken dishes",
+    "dessertEyebrow": "Something sweet",
+    "dessertTitle": "Desserts worth saving room for",
+    "viewAll": "All {{category}} recipes"
+  },
+  "promo": {
+    "eyebrow": "Cook with what you have",
+    "title": "Not sure what to make?",
+    "text": "Pick the ingredients already in your kitchen and we'll find recipes that use them — less waste, no extra shopping.",
+    "cta": "Find recipes by ingredient"
+  },
+  "areas": {
+    "eyebrow": "Travel by taste",
+    "title": "Explore world cuisines",
+    "description": "From Italian pasta to Thai curries — discover what home cooks love around the globe.",
+    "showAll": "Show all {{count}} cuisines",
+    "showFewer": "Show fewer cuisines"
+  },
+  "newsletter": {
+    "title": "Deliciousness to your inbox",
+    "text": "Hand-picked recipes and cooking tips, once a week. No spam, ever.",
+    "emailLabel": "Email address",
+    "placeholder": "you@example.com",
+    "submit": "Subscribe",
+    "soon": "Newsletter sign-up is coming soon — thanks for your interest!",
+    "terms": "By subscribing you agree to our terms and conditions."
+  },
+  "allMeals": {
+    "eyebrow": "Fresh ideas",
+    "title": "More recipes to try",
+    "browse": "Browse all recipes",
+    "loadMore": "Load more recipes"
+  },
+  "recipes": {
+    "eyebrow": "Recipe index",
+    "all": "All recipes",
+    "resultsFor": "Results for “{{q}}”",
+    "categoryTitle": "{{category}} recipes",
+    "count_one": "{{count}} recipe found",
+    "count_other": "{{count}} recipes found",
+    "searchLabel": "Search recipes",
+    "placeholder": "Search by dish name",
+    "search": "Search",
+    "filterLabel": "Filter by category",
+    "allChip": "All",
+    "clearSearch": "Clear search",
+    "empty": "No recipes match your search",
+    "showMore": "Show more recipes"
+  },
+  "detail": {
+    "breadcrumb": "Breadcrumb",
+    "ingredients": "Ingredients",
+    "ready": "{{done}} of {{total}} ready",
+    "tapHint": "Tap an item to tick it off as you go.",
+    "steps": "Steps",
+    "startCooking": "Start cooking",
+    "watchVideo": "Watch video",
+    "print": "Print",
+    "instructions": "Instructions",
+    "stepMode": "Step-by-step mode",
+    "step": "Step {{count}}",
+    "source": "View original recipe source",
+    "englishNote": "",
+    "loadError": "We couldn't load this recipe",
+    "loadErrorMsg": "Please check your connection and try again.",
+    "notFound": "Recipe not found",
+    "notFoundMsg": "It may have been removed. Try browsing other recipes.",
+    "browse": "Browse recipes",
+    "docTitle": "Recipe"
+  },
+  "video": {
+    "title": "Watch how it's made",
+    "open": "Open on YouTube",
+    "play": "Play video",
+    "playLabel": "Play video: how to make {{name}}",
+    "frameTitle": "Video: how to make {{name}}"
+  },
+  "rec": {
+    "eyebrow": "Keep cooking",
+    "title": "You might also like",
+    "description": "More recipes made with {{ingredient}}."
+  },
+  "category": {
+    "back": "All recipes",
+    "eyebrow": "Category",
+    "count_one": "{{count}} recipe",
+    "count_other": "{{count}} recipes",
+    "readMore": "Read more",
+    "showLess": "Show less",
+    "empty": "No {{category}} recipes yet"
+  },
+  "area": {
+    "back": "All cuisines",
+    "eyebrow": "World cuisine",
+    "title": "{{area}} kitchen",
+    "count_one": "{{count}} recipe to explore",
+    "count_other": "{{count}} recipes to explore",
+    "empty": "No {{area}} recipes yet"
+  },
+  "about": {
+    "docTitle": "About us",
+    "eyebrow": "About Tastebite",
+    "title": "We're a group of foodies who love cooking and sharing.",
+    "imageAlt": "Fresh ingredients on a kitchen table",
+    "value1Title": "Easy to follow",
+    "value1Text": "Every recipe is broken into clear, numbered steps with a tick-off ingredient list.",
+    "value2Title": "From around the world",
+    "value2Text": "Explore dishes from 28 cuisines — from Japanese teriyaki to Moroccan tagine.",
+    "value3Title": "Made for home cooks",
+    "value3Text": "No fancy equipment needed. Just good food you can make in your own kitchen.",
+    "storyTitle": "Simple, easy recipes for all",
+    "story1": "We are the right place for anyone who loves cooking and wants to explore recipes from around the world. Our mission is to bring you the best dishes you can easily make at home — from mouth-watering appetizers to sweet desserts.",
+    "story2": "With Tastebite, cooking becomes more fun and a lot less complicated. Start your culinary adventure with us and find new inspiration in every recipe.",
+    "cta": "Start exploring recipes",
+    "blueberryAlt": "Blueberry dessert"
+  },
+  "notFound": {
+    "docTitle": "Page not found",
+    "title": "This page isn't on the menu",
+    "text": "The page you're looking for doesn't exist or has moved.",
+    "home": "Back to home",
+    "browse": "Browse recipes"
+  },
+  "saved": {
+    "docTitle": "Saved recipes",
+    "eyebrow": "Your collection",
+    "title": "Saved recipes",
+    "count_one": "{{count}} recipe saved on this device.",
+    "count_other": "{{count}} recipes saved on this device.",
+    "hint": "Recipes you save are kept on this device.",
+    "removeAll": "Remove all",
+    "confirm": "Remove all saved recipes? This cannot be undone.",
+    "emptyTitle": "No saved recipes yet",
+    "emptyText": "Tap the heart on any recipe to keep it here, so you can find it again quickly.",
+    "browse": "Browse recipes",
+    "byIngredient": "Cook by ingredient"
+  },
+  "ing": {
+    "docTitle": "Cook with what you have",
+    "eyebrow": "Cook with what you have",
+    "title": "What's in your kitchen?",
+    "subtitle": "Tell us the ingredients you already have, and we'll show you recipes you can make with them.",
+    "addLabel": "Add an ingredient",
+    "placeholder": "e.g. chicken, eggs, rice",
+    "maxPlaceholder": "You can pick up to {{count}} ingredients",
+    "noMatch": "No ingredient called “{{q}}”. Try a simpler word, like “cheese”.",
+    "yours": "Your ingredients ({{count}}/{{max}})",
+    "clearAll": "Clear all",
+    "remove": "Remove {{name}}",
+    "quickAdd": "Quick add",
+    "how1Title": "Add what you have",
+    "how1Text": "Type or tap the ingredients in your kitchen.",
+    "how2Title": "We find the recipes",
+    "how2Text": "Dishes that use the most of them appear first.",
+    "how3Title": "Start cooking",
+    "how3Text": "Open a recipe for the full list and steps.",
+    "loadError": "We couldn't load recipes",
+    "loadErrorMsg": "Please check your connection and try again.",
+    "finding": "Finding recipes…",
+    "found_one": "{{count}} recipe found",
+    "found_other": "{{count}} recipes found",
+    "sortedHint": "Recipes that use the most of your ingredients are shown first.",
+    "onlyAll": "Only recipes that use all of them",
+    "noneAll": "No recipes use all of these yet",
+    "noneAllMsg": "Try removing an ingredient, or turn off “Only recipes that use all of them”.",
+    "none": "No recipes found",
+    "noneMsg": "Try a different or more common ingredient.",
+    "usesOne": "Uses {{name}}",
+    "usesAll": "Uses all {{count}}",
+    "usesSome": "Uses {{count}} of {{total}}",
+    "usesTitle": "Uses: {{list}}"
+  },
+  "cook": {
+    "docTitle": "Cooking: {{name}}",
+    "docFallback": "Cooking mode",
+    "loading": "Getting your recipe ready…",
+    "exit": "Exit",
+    "textSize": {
+      "normal": "Normal",
+      "large": "Large",
+      "xlarge": "Extra large"
+    },
+    "textSizeLabel": "Text size: {{size}}. Change text size",
+    "progress": "Recipe progress",
+    "timesUp": "Time's up!",
+    "ok": "OK",
+    "of": "of {{duration}}",
+    "stopTimer": "Stop timer",
+    "beforeStart": "Before you start",
+    "gather": "Gather your ingredients",
+    "summary": "{{ingredients}} ingredients · {{steps}} steps",
+    "screenOn": "Your screen will stay on",
+    "stepOf": "Step {{step}} of {{total}}",
+    "startTimer": "Start {{duration}} timer",
+    "inThisStep": "In this step",
+    "done": "Enjoy your meal!",
+    "doneText": "You've finished all {{steps}} steps of {{name}}.",
+    "backToRecipe": "Back to recipe",
+    "another": "Find another recipe",
+    "stepNav": "Step navigation",
+    "back": "Back",
+    "startStep1": "Start step 1",
+    "finish": "Finish",
+    "next": "Next: step {{count}}",
+    "doneButton": "Done",
+    "minutes": "{{count}} min",
+    "hours": "{{count}} h",
+    "hoursMinutes": "{{hours}} h {{minutes}} min"
+  }
+}

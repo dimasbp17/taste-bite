@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import useLanguage from '../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 const Layout = () => {
   const { pathname, hash } = useLocation();
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const target = hash && document.getElementById(hash.slice(1));

@@ -1,7 +1,7 @@
 import React from 'react';
 import MealCard, { MealCardSkeleton } from './MealCard';
 import StatusMessage from './StatusMessage';
-import useLanguage from '../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 const columnClasses = {
   3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
@@ -17,7 +17,7 @@ const MealGrid = ({
   skeletonCount = 8,
   emptyMessage,
 }) => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   if (error) {
     return (

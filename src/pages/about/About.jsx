@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiBookOpen, FiGlobe, FiHeart } from 'react-icons/fi';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
-import useLanguage from '../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 const values = [
   { icon: FiBookOpen, title: 'about.value1Title', text: 'about.value1Text' },
@@ -11,7 +11,7 @@ const values = [
 ];
 
 const About = () => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   useDocumentTitle(t('about.docTitle'));
 
   return (

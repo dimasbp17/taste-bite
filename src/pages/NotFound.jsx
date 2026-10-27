@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import useDocumentTitle from '../hooks/useDocumentTitle';
-import useLanguage from '../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 const NotFound = () => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   useDocumentTitle(t('notFound.docTitle'));
 
   return (

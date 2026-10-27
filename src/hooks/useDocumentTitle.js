@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import useLanguage from '../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 const SITE_NAME = 'Tastebite';
 
 /** Sets the browser tab title, e.g. "Pad See Ew · Tastebite". */
 const useDocumentTitle = (title) => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const defaultTitle = t('site.defaultTitle');
 
   useEffect(() => {

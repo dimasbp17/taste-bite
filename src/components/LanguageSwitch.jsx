@@ -1,5 +1,6 @@
 import React from 'react';
-import useLanguage, { LANGUAGES } from '../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
+import { LANGUAGES } from '../i18n';
 
 const labels = {
   id: { short: 'ID', full: 'Bahasa Indonesia' },
@@ -7,7 +8,7 @@ const labels = {
 };
 
 const LanguageSwitch = ({ className = '' }) => {
-  const { lang, setLanguage, t } = useLanguage();
+  const { t, i18n } = useTranslation();
 
   return (
     <div
@@ -15,22 +16,25 @@ const LanguageSwitch = ({ className = '' }) => {
       aria-label={t('lang.label')}
       className={`inline-flex rounded-full bg-white p-1 ring-1 ring-line ${className}`}
     >
-      {LANGUAGES.map((code) => (
-        <button
-          key={code}
-          type="button"
-          lang={code}
-          onClick={() => setLanguage(code)}
-          aria-pressed={lang === code}
-          aria-label={labels[code].full}
-          title={labels[code].full}
-          className={`min-h-[36px] min-w-[44px] rounded-full px-3 text-sm font-semibold transition-colors ${
-            lang === code ? 'bg-ink text-white' : 'text-ink-soft hover:text-ink'
-          }`}
-        >
-          {labels[code].short}
-        </button>
-      ))}
+      {LANGUAGES.map((code) => {
+        const active = i18n.resolvedLanguage === code;
+        return (
+          <button
+            key={code}
+            type="button"
+            lang={code}
+            onClick={() => i18n.changeLanguage(code)}
+            aria-pressed={active}
+            aria-label={labels[code].full}
+            title={labels[code].full}
+            className={`min-h-[36px] min-w-[44px] rounded-full px-3 text-sm font-semibold transition-colors ${
+              active ? 'bg-ink text-white' : 'text-ink-soft hover:text-ink'
+            }`}
+          >
+            {labels[code].short}
+          </button>
+        );
+      })}
     </div>
   );
 };

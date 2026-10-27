@@ -3,10 +3,12 @@ import { filterByCategory } from '../../../lib/api';
 import useFetch from '../../../hooks/useFetch';
 import SectionHeader from '../../../components/SectionHeader';
 import MealGrid from '../../../components/MealGrid';
-import useLanguage from '../../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
+import useName from '../../../i18n/useName';
 
 const FeaturedCollection = ({ eyebrow, title, category, offset = 0 }) => {
-  const { t, name } = useLanguage();
+  const { t } = useTranslation();
+  const name = useName();
   const { data, loading, error, retry } = useFetch(
     () => filterByCategory(category),
     [category]
@@ -20,7 +22,10 @@ const FeaturedCollection = ({ eyebrow, title, category, offset = 0 }) => {
       <SectionHeader
         eyebrow={eyebrow}
         title={title}
-        link={{ to: `/meal-category/${category}`, label: t('featured.viewAll', name(category)) }}
+        link={{
+          to: `/meal-category/${category}`,
+          label: t('featured.viewAll', { category: name(category).toLowerCase() }),
+        }}
       />
       <MealGrid
         meals={meals}

@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import areas from '../../../data/areas';
 import SectionHeader from '../../../components/SectionHeader';
-import useLanguage from '../../../i18n/useLanguage';
+import { useTranslation } from 'react-i18next';
+import useName from '../../../i18n/useName';
 
 const INITIAL_COUNT = 12;
 
 const AreaCategories = () => {
-  const { t, name } = useLanguage();
+  const { t } = useTranslation();
+  const name = useName();
   const [showAll, setShowAll] = useState(false);
   const visibleAreas = showAll ? areas : areas.slice(0, INITIAL_COUNT);
 
@@ -53,7 +55,7 @@ const AreaCategories = () => {
               className="btn-outline"
               aria-expanded={showAll}
             >
-              {showAll ? t('areas.showFewer') : t('areas.showAll', areas.length)}
+              {showAll ? t('areas.showFewer') : t('areas.showAll', { count: areas.length })}
             </button>
           </div>
         )}
