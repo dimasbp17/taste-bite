@@ -19,6 +19,7 @@ import {
 } from '../../lib/api';
 import useFetch from '../../hooks/useFetch';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
+import useLanguage from '../../i18n/useLanguage';
 import StatusMessage from '../../components/StatusMessage';
 import FavoriteButton from '../../components/FavoriteButton';
 import CardRecommendations from './partials/CardRecommendations';
@@ -47,6 +48,7 @@ const IngredientImage = ({ name }) => {
 };
 
 const IngredientList = ({ ingredients }) => {
+  const { t } = useLanguage();
   const [checked, setChecked] = useState(() => new Set());
 
   const toggle = (index) =>
@@ -60,19 +62,20 @@ const IngredientList = ({ ingredients }) => {
   return (
     <div className="rounded-3xl bg-white p-6 shadow-card ring-1 ring-line sm:p-8">
       <div className="flex items-baseline justify-between gap-4">
-        <h2 className="text-2xl font-semibold">Ingredients</h2>
+        <h2 className="text-2xl font-semibold">{t('detail.ingredients')}</h2>
         <p
           className="text-sm text-ink-soft print:hidden"
           aria-live="polite"
         >
-          {checked.size} of {ingredients.length} ready
+          {t('detail.ready', checked.size, ingredients.length)}
         </p>
       </div>
-      <p className="mt-1 text-sm text-ink-soft print:hidden">
-        Tap an item to tick it off as you go.
-      </p>
+      <p className="mt-1 text-sm text-ink-soft print:hidden">{t('detail.tapHint')}</p>
 
-      <ul className="mt-5 divide-y divide-line">
+      <ul
+        lang="en"
+        className="mt-5 divide-y divide-line"
+      >
         {ingredients.map((item, index) => {
           const done = checked.has(index);
           return (
@@ -125,8 +128,9 @@ const DetailSkeleton = () => (
 
 const DetailRecipes = () => {
   const { id } = useParams();
+  const { t, name } = useLanguage();
   const { data: meal, loading, error, retry } = useFetch(() => getMealById(id), [id]);
-  useDocumentTitle(meal?.strMeal || 'Recipe');
+  useDocumentTitle(meal?.strMeal || t('detail.docTitle'));
 
   if (loading) return <DetailSkeleton />;
 
@@ -134,14 +138,10 @@ const DetailRecipes = () => {
     return (
       <div className="container-page py-16">
         <StatusMessage
-          title={error ? "We couldn't load this recipe" : 'Recipe not found'}
-          message={
-            error
-              ? 'Please check your connection and try again.'
-              : 'It may have been removed. Try browsing other recipes.'
-          }
+          title={error ? t('detail.loadError') : t('detail.notFound')}
+          message={error ? t('detail.loadErrorMsg') : t('detail.notFoundMsg')}
           onRetry={error ? retry : undefined}
-          action={{ to: '/recipes', label: 'Browse recipes' }}
+          action={{ to: '/recipes', label: t('detail.browse') }}
         />
       </div>
     );
@@ -156,7 +156,7 @@ const DetailRecipes = () => {
     <article className="pb-8">
       <div className="container-page py-8 lg:py-12">
         <nav
-          aria-label="Breadcrumb"
+          aria-label={t('detail.breadcrumb')}
           className="print:hidden"
         >
           <ol className="flex flex-wrap items-center gap-1 text-sm text-ink-soft">
@@ -165,7 +165,7 @@ const DetailRecipes = () => {
                 to="/"
                 className="hover:text-brand"
               >
-                Home
+                {t('nav.home')}
               </Link>
               <FiChevronRight aria-hidden />
             </li>
@@ -174,7 +174,7 @@ const DetailRecipes = () => {
                 to={`/meal-category/${meal.strCategory}`}
                 className="hover:text-brand"
               >
-                {meal.strCategory}
+                {name(meal.strCategory)}
               </Link>
               <FiChevronRight aria-hidden />
             </li>
@@ -204,7 +204,7 @@ const DetailRecipes = () => {
                   className="text-brand"
                   aria-hidden
                 />
-                {meal.strCategory}
+                {name(meal.strCategory)}
               </Link>
               {meal.strArea && (
                 <Link
@@ -215,12 +215,15 @@ const DetailRecipes = () => {
                     className="text-brand"
                     aria-hidden
                   />
-                  {meal.strArea}
+                  {name(meal.strArea)}
                 </Link>
               )}
             </div>
 
-            <h1 className="mt-5 text-4xl font-semibold leading-tight sm:text-5xl">
+            <h1
+              lang="en"
+              className="mt-5 text-4xl font-semibold leading-tight sm:text-5xl"
+            >
               {meal.strMeal}
             </h1>
 
@@ -232,13 +235,13 @@ const DetailRecipes = () => {
 
             <dl className="mt-8 grid max-w-sm grid-cols-2 gap-4">
               <div className="rounded-2xl bg-white p-4 ring-1 ring-line">
-                <dt className="text-sm text-ink-soft">Ingredients</dt>
+                <dt className="text-sm text-ink-soft">{t('detail.ingredients')}</dt>
                 <dd className="mt-1 font-serif text-3xl font-semibold">
                   {ingredients.length}
                 </dd>
               </div>
               <div className="rounded-2xl bg-white p-4 ring-1 ring-line">
-                <dt className="text-sm text-ink-soft">Steps</dt>
+                <dt className="text-sm text-ink-soft">{t('detail.steps')}</dt>
                 <dd className="mt-1 font-serif text-3xl font-semibold">{steps.length}</dd>
               </div>
             </dl>
@@ -248,7 +251,7 @@ const DetailRecipes = () => {
                 to={`/cook/${meal.idMeal}`}
                 className="btn-primary"
               >
-                <FiList aria-hidden /> Start cooking
+                <FiList aria-hidden /> {t('detail.startCooking')}
               </Link>
               <FavoriteButton
                 meal={meal}
@@ -263,7 +266,7 @@ const DetailRecipes = () => {
                     className="text-red-600"
                     aria-hidden
                   />
-                  Watch video
+                  {t('detail.watchVideo')}
                 </a>
               )}
               <button
@@ -271,7 +274,7 @@ const DetailRecipes = () => {
                 onClick={() => window.print()}
                 className="btn-outline"
               >
-                <FiPrinter aria-hidden /> Print
+                <FiPrinter aria-hidden /> {t('detail.print')}
               </button>
             </div>
           </div>
@@ -302,14 +305,17 @@ const DetailRecipes = () => {
             className="scroll-mt-28"
           >
             <div className="flex flex-wrap items-center justify-between gap-4">
-              <h2 className="text-3xl font-semibold">Instructions</h2>
+              <h2 className="text-3xl font-semibold">{t('detail.instructions')}</h2>
               <Link
                 to={`/cook/${meal.idMeal}`}
                 className="btn-outline print:hidden"
               >
-                Step-by-step mode <FiChevronRight aria-hidden />
+                {t('detail.stepMode')} <FiChevronRight aria-hidden />
               </Link>
             </div>
+            {t('detail.englishNote') && (
+              <p className="mt-3 text-ink-soft print:hidden">{t('detail.englishNote')}</p>
+            )}
             <ol className="mt-8 space-y-8">
               {steps.map((step, index) => (
                 <li
@@ -323,8 +329,13 @@ const DetailRecipes = () => {
                     {index + 1}
                   </span>
                   <div className="pt-1.5">
-                    <p className="sr-only">Step {index + 1}</p>
-                    <p className="text-lg leading-relaxed text-ink">{step}</p>
+                    <p className="sr-only">{t('detail.step', index + 1)}</p>
+                    <p
+                      lang="en"
+                      className="text-lg leading-relaxed text-ink"
+                    >
+                      {step}
+                    </p>
                   </div>
                 </li>
               ))}
@@ -337,7 +348,7 @@ const DetailRecipes = () => {
                 rel="noreferrer"
                 className="mt-10 inline-flex items-center gap-2 font-medium text-brand underline-offset-4 hover:underline print:hidden"
               >
-                View original recipe source <FiExternalLink aria-hidden />
+                {t('detail.source')} <FiExternalLink aria-hidden />
               </a>
             )}
           </section>

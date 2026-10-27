@@ -3,10 +3,12 @@ import { searchMeals } from '../../../lib/api';
 import useFetch from '../../../hooks/useFetch';
 import SectionHeader from '../../../components/SectionHeader';
 import MealGrid from '../../../components/MealGrid';
+import useLanguage from '../../../i18n/useLanguage';
 
 const PAGE_SIZE = 8;
 
 const AllMeals = () => {
+  const { t } = useLanguage();
   const { data, loading, error, retry } = useFetch(() => searchMeals(''));
   const [visibleMeals, setVisibleMeals] = useState(PAGE_SIZE);
   const meals = data || [];
@@ -14,9 +16,9 @@ const AllMeals = () => {
   return (
     <section className="container-page py-16 lg:py-20">
       <SectionHeader
-        eyebrow="Fresh ideas"
-        title="More recipes to try"
-        link={{ to: '/recipes', label: 'Browse all recipes' }}
+        eyebrow={t('allMeals.eyebrow')}
+        title={t('allMeals.title')}
+        link={{ to: '/recipes', label: t('allMeals.browse') }}
       />
       <MealGrid
         meals={meals.slice(0, visibleMeals)}
@@ -31,7 +33,7 @@ const AllMeals = () => {
             onClick={() => setVisibleMeals((count) => count + PAGE_SIZE)}
             className="btn-outline px-8"
           >
-            Load more recipes
+            {t('allMeals.loadMore')}
           </button>
         </div>
       )}

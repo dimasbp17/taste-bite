@@ -14,24 +14,21 @@ import { getIngredientImage, getIngredients, getMealById, getSteps } from '../..
 import useFetch from '../../hooks/useFetch';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
 import useWakeLock from '../../hooks/useWakeLock';
+import useLanguage from '../../i18n/useLanguage';
 import FavoriteButton from '../../components/FavoriteButton';
 import StatusMessage from '../../components/StatusMessage';
 import useTimer, { formatTime } from './useTimer';
-import { findDurations, findStepIngredients, formatDuration } from './cookHelpers';
+import { findDurations, findStepIngredients } from './cookHelpers';
 
-const TEXT_SIZES = [
-  { label: 'Normal', className: 'text-2xl sm:text-3xl' },
-  { label: 'Large', className: 'text-3xl sm:text-4xl' },
-  { label: 'Extra large', className: 'text-4xl sm:text-5xl' },
-];
+const TEXT_SIZES = ['text-2xl sm:text-3xl', 'text-3xl sm:text-4xl', 'text-4xl sm:text-5xl'];
 const TEXT_SIZE_KEY = 'tastebite:cook-text-size';
 
 const readTextSize = () => {
   try {
     const value = Number(localStorage.getItem(TEXT_SIZE_KEY));
-    return TEXT_SIZES[value] ? value : 1;
+    return TEXT_SIZES[value] ? value : 0;
   } catch {
-    return 1;
+    return 0;
   }
 };
 
@@ -42,7 +39,10 @@ const IngredientChip = ({ item }) => (
       alt=""
       className="size-12 shrink-0 object-contain"
     />
-    <span className="text-lg">
+    <span
+      lang="en"
+      className="text-lg"
+    >
       <span className="font-semibold text-ink">{item.name}</span>
       {item.measure && <span className="text-ink-soft"> — {item.measure}</span>}
     </span>
@@ -52,13 +52,14 @@ const IngredientChip = ({ item }) => (
 const CookingMode = () => {
   const { id } = useParams();
   const [params, setParams] = useSearchParams();
+  const { t } = useLanguage();
   const { data: meal, loading, error, retry } = useFetch(() => getMealById(id), [id]);
   const [textSize, setTextSize] = useState(readTextSize);
   const wakeLock = useWakeLock();
   const timer = useTimer();
   const touchStart = useRef(null);
 
-  useDocumentTitle(meal ? `Cooking: ${meal.strMeal}` : 'Cooking mode');
+  useDocumentTitle(meal ? t('cook.docTitle', meal.strMeal) : t('cook.docFallback'));
 
   const ingredients = meal ? getIngredients(meal) : [];
   const steps = meal ? getSteps(meal.strInstructions) : [];
@@ -107,7 +108,7 @@ const CookingMode = () => {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="animate-pulse text-lg text-ink-soft">Getting your recipe ready…</p>
+        <p className="animate-pulse text-lg text-ink-soft">{t('cook.loading')}</p>
       </div>
     );
   }
@@ -116,9 +117,9 @@ const CookingMode = () => {
     return (
       <div className="container-page py-16">
         <StatusMessage
-          title={error ? "We couldn't load this recipe" : 'Recipe not found'}
+          title={error ? t('detail.loadError') : t('detail.notFound')}
           onRetry={error ? retry : undefined}
-          action={{ to: '/recipes', label: 'Browse recipes' }}
+          action={{ to: '/recipes', label: t('detail.browse') }}
         />
       </div>
     );
@@ -128,6 +129,11 @@ const CookingMode = () => {
   const stepIngredients = step ? findStepIngredients(step, ingredients) : [];
   const durations = step ? findDurations(step) : [];
   const progress = (screen / lastScreen) * 100;
+  const textSizeLabel = t('cook.textSizes')[textSize];
+
+  let nextLabel = t('cook.next', screen + 1);
+  if (screen === 0) nextLabel = t('cook.startStep1');
+  else if (screen === steps.length) nextLabel = t('cook.finish');
 
   return (
     <div className="flex min-h-screen flex-col bg-cream">
@@ -141,28 +147,31 @@ const CookingMode = () => {
               className="text-xl"
               aria-hidden
             />
-            <span className="hidden sm:inline">Exit</span>
+            <span className="hidden sm:inline">{t('cook.exit')}</span>
           </Link>
-          <p className="min-w-0 flex-1 truncate text-center font-semibold text-ink">
+          <p
+            lang="en"
+            className="min-w-0 flex-1 truncate text-center font-semibold text-ink"
+          >
             {meal.strMeal}
           </p>
           <button
             type="button"
             onClick={changeTextSize}
             className="btn-ghost shrink-0 px-3"
-            aria-label={`Text size: ${TEXT_SIZES[textSize].label}. Change text size`}
+            aria-label={t('cook.textSizeLabel', textSizeLabel)}
           >
             <FiType
               className="text-xl"
               aria-hidden
             />
-            <span className="hidden sm:inline">{TEXT_SIZES[textSize].label}</span>
+            <span className="hidden sm:inline">{textSizeLabel}</span>
           </button>
         </div>
         <div
           className="h-1.5 bg-line"
           role="progressbar"
-          aria-label="Recipe progress"
+          aria-label={t('cook.progress')}
           aria-valuenow={Math.round(progress)}
           aria-valuemin={0}
           aria-valuemax={100}
@@ -187,14 +196,14 @@ const CookingMode = () => {
                 className="shrink-0 text-xl"
                 aria-hidden
               />
-              <p className="flex-1 text-lg font-semibold">Time&apos;s up!</p>
+              <p className="flex-1 text-lg font-semibold">{t('cook.timesUp')}</p>
               <button
                 key="dismiss"
                 type="button"
                 onClick={timer.dismiss}
                 className="btn bg-white px-6 font-semibold text-brand hover:bg-brand-50"
               >
-                OK
+                {t('cook.ok')}
               </button>
             </>
           ) : (
@@ -208,7 +217,7 @@ const CookingMode = () => {
                   {formatTime(timer.remaining)}
                 </span>
                 <span className="ml-2 text-white/70">
-                  of {formatDuration(timer.timer.minutes)}
+                  {t('cook.of', t('cook.duration', timer.timer.minutes))}
                 </span>
               </p>
               <button
@@ -217,7 +226,7 @@ const CookingMode = () => {
                 onClick={timer.cancel}
                 className="btn border border-white/30 text-white hover:bg-white/10"
               >
-                Stop timer
+                {t('cook.stopTimer')}
               </button>
             </>
           )}
@@ -232,15 +241,13 @@ const CookingMode = () => {
       >
         {screen === 0 && (
           <section>
-            <p className="eyebrow">Before you start</p>
-            <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">
-              Gather your ingredients
-            </h1>
+            <p className="eyebrow">{t('cook.beforeStart')}</p>
+            <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">{t('cook.gather')}</h1>
             <p className="mt-3 text-lg text-ink-soft">
-              {ingredients.length} ingredients · {steps.length} steps
+              {t('cook.summary', ingredients.length, steps.length)}
               {wakeLock.active && (
                 <span className="ml-2 inline-flex items-center gap-1.5 text-sage">
-                  <FiSun aria-hidden /> Your screen will stay on
+                  <FiSun aria-hidden /> {t('cook.screenOn')}
                 </span>
               )}
             </p>
@@ -257,11 +264,10 @@ const CookingMode = () => {
 
         {step && (
           <section>
-            <p className="eyebrow">
-              Step {screen} of {steps.length}
-            </p>
+            <p className="eyebrow">{t('cook.stepOf', screen, steps.length)}</p>
             <p
-              className={`mt-5 font-medium leading-snug text-ink ${TEXT_SIZES[textSize].className}`}
+              lang="en"
+              className={`mt-5 font-medium leading-snug text-ink ${TEXT_SIZES[textSize]}`}
             >
               {step}
             </p>
@@ -275,7 +281,7 @@ const CookingMode = () => {
                     onClick={() => timer.start(minutes)}
                     className="btn border-2 border-brand bg-white px-6 text-lg text-brand hover:bg-brand-50"
                   >
-                    <FiClock aria-hidden /> Start {formatDuration(minutes)} timer
+                    <FiClock aria-hidden /> {t('cook.startTimer', t('cook.duration', minutes))}
                   </button>
                 ))}
               </div>
@@ -283,7 +289,7 @@ const CookingMode = () => {
 
             {stepIngredients.length > 0 && (
               <div className="mt-10 border-t border-line pt-6">
-                <p className="font-medium text-ink-soft">In this step</p>
+                <p className="font-medium text-ink-soft">{t('cook.inThisStep')}</p>
                 <ul className="mt-3 grid gap-3 sm:grid-cols-2">
                   {stepIngredients.map((item) => (
                     <IngredientChip
@@ -302,9 +308,9 @@ const CookingMode = () => {
             <span className="mx-auto flex size-20 items-center justify-center rounded-full bg-sage text-4xl text-white">
               <FiCheck aria-hidden />
             </span>
-            <h1 className="mt-6 text-4xl font-semibold sm:text-5xl">Enjoy your meal!</h1>
+            <h1 className="mt-6 text-4xl font-semibold sm:text-5xl">{t('cook.done')}</h1>
             <p className="mt-3 text-lg text-ink-soft">
-              You&apos;ve finished all {steps.length} steps of {meal.strMeal}.
+              {t('cook.doneText', steps.length, meal.strMeal)}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <FavoriteButton
@@ -315,13 +321,13 @@ const CookingMode = () => {
                 to={`/detail-recipes/${meal.idMeal}`}
                 className="btn-outline"
               >
-                Back to recipe
+                {t('cook.backToRecipe')}
               </Link>
               <Link
                 to="/recipes"
                 className="btn-primary"
               >
-                Find another recipe
+                {t('cook.another')}
               </Link>
             </div>
           </section>
@@ -329,7 +335,7 @@ const CookingMode = () => {
       </main>
 
       <nav
-        aria-label="Step navigation"
+        aria-label={t('cook.stepNav')}
         className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-white/95 backdrop-blur"
       >
         <div className="mx-auto flex max-w-4xl gap-3 px-4 py-4">
@@ -339,7 +345,7 @@ const CookingMode = () => {
             disabled={screen === 0}
             className="btn-outline min-h-[56px] px-6 text-lg"
           >
-            <FiArrowLeft aria-hidden /> Back
+            <FiArrowLeft aria-hidden /> {t('cook.back')}
           </button>
           {screen < lastScreen ? (
             <button
@@ -347,11 +353,7 @@ const CookingMode = () => {
               onClick={() => goTo(screen + 1)}
               className="btn-primary min-h-[56px] flex-1 text-lg"
             >
-              {screen === 0
-                ? 'Start step 1'
-                : screen === steps.length
-                  ? 'Finish'
-                  : `Next: step ${screen + 1}`}
+              {nextLabel}
               <FiArrowRight aria-hidden />
             </button>
           ) : (
@@ -359,7 +361,7 @@ const CookingMode = () => {
               to={`/detail-recipes/${meal.idMeal}`}
               className="btn-primary min-h-[56px] flex-1 text-lg"
             >
-              Done
+              {t('cook.doneButton')}
             </Link>
           )}
         </div>

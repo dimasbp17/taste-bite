@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import useLanguage from '../i18n/useLanguage';
 
 const Layout = () => {
   const { pathname, hash } = useLocation();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const target = hash && document.getElementById(hash.slice(1));
@@ -18,7 +20,7 @@ const Layout = () => {
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-white"
       >
-        Skip to content
+        {t('layout.skip')}
       </a>
       <Navbar />
       <main

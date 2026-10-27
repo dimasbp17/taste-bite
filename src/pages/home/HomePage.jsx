@@ -7,8 +7,10 @@ import Newsletter from './partials/Newsletter';
 import IngredientPromo from './partials/IngredientPromo';
 import AllMeals from './partials/AllMeal';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
+import useLanguage from '../../i18n/useLanguage';
 
 const HomePage = () => {
+  const { t } = useLanguage();
   useDocumentTitle();
 
   return (
@@ -16,15 +18,15 @@ const HomePage = () => {
       <Hero />
       <Categories />
       <FeaturedCollection
-        eyebrow="Weeknight favourites"
-        title="Comforting chicken dishes"
+        eyebrow={t('featured.chickenEyebrow')}
+        title={t('featured.chickenTitle')}
         category="Chicken"
       />
       <IngredientPromo />
       <AreaCategories />
       <FeaturedCollection
-        eyebrow="Something sweet"
-        title="Desserts worth saving room for"
+        eyebrow={t('featured.dessertEyebrow')}
+        title={t('featured.dessertTitle')}
         category="Dessert"
         offset={3}
       />

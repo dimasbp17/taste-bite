@@ -1,29 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import useLanguage from '../i18n/useLanguage';
 
-const columns = [
-  {
-    title: 'Explore',
-    links: [
-      { to: '/', label: 'Home' },
-      { to: '/recipes', label: 'All recipes' },
-      { to: '/cook-with-ingredients', label: 'Cook by ingredient' },
-      { to: '/saved', label: 'Saved recipes' },
-      { to: '/about', label: 'About us' },
-    ],
-  },
-  {
-    title: 'Popular',
-    links: [
-      { to: '/meal-category/Chicken', label: 'Chicken' },
-      { to: '/meal-category/Vegetarian', label: 'Vegetarian' },
-      { to: '/meal-category/Seafood', label: 'Seafood' },
-      { to: '/meal-category/Dessert', label: 'Dessert' },
-    ],
-  },
+const exploreLinks = [
+  { to: '/', label: 'nav.home' },
+  { to: '/recipes', label: 'footer.allRecipes' },
+  { to: '/cook-with-ingredients', label: 'footer.byIngredient' },
+  { to: '/saved', label: 'footer.saved' },
+  { to: '/about', label: 'footer.about' },
 ];
 
+const popularCategories = ['Chicken', 'Vegetarian', 'Seafood', 'Dessert'];
+
+const linkClass = 'transition-colors hover:text-white';
+
 const Footer = () => {
+  const { t, name } = useLanguage();
+
   return (
     <footer className="mt-24 bg-ink text-white/70 print:hidden">
       <div className="container-page grid gap-12 py-16 lg:grid-cols-12">
@@ -33,40 +26,52 @@ const Footer = () => {
             alt="Tastebite"
             className="h-12 w-auto invert"
           />
-          <p className="mt-4 max-w-sm">
-            Simple, honest recipes from kitchens around the world — written so
-            anyone can cook them at home.
-          </p>
+          <p className="mt-4 max-w-sm">{t('footer.tagline')}</p>
         </div>
 
         <div className="grid grid-cols-2 gap-8 lg:col-span-7">
-          {columns.map((column) => (
-            <div key={column.title}>
-              <h2 className="font-sans text-sm font-semibold uppercase tracking-wider text-white">
-                {column.title}
-              </h2>
-              <ul className="mt-4 space-y-3">
-                {column.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      to={link.to}
-                      className="transition-colors hover:text-white"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div>
+            <h2 className="font-sans text-sm font-semibold uppercase tracking-wider text-white">
+              {t('footer.explore')}
+            </h2>
+            <ul className="mt-4 space-y-3">
+              {exploreLinks.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className={linkClass}
+                  >
+                    {t(link.label)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h2 className="font-sans text-sm font-semibold uppercase tracking-wider text-white">
+              {t('footer.popular')}
+            </h2>
+            <ul className="mt-4 space-y-3">
+              {popularCategories.map((category) => (
+                <li key={category}>
+                  <Link
+                    to={`/meal-category/${category}`}
+                    className={linkClass}
+                  >
+                    {name(category)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
       <div className="border-t border-white/10">
         <div className="container-page flex flex-col gap-2 py-6 text-sm sm:flex-row sm:justify-between">
-          <p>© {new Date().getFullYear()} Tastebite. All rights reserved.</p>
+          <p>{t('footer.rights', new Date().getFullYear())}</p>
           <p>
-            Recipe data by{' '}
+            {t('footer.dataBy')}{' '}
             <a
               href="https://www.themealdb.com"
               target="_blank"

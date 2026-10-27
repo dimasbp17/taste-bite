@@ -1,6 +1,7 @@
 import React from 'react';
 import MealCard, { MealCardSkeleton } from './MealCard';
 import StatusMessage from './StatusMessage';
+import useLanguage from '../i18n/useLanguage';
 
 const columnClasses = {
   3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
@@ -14,20 +15,22 @@ const MealGrid = ({
   onRetry,
   columns = 4,
   skeletonCount = 8,
-  emptyMessage = 'No recipes found.',
+  emptyMessage,
 }) => {
+  const { t } = useLanguage();
+
   if (error) {
     return (
       <StatusMessage
-        title="We couldn't load these recipes"
-        message="Please check your connection and try again."
+        title={t('grid.errorTitle')}
+        message={t('grid.errorMessage')}
         onRetry={onRetry}
       />
     );
   }
 
   if (!loading && meals.length === 0) {
-    return <StatusMessage title={emptyMessage} />;
+    return <StatusMessage title={emptyMessage || t('grid.empty')} />;
   }
 
   return (

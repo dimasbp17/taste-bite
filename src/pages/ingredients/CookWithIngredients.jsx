@@ -4,6 +4,7 @@ import { FiCheck, FiX } from 'react-icons/fi';
 import { filterByIngredient, getIngredientImage, getIngredientList } from '../../lib/api';
 import useFetch from '../../hooks/useFetch';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
+import useLanguage from '../../i18n/useLanguage';
 import MealCard, { MealCardSkeleton } from '../../components/MealCard';
 import StatusMessage from '../../components/StatusMessage';
 import IngredientPicker from './IngredientPicker';
@@ -31,9 +32,9 @@ const popular = [
 ];
 
 const howItWorks = [
-  ['Add what you have', 'Type or tap the ingredients in your kitchen.'],
-  ['We find the recipes', 'Dishes that use the most of them appear first.'],
-  ['Start cooking', 'Open a recipe for the full list and steps.'],
+  ['ing.how1Title', 'ing.how1Text'],
+  ['ing.how2Title', 'ing.how2Text'],
+  ['ing.how3Title', 'ing.how3Text'],
 ];
 
 // Ingredient names must match exactly, and the database lists singular and
@@ -84,31 +85,33 @@ const findMatches = async (selected, allNames) => {
 };
 
 const MatchBadge = ({ matched, total }) => {
+  const { t, name } = useLanguage();
   const all = matched.length === total;
+
+  let label = t('ing.usesSome', matched.length, total);
+  if (all) label = total === 1 ? t('ing.usesOne', name(matched[0])) : t('ing.usesAll', total);
+
   return (
     <span
-      title={`Uses: ${matched.join(', ')}`}
+      title={t('ing.usesTitle', matched.map(name).join(', '))}
       className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-semibold shadow-card ${
         all ? 'bg-sage text-white' : 'bg-white text-ink'
       }`}
     >
       {all && <FiCheck aria-hidden />}
-      {all
-        ? total === 1
-          ? `Uses ${matched[0].toLowerCase()}`
-          : `Uses all ${total}`
-        : `Uses ${matched.length} of ${total}`}
+      {label}
     </span>
   );
 };
 
 const CookWithIngredients = () => {
+  const { t, name } = useLanguage();
   const [params, setParams] = useSearchParams();
   const selected = params.getAll('i');
   const key = selected.join('|');
   const [onlyAll, setOnlyAll] = useState(false);
   const [visible, setVisible] = useState(PAGE_SIZE);
-  useDocumentTitle('Cook with what you have');
+  useDocumentTitle(t('ing.docTitle'));
 
   useEffect(() => setVisible(PAGE_SIZE), [key, onlyAll]);
 
@@ -118,10 +121,10 @@ const CookWithIngredients = () => {
     [key, Boolean(allNames)]
   );
 
-  const update = (next) => setParams(next.map((name) => ['i', name]), { replace: true });
-  const add = (name) =>
-    !selected.includes(name) && selected.length < MAX_INGREDIENTS && update([...selected, name]);
-  const remove = (name) => update(selected.filter((item) => item !== name));
+  const update = (next) => setParams(next.map((item) => ['i', item]), { replace: true });
+  const add = (item) =>
+    !selected.includes(item) && selected.length < MAX_INGREDIENTS && update([...selected, item]);
+  const remove = (item) => update(selected.filter((value) => value !== item));
 
   const results = (data || []).filter(
     (item) => !onlyAll || item.matched.length === selected.length
@@ -131,14 +134,9 @@ const CookWithIngredients = () => {
   return (
     <div className="container-page py-10 lg:py-14">
       <header className="max-w-3xl">
-        <p className="eyebrow">Cook with what you have</p>
-        <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">
-          What&apos;s in your kitchen?
-        </h1>
-        <p className="mt-4 text-lg text-ink-soft">
-          Tell us the ingredients you already have, and we&apos;ll show you
-          recipes you can make with them.
-        </p>
+        <p className="eyebrow">{t('ing.eyebrow')}</p>
+        <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">{t('ing.title')}</h1>
+        <p className="mt-4 text-lg text-ink-soft">{t('ing.subtitle')}</p>
       </header>
 
       <section className="mt-8 rounded-3xl bg-white p-5 shadow-card ring-1 ring-line sm:p-8">
@@ -147,37 +145,38 @@ const CookWithIngredients = () => {
           selected={selected}
           onAdd={add}
           disabled={full}
+          maxCount={MAX_INGREDIENTS}
         />
 
         {selected.length > 0 && (
           <div className="mt-6">
             <div className="flex items-center justify-between gap-4">
               <p className="font-medium text-ink">
-                Your ingredients ({selected.length}/{MAX_INGREDIENTS})
+                {t('ing.yours', selected.length, MAX_INGREDIENTS)}
               </p>
               <button
                 type="button"
                 onClick={() => update([])}
                 className="text-sm font-semibold text-brand hover:text-brand-dark"
               >
-                Clear all
+                {t('ing.clearAll')}
               </button>
             </div>
             <ul className="mt-3 flex flex-wrap gap-2">
-              {selected.map((name) => (
-                <li key={name}>
+              {selected.map((item) => (
+                <li key={item}>
                   <button
                     type="button"
-                    onClick={() => remove(name)}
+                    onClick={() => remove(item)}
                     className="group inline-flex min-h-[44px] items-center gap-2 rounded-full bg-brand-50 py-1 pl-1.5 pr-3 font-medium text-ink ring-1 ring-brand/25 hover:bg-brand-100"
-                    aria-label={`Remove ${name}`}
+                    aria-label={t('ing.remove', name(item))}
                   >
                     <img
-                      src={getIngredientImage(name)}
+                      src={getIngredientImage(item)}
                       alt=""
                       className="size-8 rounded-full bg-white object-contain p-0.5"
                     />
-                    {name}
+                    {name(item)}
                     <FiX
                       className="text-ink-soft group-hover:text-brand"
                       aria-hidden
@@ -190,28 +189,28 @@ const CookWithIngredients = () => {
         )}
 
         <div className="mt-6 border-t border-line pt-6">
-          <p className="text-sm font-medium text-ink-soft">Quick add</p>
+          <p className="text-sm font-medium text-ink-soft">{t('ing.quickAdd')}</p>
           <ul className="-mx-5 mt-3 flex gap-2 overflow-x-auto px-5 pb-1 scrollbar-hide sm:mx-0 sm:flex-wrap sm:px-0">
             {popular
-              .filter((name) => !selected.includes(name))
-              .map((name) => (
+              .filter((item) => !selected.includes(item))
+              .map((item) => (
                 <li
-                  key={name}
+                  key={item}
                   className="shrink-0"
                 >
                   <button
                     type="button"
-                    onClick={() => add(name)}
+                    onClick={() => add(item)}
                     disabled={full}
                     className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-white py-1 pl-1.5 pr-4 font-medium text-ink-soft ring-1 ring-line transition-colors hover:text-ink hover:ring-ink/30 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <img
-                      src={getIngredientImage(name)}
+                      src={getIngredientImage(item)}
                       alt=""
                       loading="lazy"
                       className="size-8 object-contain"
                     />
-                    {name}
+                    {name(item)}
                   </button>
                 </li>
               ))}
@@ -233,15 +232,15 @@ const CookWithIngredients = () => {
                 <span className="flex size-10 items-center justify-center rounded-full bg-brand-50 font-serif text-lg font-semibold text-brand">
                   {index + 1}
                 </span>
-                <p className="mt-4 text-lg font-semibold text-ink">{title}</p>
-                <p className="mt-1 text-ink-soft">{text}</p>
+                <p className="mt-4 text-lg font-semibold text-ink">{t(title)}</p>
+                <p className="mt-1 text-ink-soft">{t(text)}</p>
               </li>
             ))}
           </ol>
         ) : error ? (
           <StatusMessage
-            title="We couldn't load recipes"
-            message="Please check your connection and try again."
+            title={t('ing.loadError')}
+            message={t('ing.loadErrorMsg')}
             onRetry={retry}
           />
         ) : (
@@ -249,14 +248,10 @@ const CookWithIngredients = () => {
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h2 className="text-3xl font-semibold">
-                  {loading
-                    ? 'Finding recipes…'
-                    : `${results.length} ${results.length === 1 ? 'recipe' : 'recipes'} found`}
+                  {loading ? t('ing.finding') : t('ing.found', results.length)}
                 </h2>
                 {!loading && selected.length > 1 && (
-                  <p className="mt-2 text-ink-soft">
-                    Recipes that use the most of your ingredients are shown first.
-                  </p>
+                  <p className="mt-2 text-ink-soft">{t('ing.sortedHint')}</p>
                 )}
               </div>
               {selected.length > 1 && (
@@ -267,7 +262,7 @@ const CookWithIngredients = () => {
                     onChange={(e) => setOnlyAll(e.target.checked)}
                     className="size-5 accent-[#4D5E46]"
                   />
-                  Only recipes that use all of them
+                  {t('ing.onlyAll')}
                 </label>
               )}
             </div>
@@ -280,12 +275,8 @@ const CookWithIngredients = () => {
               </div>
             ) : results.length === 0 ? (
               <StatusMessage
-                title={onlyAll ? 'No recipes use all of these yet' : 'No recipes found'}
-                message={
-                  onlyAll
-                    ? 'Try removing an ingredient, or turn off “Only recipes that use all of them”.'
-                    : 'Try a different or more common ingredient.'
-                }
+                title={onlyAll ? t('ing.noneAll') : t('ing.none')}
+                message={onlyAll ? t('ing.noneAllMsg') : t('ing.noneMsg')}
               />
             ) : (
               <div className="grid grid-cols-2 gap-x-5 gap-y-8 lg:grid-cols-4">
@@ -311,7 +302,7 @@ const CookWithIngredients = () => {
                   onClick={() => setVisible((count) => count + PAGE_SIZE)}
                   className="btn-outline px-8"
                 >
-                  Show more recipes
+                  {t('recipes.showMore')}
                 </button>
               </div>
             )}

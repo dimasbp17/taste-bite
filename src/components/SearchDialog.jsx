@@ -3,10 +3,14 @@ import { createPortal } from 'react-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiArrowRight, FiSearch, FiX } from 'react-icons/fi';
 import { searchMeals } from '../lib/api';
+import useLanguage from '../i18n/useLanguage';
 
+// Search terms stay in English (the recipe database is English);
+// only the button labels are translated.
 const suggestions = ['Chicken', 'Pasta', 'Soup', 'Cake', 'Salmon', 'Curry'];
 
 const SearchDialog = ({ open, onClose }) => {
+  const { t, name } = useLanguage();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -69,7 +73,7 @@ const SearchDialog = ({ open, onClose }) => {
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Search recipes"
+        aria-label={t('nav.searchRecipes')}
         className="w-full max-w-2xl overflow-hidden rounded-3xl bg-white shadow-lift"
       >
         <form
@@ -85,15 +89,15 @@ const SearchDialog = ({ open, onClose }) => {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search a dish, e.g. lasagna"
-            aria-label="Search a dish"
+            placeholder={t('search.placeholder')}
+            aria-label={t('search.label')}
             className="h-16 w-full bg-transparent text-lg text-ink placeholder:text-ink-muted focus:outline-none"
           />
           <button
             type="button"
             onClick={onClose}
             className="btn-ghost shrink-0 px-3"
-            aria-label="Close search"
+            aria-label={t('search.close')}
           >
             <FiX className="text-xl" />
           </button>
@@ -103,7 +107,7 @@ const SearchDialog = ({ open, onClose }) => {
           {!term && (
             <div className="p-3">
               <p className="mb-3 text-sm font-medium text-ink-soft">
-                Popular searches
+                {t('search.popular')}
               </p>
               <div className="flex flex-wrap gap-2">
                 {suggestions.map((item) => (
@@ -113,7 +117,7 @@ const SearchDialog = ({ open, onClose }) => {
                     onClick={() => setQuery(item)}
                     className="chip min-h-[40px] px-4 hover:bg-cream-dark hover:text-ink"
                   >
-                    {item}
+                    {name(item)}
                   </button>
                 ))}
               </div>
@@ -136,7 +140,7 @@ const SearchDialog = ({ open, onClose }) => {
 
           {term && !loading && results.length === 0 && (
             <p className="p-6 text-center text-ink-soft">
-              No recipes found for “{term}”. Try another dish or ingredient.
+              {t('search.noResults', term)}
             </p>
           )}
 
@@ -160,7 +164,7 @@ const SearchDialog = ({ open, onClose }) => {
                           {meal.strMeal}
                         </p>
                         <p className="text-sm text-ink-soft">
-                          {meal.strCategory} · {meal.strArea}
+                          {name(meal.strCategory)} · {name(meal.strArea)}
                         </p>
                       </div>
                     </Link>
@@ -172,7 +176,7 @@ const SearchDialog = ({ open, onClose }) => {
                 onClick={handleSubmit}
                 className="btn-ghost mt-1 w-full text-brand"
               >
-                See all {results.length} results
+                {t('search.seeAll', results.length)}
                 <FiArrowRight aria-hidden />
               </button>
             </>

@@ -5,12 +5,15 @@ import { filterByArea } from '../../lib/api';
 import { getAreaImage } from '../../data/areas';
 import useFetch from '../../hooks/useFetch';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
+import useLanguage from '../../i18n/useLanguage';
 import MealGrid from '../../components/MealGrid';
 
 const CategoriesByArea = () => {
   const { area } = useParams();
+  const { t, name } = useLanguage();
+  const label = name(area);
   const image = getAreaImage(area);
-  useDocumentTitle(`${area} recipes`);
+  useDocumentTitle(t('recipes.categoryTitle', label));
   const { data, loading, error, retry } = useFetch(() => filterByArea(area), [area]);
   const meals = (data || []).map((meal) => ({ ...meal, strArea: area }));
 
@@ -30,18 +33,16 @@ const CategoriesByArea = () => {
             to="/#cuisines"
             className="inline-flex items-center gap-2 text-sm font-medium text-white/80 hover:text-white"
           >
-            <FiArrowLeft aria-hidden /> All cuisines
+            <FiArrowLeft aria-hidden /> {t('area.back')}
           </Link>
           <p className="mt-6 text-sm font-semibold uppercase tracking-[0.14em] text-brand-100">
-            World cuisine
+            {t('area.eyebrow')}
           </p>
           <h1 className="mt-2 text-4xl font-semibold text-white sm:text-6xl">
-            {area} kitchen
+            {t('area.title', label)}
           </h1>
           {!loading && !error && (
-            <p className="mt-3 text-lg text-white/85">
-              {meals.length} {meals.length === 1 ? 'recipe' : 'recipes'} to explore
-            </p>
+            <p className="mt-3 text-lg text-white/85">{t('area.count', meals.length)}</p>
           )}
         </div>
       </section>
@@ -53,7 +54,7 @@ const CategoriesByArea = () => {
           error={error}
           onRetry={retry}
           skeletonCount={12}
-          emptyMessage={`No ${area} recipes yet`}
+          emptyMessage={t('area.empty', label)}
         />
       </div>
     </>

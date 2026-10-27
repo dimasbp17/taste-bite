@@ -4,12 +4,15 @@ import { FiArrowLeft } from 'react-icons/fi';
 import { filterByCategory, getCategories } from '../../lib/api';
 import useFetch from '../../hooks/useFetch';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
+import useLanguage from '../../i18n/useLanguage';
 import MealGrid from '../../components/MealGrid';
 
 const CategoriesMeals = () => {
   const { category } = useParams();
+  const { t, name } = useLanguage();
   const [expanded, setExpanded] = useState(false);
-  useDocumentTitle(`${category} recipes`);
+  const label = name(category);
+  useDocumentTitle(t('recipes.categoryTitle', label));
 
   const { data, loading, error, retry } = useFetch(
     () => filterByCategory(category),
@@ -29,18 +32,21 @@ const CategoriesMeals = () => {
               to="/recipes"
               className="inline-flex items-center gap-2 text-sm font-medium text-ink-soft hover:text-brand"
             >
-              <FiArrowLeft aria-hidden /> All recipes
+              <FiArrowLeft aria-hidden /> {t('category.back')}
             </Link>
-            <p className="eyebrow mt-6">Category</p>
-            <h1 className="mt-2 text-4xl font-semibold sm:text-5xl">{category}</h1>
+            <p className="eyebrow mt-6">{t('category.eyebrow')}</p>
+            <h1 className="mt-2 text-4xl font-semibold sm:text-5xl">{label}</h1>
             {!loading && !error && (
               <p className="mt-2 font-medium text-ink-soft">
-                {meals.length} {meals.length === 1 ? 'recipe' : 'recipes'}
+                {t('category.count', meals.length)}
               </p>
             )}
             {details?.strCategoryDescription && (
               <div className="mt-5">
-                <p className={`text-ink-soft ${expanded ? '' : 'line-clamp-3'}`}>
+                <p
+                  lang="en"
+                  className={`text-ink-soft ${expanded ? '' : 'line-clamp-3'}`}
+                >
                   {details.strCategoryDescription}
                 </p>
                 <button
@@ -48,7 +54,7 @@ const CategoriesMeals = () => {
                   onClick={() => setExpanded((value) => !value)}
                   className="mt-2 font-semibold text-brand hover:text-brand-dark"
                 >
-                  {expanded ? 'Show less' : 'Read more'}
+                  {expanded ? t('category.showLess') : t('category.readMore')}
                 </button>
               </div>
             )}
@@ -72,7 +78,7 @@ const CategoriesMeals = () => {
           error={error}
           onRetry={retry}
           skeletonCount={12}
-          emptyMessage={`No ${category} recipes yet`}
+          emptyMessage={t('category.empty', label)}
         />
       </div>
     </>

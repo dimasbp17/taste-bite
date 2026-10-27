@@ -4,11 +4,13 @@ import { FiSearch, FiX } from 'react-icons/fi';
 import { filterByCategory, getCategories, searchMeals } from '../../lib/api';
 import useFetch from '../../hooks/useFetch';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
+import useLanguage from '../../i18n/useLanguage';
 import MealGrid from '../../components/MealGrid';
 
 const PAGE_SIZE = 12;
 
 const RecipesPage = () => {
+  const { t, name } = useLanguage();
   const [params, setParams] = useSearchParams();
   const q = params.get('q') || '';
   const category = params.get('category') || '';
@@ -45,21 +47,19 @@ const RecipesPage = () => {
         : 'hover:bg-cream-dark hover:text-ink'
     }`;
 
-  let heading = 'All recipes';
-  if (q) heading = `Results for “${q}”`;
-  else if (category) heading = `${category} recipes`;
+  let heading = t('recipes.all');
+  if (q) heading = t('recipes.resultsFor', q);
+  else if (category) heading = t('recipes.categoryTitle', name(category));
 
-  useDocumentTitle(q ? `Results for "${q}"` : heading);
+  useDocumentTitle(heading);
 
   return (
     <div className="container-page py-10 lg:py-14">
       <header className="max-w-3xl">
-        <p className="eyebrow">Recipe index</p>
+        <p className="eyebrow">{t('recipes.eyebrow')}</p>
         <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">{heading}</h1>
         {!loading && !error && (
-          <p className="mt-3 text-ink-soft">
-            {meals.length} {meals.length === 1 ? 'recipe' : 'recipes'} found
-          </p>
+          <p className="mt-3 text-ink-soft">{t('recipes.count', meals.length)}</p>
         )}
       </header>
 
@@ -69,7 +69,7 @@ const RecipesPage = () => {
         className="mt-8 flex max-w-2xl gap-2"
       >
         <label className="relative flex-1">
-          <span className="sr-only">Search recipes</span>
+          <span className="sr-only">{t('recipes.searchLabel')}</span>
           <FiSearch
             className="absolute left-4 top-1/2 -translate-y-1/2 text-lg text-ink-muted"
             aria-hidden
@@ -78,7 +78,7 @@ const RecipesPage = () => {
             type="search"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Search by dish name"
+            placeholder={t('recipes.placeholder')}
             className="input rounded-full pl-11"
           />
         </label>
@@ -86,13 +86,14 @@ const RecipesPage = () => {
           type="submit"
           className="btn-primary"
         >
-          Search
+          {t('recipes.search')}
         </button>
       </form>
 
       <div
         className="-mx-4 mt-6 flex gap-2 overflow-x-auto px-4 pb-2 scrollbar-hide sm:mx-0 sm:flex-wrap sm:px-0"
-        aria-label="Filter by category"
+        role="group"
+        aria-label={t('recipes.filterLabel')}
       >
         <button
           type="button"
@@ -100,7 +101,7 @@ const RecipesPage = () => {
           className={chipClass(!q && !category)}
           aria-pressed={!q && !category}
         >
-          All
+          {t('recipes.allChip')}
         </button>
         {(categories || []).map((item) => (
           <button
@@ -110,7 +111,7 @@ const RecipesPage = () => {
             className={chipClass(category === item.strCategory)}
             aria-pressed={category === item.strCategory}
           >
-            {item.strCategory}
+            {name(item.strCategory)}
           </button>
         ))}
         {q && (
@@ -119,7 +120,7 @@ const RecipesPage = () => {
             onClick={() => setParams({})}
             className="chip min-h-[40px] shrink-0 bg-brand-50 px-4 text-brand ring-brand/30"
           >
-            “{q}” <FiX aria-label="Clear search" />
+            “{q}” <FiX aria-label={t('recipes.clearSearch')} />
           </button>
         )}
       </div>
@@ -131,7 +132,7 @@ const RecipesPage = () => {
           error={error}
           onRetry={retry}
           skeletonCount={PAGE_SIZE}
-          emptyMessage="No recipes match your search"
+          emptyMessage={t('recipes.empty')}
         />
       </div>
 
@@ -142,7 +143,7 @@ const RecipesPage = () => {
             onClick={() => setVisible((count) => count + PAGE_SIZE)}
             className="btn-outline px-8"
           >
-            Show more recipes
+            {t('recipes.showMore')}
           </button>
         </div>
       )}

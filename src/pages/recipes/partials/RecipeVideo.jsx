@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { FiExternalLink, FiPlay } from 'react-icons/fi';
+import useLanguage from '../../../i18n/useLanguage';
 
 // Shows the YouTube thumbnail first and only loads the player when the user
 // presses play, so the page stays fast and nothing autoplays unexpectedly.
 const RecipeVideo = ({ videoId, title, url }) => {
+  const { t } = useLanguage();
   const [playing, setPlaying] = useState(false);
 
   return (
@@ -12,14 +14,14 @@ const RecipeVideo = ({ videoId, title, url }) => {
       className="scroll-mt-28 print:hidden"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="text-3xl font-semibold">Watch how it&apos;s made</h2>
+        <h2 className="text-3xl font-semibold">{t('video.title')}</h2>
         <a
           href={url}
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-soft hover:text-brand"
         >
-          Open on YouTube <FiExternalLink aria-hidden />
+          {t('video.open')} <FiExternalLink aria-hidden />
         </a>
       </div>
 
@@ -27,7 +29,7 @@ const RecipeVideo = ({ videoId, title, url }) => {
         {playing ? (
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`}
-            title={`Video: how to make ${title}`}
+            title={t('video.frameTitle', title)}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             className="absolute inset-0 size-full"
@@ -37,7 +39,7 @@ const RecipeVideo = ({ videoId, title, url }) => {
             type="button"
             onClick={() => setPlaying(true)}
             className="group absolute inset-0 size-full"
-            aria-label={`Play video: how to make ${title}`}
+            aria-label={t('video.playLabel', title)}
           >
             <img
               src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
@@ -53,7 +55,7 @@ const RecipeVideo = ({ videoId, title, url }) => {
                   aria-hidden
                 />
               </span>
-              Play video
+              {t('video.play')}
             </span>
           </button>
         )}

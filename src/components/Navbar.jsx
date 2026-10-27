@@ -3,13 +3,15 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { FiMenu, FiSearch, FiX } from 'react-icons/fi';
 import { FaRegHeart } from 'react-icons/fa';
 import SearchDialog from './SearchDialog';
+import LanguageSwitch from './LanguageSwitch';
 import useFavorites from '../hooks/useFavorites';
+import useLanguage from '../i18n/useLanguage';
 
 const links = [
-  { to: '/', label: 'Home' },
-  { to: '/recipes', label: 'Recipes' },
-  { to: '/cook-with-ingredients', label: 'By Ingredient' },
-  { to: '/about', label: 'About' },
+  { to: '/', label: 'nav.home' },
+  { to: '/recipes', label: 'nav.recipes' },
+  { to: '/cook-with-ingredients', label: 'nav.byIngredient' },
+  { to: '/about', label: 'nav.about' },
 ];
 
 const linkClass = ({ isActive }) =>
@@ -22,6 +24,7 @@ const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const { pathname } = useLocation();
   const { favorites } = useFavorites();
+  const { t } = useLanguage();
 
   useEffect(() => {
     setMenuOpen(false);
@@ -32,7 +35,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-40 border-b border-line/80 bg-cream/90 backdrop-blur print:hidden">
       <nav
         className="container-page flex h-16 items-center justify-between gap-4 lg:h-20"
-        aria-label="Main"
+        aria-label={t('nav.main')}
       >
         <Link
           to="/"
@@ -40,12 +43,12 @@ const Navbar = () => {
         >
           <img
             src="/images/logo-taste.png"
-            alt="Tastebite home"
+            alt={t('nav.logo')}
             className="h-10 w-auto lg:h-12"
           />
         </Link>
 
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul className="hidden items-center gap-1 lg:flex">
           {links.map((link) => (
             <li key={link.to}>
               <NavLink
@@ -53,21 +56,21 @@ const Navbar = () => {
                 end={link.to === '/'}
                 className={linkClass}
               >
-                {link.label}
+                {t(link.label)}
               </NavLink>
             </li>
           ))}
         </ul>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           <button
             type="button"
             onClick={() => setSearchOpen(true)}
             className="btn-ghost px-3 sm:px-4"
-            aria-label="Search recipes"
+            aria-label={t('nav.searchRecipes')}
           >
             <FiSearch className="text-lg" />
-            <span className="hidden sm:inline">Search</span>
+            <span className="hidden sm:inline">{t('nav.search')}</span>
           </button>
           <NavLink
             to="/saved"
@@ -76,23 +79,24 @@ const Navbar = () => {
                 isActive ? 'bg-brand-50 text-brand' : 'text-ink hover:bg-cream-dark'
               }`
             }
-            aria-label={`Saved recipes (${favorites.length})`}
+            aria-label={t('nav.savedCount', favorites.length)}
           >
             <FaRegHeart className="text-lg" />
-            <span className="hidden sm:inline">Saved</span>
+            <span className="hidden sm:inline">{t('nav.saved')}</span>
             {favorites.length > 0 && (
               <span className="absolute -right-0.5 top-0.5 flex min-w-[1.25rem] items-center justify-center rounded-full bg-brand px-1 text-xs font-semibold leading-5 text-white sm:static sm:bg-brand-100 sm:text-brand">
                 {favorites.length}
               </span>
             )}
           </NavLink>
+          <LanguageSwitch className="ml-1 hidden lg:inline-flex" />
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
-            className="btn-ghost px-3 md:hidden"
+            className="btn-ghost px-3 lg:hidden"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={menuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
           >
             {menuOpen ? <FiX className="text-xl" /> : <FiMenu className="text-xl" />}
           </button>
@@ -102,7 +106,7 @@ const Navbar = () => {
       {menuOpen && (
         <div
           id="mobile-menu"
-          className="border-t border-line bg-cream md:hidden"
+          className="border-t border-line bg-cream lg:hidden"
         >
           <ul className="container-page flex flex-col gap-1 py-4">
             {links.map((link) => (
@@ -116,10 +120,14 @@ const Navbar = () => {
                     }`
                   }
                 >
-                  {link.label}
+                  {t(link.label)}
                 </NavLink>
               </li>
             ))}
+            <li className="mt-2 flex items-center justify-between gap-4 border-t border-line px-4 pt-4">
+              <span className="font-medium text-ink-soft">{t('lang.label')}</span>
+              <LanguageSwitch />
+            </li>
           </ul>
         </div>
       )}

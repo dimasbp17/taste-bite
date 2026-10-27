@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { FiMail } from 'react-icons/fi';
+import useLanguage from '../../../i18n/useLanguage';
 
 const Newsletter = () => {
+  const { t } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
@@ -21,11 +23,9 @@ const Newsletter = () => {
             aria-hidden
           />
           <h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">
-            Deliciousness to your inbox
+            {t('newsletter.title')}
           </h2>
-          <p className="mt-3 text-white/85">
-            Hand-picked recipes and cooking tips, once a week. No spam, ever.
-          </p>
+          <p className="mt-3 text-white/85">{t('newsletter.text')}</p>
 
           <form
             onSubmit={handleSubmit}
@@ -35,20 +35,20 @@ const Newsletter = () => {
               htmlFor="newsletter-email"
               className="sr-only"
             >
-              Email address
+              {t('newsletter.emailLabel')}
             </label>
             <input
               id="newsletter-email"
               type="email"
               required
-              placeholder="you@example.com"
+              placeholder={t('newsletter.placeholder')}
               className="input flex-1 rounded-full border-transparent"
             />
             <button
               type="submit"
               className="btn bg-ink px-7 text-white hover:bg-ink/85"
             >
-              Subscribe
+              {t('newsletter.submit')}
             </button>
           </form>
 
@@ -56,9 +56,7 @@ const Newsletter = () => {
             className="mt-4 min-h-[1.5rem] text-sm text-white/85"
             aria-live="polite"
           >
-            {submitted
-              ? 'Newsletter sign-up is coming soon — thanks for your interest!'
-              : 'By subscribing you agree to our terms and conditions.'}
+            {submitted ? t('newsletter.soon') : t('newsletter.terms')}
           </p>
         </div>
       </div>

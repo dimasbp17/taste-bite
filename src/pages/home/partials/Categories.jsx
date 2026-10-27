@@ -4,8 +4,10 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { getCategories } from '../../../lib/api';
 import useFetch from '../../../hooks/useFetch';
 import SectionHeader from '../../../components/SectionHeader';
+import useLanguage from '../../../i18n/useLanguage';
 
 const Categories = () => {
+  const { t, name } = useLanguage();
   const { data: categories, loading } = useFetch(getCategories);
   const scrollerRef = useRef(null);
 
@@ -18,15 +20,15 @@ const Categories = () => {
     <section className="border-y border-line bg-white py-16">
       <div className="container-page">
         <SectionHeader
-          eyebrow="Browse"
-          title="What are you in the mood for?"
+          eyebrow={t('categories.eyebrow')}
+          title={t('categories.title')}
         >
           <div className="hidden gap-2 sm:flex">
             <button
               type="button"
               onClick={() => scroll(-1)}
               className="btn-outline size-11 p-0"
-              aria-label="Scroll categories left"
+              aria-label={t('categories.scrollLeft')}
             >
               <FiChevronLeft className="text-xl" />
             </button>
@@ -34,7 +36,7 @@ const Categories = () => {
               type="button"
               onClick={() => scroll(1)}
               className="btn-outline size-11 p-0"
-              aria-label="Scroll categories right"
+              aria-label={t('categories.scrollRight')}
             >
               <FiChevronRight className="text-xl" />
             </button>
@@ -73,7 +75,7 @@ const Categories = () => {
                       />
                     </div>
                     <p className="mt-3 font-medium text-ink group-hover:text-brand">
-                      {category.strCategory}
+                      {name(category.strCategory)}
                     </p>
                   </Link>
                 </li>

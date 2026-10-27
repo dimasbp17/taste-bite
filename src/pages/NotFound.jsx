@@ -1,31 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import useDocumentTitle from '../hooks/useDocumentTitle';
+import useLanguage from '../i18n/useLanguage';
 
 const NotFound = () => {
-  useDocumentTitle('Page not found');
+  const { t } = useLanguage();
+  useDocumentTitle(t('notFound.docTitle'));
 
   return (
     <section className="container-page flex flex-col items-center py-24 text-center">
       <p className="font-serif text-7xl font-semibold text-brand">404</p>
-      <h1 className="mt-4 text-3xl font-semibold sm:text-4xl">
-        This page isn&apos;t on the menu
-      </h1>
-      <p className="mt-3 max-w-md text-ink-soft">
-        The page you&apos;re looking for doesn&apos;t exist or has moved.
-      </p>
+      <h1 className="mt-4 text-3xl font-semibold sm:text-4xl">{t('notFound.title')}</h1>
+      <p className="mt-3 max-w-md text-ink-soft">{t('notFound.text')}</p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         <Link
           to="/"
           className="btn-primary"
         >
-          Back to home
+          {t('notFound.home')}
         </Link>
         <Link
           to="/recipes"
           className="btn-outline"
         >
-          Browse recipes
+          {t('notFound.browse')}
         </Link>
       </div>
     </section>
