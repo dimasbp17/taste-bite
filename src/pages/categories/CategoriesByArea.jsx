@@ -4,11 +4,13 @@ import { FiArrowLeft } from 'react-icons/fi';
 import { filterByArea } from '../../lib/api';
 import { getAreaImage } from '../../data/areas';
 import useFetch from '../../hooks/useFetch';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 import MealGrid from '../../components/MealGrid';
 
 const CategoriesByArea = () => {
   const { area } = useParams();
   const image = getAreaImage(area);
+  useDocumentTitle(`${area} recipes`);
   const { data, loading, error, retry } = useFetch(() => filterByArea(area), [area]);
   const meals = (data || []).map((meal) => ({ ...meal, strArea: area }));
 

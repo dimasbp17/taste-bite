@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiBookOpen, FiGlobe, FiHeart } from 'react-icons/fi';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 const values = [
   {
@@ -21,6 +22,8 @@ const values = [
 ];
 
 const About = () => {
+  useDocumentTitle('About us');
+
   return (
     <>
       <section className="container-page pb-12 pt-12 lg:pt-20">

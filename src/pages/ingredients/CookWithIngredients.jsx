@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { FiCheck, FiX } from 'react-icons/fi';
 import { filterByIngredient, getIngredientImage, getIngredientList } from '../../lib/api';
 import useFetch from '../../hooks/useFetch';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 import MealCard, { MealCardSkeleton } from '../../components/MealCard';
 import StatusMessage from '../../components/StatusMessage';
 import IngredientPicker from './IngredientPicker';
@@ -107,6 +108,7 @@ const CookWithIngredients = () => {
   const key = selected.join('|');
   const [onlyAll, setOnlyAll] = useState(false);
   const [visible, setVisible] = useState(PAGE_SIZE);
+  useDocumentTitle('Cook with what you have');
 
   useEffect(() => setVisible(PAGE_SIZE), [key, onlyAll]);
 

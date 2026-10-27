@@ -3,11 +3,13 @@ import { Link, useParams } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { filterByCategory, getCategories } from '../../lib/api';
 import useFetch from '../../hooks/useFetch';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 import MealGrid from '../../components/MealGrid';
 
 const CategoriesMeals = () => {
   const { category } = useParams();
   const [expanded, setExpanded] = useState(false);
+  useDocumentTitle(`${category} recipes`);
 
   const { data, loading, error, retry } = useFetch(
     () => filterByCategory(category),

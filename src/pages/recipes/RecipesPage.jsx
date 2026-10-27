@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { FiSearch, FiX } from 'react-icons/fi';
 import { filterByCategory, getCategories, searchMeals } from '../../lib/api';
 import useFetch from '../../hooks/useFetch';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 import MealGrid from '../../components/MealGrid';
 
 const PAGE_SIZE = 12;
@@ -47,6 +48,8 @@ const RecipesPage = () => {
   let heading = 'All recipes';
   if (q) heading = `Results for “${q}”`;
   else if (category) heading = `${category} recipes`;
+
+  useDocumentTitle(q ? `Results for "${q}"` : heading);
 
   return (
     <div className="container-page py-10 lg:py-14">

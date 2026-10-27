@@ -18,6 +18,7 @@ import {
   getYoutubeId,
 } from '../../lib/api';
 import useFetch from '../../hooks/useFetch';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 import StatusMessage from '../../components/StatusMessage';
 import CardRecommendations from './partials/CardRecommendations';
 import RecipeVideo from './partials/RecipeVideo';
@@ -124,6 +125,7 @@ const DetailSkeleton = () => (
 const DetailRecipes = () => {
   const { id } = useParams();
   const { data: meal, loading, error, retry } = useFetch(() => getMealById(id), [id]);
+  useDocumentTitle(meal?.strMeal || 'Recipe');
 
   if (loading) return <DetailSkeleton />;
 

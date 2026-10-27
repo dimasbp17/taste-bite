@@ -6,8 +6,11 @@ import FeaturedCollection from './partials/FeaturedCollection';
 import Newsletter from './partials/Newsletter';
 import IngredientPromo from './partials/IngredientPromo';
 import AllMeals from './partials/AllMeal';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 const HomePage = () => {
+  useDocumentTitle();
+
   return (
     <>
       <Hero />
