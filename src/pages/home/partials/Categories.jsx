@@ -1,79 +1,86 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { getCategories } from '../../../lib/api';
+import useFetch from '../../../hooks/useFetch';
+import SectionHeader from '../../../components/SectionHeader';
 
 const Categories = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { data: categories, loading } = useFetch(getCategories);
+  const scrollerRef = useRef(null);
 
-  useEffect(() => {
-    setLoading(true);
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(
-          'https://www.themealdb.com/api/json/v1/1/categories.php'
-        );
-        setCategories(response.data.categories);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetch categories', error);
-      }
-    };
-    fetchCategories();
-  }, []);
-
-  const SkeletonCategories = () => {
-    return (
-      <>
-        {Array(20)
-          .fill()
-          .map((_, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center justify-center animate-pulse"
-            >
-              <div className="w-24 h-24 bg-gray-300 rounded-full "></div>
-              <div className="w-10 h-3 mt-2 bg-gray-400 rounded-sm"></div>
-            </div>
-          ))}
-      </>
-    );
+  const scroll = (direction) => {
+    const el = scrollerRef.current;
+    el?.scrollBy({ left: direction * el.clientWidth * 0.8, behavior: 'smooth' });
   };
 
   return (
-    <>
-      <div className="w-full px-4 lg:px-24">
-        <h1 className="my-2 text-2xl font-bold font-playfair">
-          Meal Categories
-        </h1>
+    <section className="border-y border-line bg-white py-16">
+      <div className="container-page">
+        <SectionHeader
+          eyebrow="Browse"
+          title="What are you in the mood for?"
+        >
+          <div className="hidden gap-2 sm:flex">
+            <button
+              type="button"
+              onClick={() => scroll(-1)}
+              className="btn-outline size-11 p-0"
+              aria-label="Scroll categories left"
+            >
+              <FiChevronLeft className="text-xl" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scroll(1)}
+              className="btn-outline size-11 p-0"
+              aria-label="Scroll categories right"
+            >
+              <FiChevronRight className="text-xl" />
+            </button>
+          </div>
+        </SectionHeader>
 
-        {loading ? (
-          <div className="flex w-full gap-4 overflow-x-scroll whitespace-nowrap scrollbar-hide">
-            <SkeletonCategories />
-          </div>
-        ) : (
-          <div className="flex w-full gap-4 overflow-x-scroll whitespace-nowrap scrollbar-hide">
-            {categories.map((category, index) => (
-              <Link
-                key={index}
-                to={`/meal-category/${category.strCategory}`}
-              >
-                <div className="flex flex-col items-center w-24 border-none">
-                  <img
-                    src={category.strCategoryThumb}
-                    alt={category.strCategory}
-                    className="object-cover w-24 h-24 rounded-full shadow-md"
-                  />
-                  <h1 className="mt-2 text-sm font-medium text-center">
-                    {category.strCategory}
-                  </h1>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
+        <ul
+          ref={scrollerRef}
+          className="-mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-2 scrollbar-hide sm:mx-0 sm:px-0"
+        >
+          {loading
+            ? Array.from({ length: 8 }, (_, i) => (
+                <li
+                  key={i}
+                  className="w-32 shrink-0 animate-pulse sm:w-36"
+                >
+                  <div className="aspect-square rounded-3xl bg-cream-dark" />
+                  <div className="mx-auto mt-3 h-4 w-16 rounded bg-cream-dark" />
+                </li>
+              ))
+            : (categories || []).map((category) => (
+                <li
+                  key={category.idCategory}
+                  className="w-32 shrink-0 snap-start sm:w-36"
+                >
+                  <Link
+                    to={`/meal-category/${category.strCategory}`}
+                    className="group block rounded-3xl text-center"
+                  >
+                    <div className="flex aspect-square items-center justify-center rounded-3xl bg-cream p-4 ring-1 ring-line transition-all group-hover:bg-brand-50 group-hover:ring-brand/30">
+                      <img
+                        src={category.strCategoryThumb}
+                        alt=""
+                        loading="lazy"
+                        className="w-full object-contain transition-transform duration-300 group-hover:scale-110"
+                      />
+                    </div>
+                    <p className="mt-3 font-medium text-ink group-hover:text-brand">
+                      {category.strCategory}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+        </ul>
       </div>
-    </>
+    </section>
   );
 };
 

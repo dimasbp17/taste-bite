@@ -1,86 +1,114 @@
-import React, { useState } from 'react';
-import logo from '../../public/images/logo-taste.png';
-import { Button } from '@material-tailwind/react';
-import Search from './Search';
-import { Link, NavLink } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { FiMenu, FiSearch, FiX } from 'react-icons/fi';
+import SearchDialog from './SearchDialog';
+
+const links = [
+  { to: '/', label: 'Home' },
+  { to: '/recipes', label: 'Recipes' },
+  { to: '/cook-with-ingredients', label: 'By Ingredient' },
+  { to: '/about', label: 'About' },
+];
+
+const linkClass = ({ isActive }) =>
+  `rounded-full px-4 py-2 font-medium transition-colors ${
+    isActive ? 'bg-brand-50 text-brand' : 'text-ink-soft hover:text-ink'
+  }`;
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setMenuOpen(false);
+    setSearchOpen(false);
+  }, [pathname]);
 
   return (
-    <div className="w-full px-4 py-2 bg-white shadow-md lg:shadow-none lg:px-24 font-inter">
-      <div className="flex items-center justify-between">
-        <Link to={'/'}>
+    <header className="sticky top-0 z-40 border-b border-line/80 bg-cream/90 backdrop-blur print:hidden">
+      <nav
+        className="container-page flex h-16 items-center justify-between gap-4 lg:h-20"
+        aria-label="Main"
+      >
+        <Link
+          to="/"
+          className="shrink-0 rounded-md"
+        >
           <img
-            src={logo}
-            alt="Logo Taste Bite"
-            className="w-20 lg:w-28"
+            src="/images/logo-taste.png"
+            alt="Tastebite home"
+            className="h-10 w-auto lg:h-12"
           />
         </Link>
 
-        {/* Mobile Menu Button */}
-        <div className="lg:hidden">
+        <ul className="hidden items-center gap-1 md:flex">
+          {links.map((link) => (
+            <li key={link.to}>
+              <NavLink
+                to={link.to}
+                end={link.to === '/'}
+                className={linkClass}
+              >
+                {link.label}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex items-center gap-2">
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-2xl"
+            type="button"
+            onClick={() => setSearchOpen(true)}
+            className="btn-ghost px-3 sm:px-4"
+            aria-label="Search recipes"
           >
-            {isOpen ? <FaTimes /> : <FaBars />}
+            <FiSearch className="text-lg" />
+            <span className="hidden sm:inline">Search</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="btn-ghost px-3 md:hidden"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          >
+            {menuOpen ? <FiX className="text-xl" /> : <FiMenu className="text-xl" />}
           </button>
         </div>
+      </nav>
 
-        {/* Main Menu for larger screens */}
-        <div className={`hidden lg:flex items-center gap-8 font-medium`}>
-          <ul className="flex items-center gap-8">
-            <NavLink to={'/'}>Homepage</NavLink>
-            <li>Recipe Page</li>
-            <NavLink to={'/about'}>About</NavLink>
+      {menuOpen && (
+        <div
+          id="mobile-menu"
+          className="border-t border-line bg-cream md:hidden"
+        >
+          <ul className="container-page flex flex-col gap-1 py-4">
+            {links.map((link) => (
+              <li key={link.to}>
+                <NavLink
+                  to={link.to}
+                  end={link.to === '/'}
+                  className={({ isActive }) =>
+                    `block rounded-xl px-4 py-3 text-lg font-medium ${
+                      isActive ? 'bg-brand-50 text-brand' : 'text-ink'
+                    }`
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
           </ul>
-        </div>
-
-        {/* Search and Login button */}
-        <div className="items-center hidden gap-2 lg:flex">
-          <Search />
-          <Link to={'/login'}>
-            <Button
-              className="w-full capitalize border rounded-none border-oren text-oren"
-              variant="outlined"
-              size="md"
-            >
-              Login
-            </Button>
-          </Link>
-        </div>
-      </div>
-
-      {/* Mobile Menu Overlay */}
-      {isOpen && (
-        <div className="absolute left-0 z-10 flex flex-col items-center w-full p-4 space-y-6 bg-white shadow-lg lg:hidden">
-          <ul className="flex flex-col items-center gap-6 text-lg font-medium">
-            <NavLink to={'/'}>Homepage</NavLink>
-            <li>Recipe Page</li>
-            <NavLink to={'/about'}>About</NavLink>
-          </ul>
-
-          <div className="w-full">
-            <Search />
-          </div>
-
-          <Link
-            to={'/login'}
-            className="w-full"
-          >
-            <Button
-              className="w-full capitalize border rounded-none border-oren text-oren"
-              variant="outlined"
-              size="sm"
-            >
-              Login
-            </Button>
-          </Link>
         </div>
       )}
-    </div>
+
+      <SearchDialog
+        open={searchOpen}
+        onClose={() => setSearchOpen(false)}
+      />
+    </header>
   );
 };
 

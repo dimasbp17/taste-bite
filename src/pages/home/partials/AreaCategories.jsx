@@ -1,86 +1,62 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import areaImages from './areaImages';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import areas from '../../../data/areas';
+import SectionHeader from '../../../components/SectionHeader';
+
+const INITIAL_COUNT = 12;
 
 const AreaCategories = () => {
-  const [categoriesArea, setCategoriesArea] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+  const visibleAreas = showAll ? areas : areas.slice(0, INITIAL_COUNT);
 
-  useEffect(() => {
-    // setLoading(true);
-    const fetchCategoriesArea = async () => {
-      try {
-        const response = await axios.get(
-          'https://www.themealdb.com/api/json/v1/1/list.php?a=list'
-        );
-        setCategoriesArea(response.data.meals);
-
-        // setLoading(false);
-      } catch (error) {
-        console.error('Error fetch categories', error);
-      }
-    };
-    fetchCategoriesArea();
-  }, []);
   return (
-    <>
-      <div className="w-full px-4 lg:px-24">
-        <h1 className="my-2 text-2xl font-bold font-playfair">
-          Meal Categories by Area
-        </h1>
+    <section
+      id="cuisines"
+      className="bg-sage-50 py-16 lg:py-20"
+    >
+      <div className="container-page">
+        <SectionHeader
+          eyebrow="Travel by taste"
+          title="Explore world cuisines"
+          description="From Italian pasta to Thai curries — discover what home cooks love around the globe."
+        />
 
-        <div className="grid grid-cols-3 gap-3 lg:grid-cols-7">
-          {categoriesArea
-            .filter((area) => area.strArea !== 'Unknown')
-            .map((area, index) => (
+        <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+          {visibleAreas.map((area) => (
+            <li key={area.name}>
               <Link
-                key={index}
-                to={`/meal-category-area/${area.strArea}`}
+                to={`/meal-category-area/${area.name}`}
+                className="group relative block overflow-hidden rounded-2xl shadow-card"
               >
-                <div className="text-black bg-white rounded-lg shadow-md">
-                  <LazyLoadImage
-                    src={areaImages[area.strArea]}
-                    alt={area.strArea}
-                    effect="blur"
-                    loading="lazy"
-                    className="object-cover w-full h-24 rounded-t-lg"
-                  />
-                  <h1 className="p-1 text-sm text-center">{area.strArea}</h1>
-                </div>
+                <img
+                  src={area.image}
+                  alt=""
+                  loading="lazy"
+                  className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/10 to-transparent" />
+                <span className="absolute bottom-3 left-4 font-semibold text-white">
+                  {area.name}
+                </span>
               </Link>
-            ))}
-        </div>
+            </li>
+          ))}
+        </ul>
 
-        {/* {loading ? (
-          <div className="flex w-full gap-4 overflow-x-scroll whitespace-nowrap scrollbar-hide">
-            <SkeletonCategories />
+        {areas.length > INITIAL_COUNT && (
+          <div className="mt-8 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowAll((value) => !value)}
+              className="btn-outline"
+              aria-expanded={showAll}
+            >
+              {showAll ? 'Show fewer cuisines' : `Show all ${areas.length} cuisines`}
+            </button>
           </div>
-        ) : (
-          <div className="flex w-full gap-4 overflow-x-scroll whitespace-nowrap scrollbar-hide">
-            {categories.map((category, index) => (
-              <Link to={`/meal-category/${category.strCategory}`}>
-                <div
-                  key={index}
-                  className="flex flex-col items-center w-24 border-none"
-                >
-                  <img
-                    src={category.strCategoryThumb}
-                    alt={category.strCategory}
-                    className="object-cover w-24 h-24 rounded-full shadow-md"
-                  />
-                  <h1 className="mt-2 text-sm font-medium text-center">
-                    {category.strCategory}
-                  </h1>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )} */}
+        )}
       </div>
-    </>
+    </section>
   );
 };
 
