@@ -17,7 +17,9 @@
     "savedCount": "Resep tersimpan ({{count}})",
     "openMenu": "Buka menu",
     "closeMenu": "Tutup menu",
-    "logo": "Beranda Tastebite"
+    "logo": "Beranda Tastebite",
+    "shopping": "Belanja",
+    "shoppingCount": "Daftar belanja ({{count}} belum dibeli)"
   },
   "layout": {
     "skip": "Langsung ke konten"
@@ -31,7 +33,8 @@
     "saved": "Resep tersimpan",
     "about": "Tentang kami",
     "rights": "© {{year}} Tastebite. Hak cipta dilindungi.",
-    "dataBy": "Data resep dari"
+    "dataBy": "Data resep dari",
+    "shopping": "Daftar belanja"
   },
   "search": {
     "label": "Cari masakan",
@@ -281,5 +284,35 @@
     "minutes": "{{count}} menit",
     "hours": "{{count}} jam",
     "hoursMinutes": "{{hours}} jam {{minutes}} menit"
+  },
+  "shop": {
+    "addButton": "Tambah {{count}} bahan ke daftar belanja",
+    "addHint": "Bahan yang belum dicentang akan dimasukkan ke daftar belanja.",
+    "allReady": "Semua bahan sudah siap — tidak ada yang perlu dibeli.",
+    "added": "Ditambahkan ke daftar belanja.",
+    "inList": "Resep ini ada di daftar belanjamu.",
+    "viewList": "Lihat daftar",
+    "docTitle": "Daftar belanja",
+    "eyebrow": "Siap ke pasar",
+    "title": "Daftar belanja",
+    "summary": "{{remaining}} dari {{total}} bahan belum dibeli",
+    "allBought": "Semua sudah dibeli. Selamat memasak!",
+    "emptyTitle": "Daftar belanjamu masih kosong",
+    "emptyText": "Buka resep, lalu ketuk “Tambah ke daftar belanja” untuk memasukkan bahan yang belum kamu punya.",
+    "browse": "Cari resep",
+    "share": "Bagikan",
+    "copy": "Salin daftar",
+    "copied": "Daftar disalin — tinggal tempel di chat.",
+    "copyFailed": "Gagal menyalin. Coba cetak daftarnya.",
+    "print": "Cetak",
+    "clearBought": "Hapus yang sudah dibeli",
+    "clearAll": "Hapus semua",
+    "confirmClear": "Hapus seluruh daftar belanja? Tindakan ini tidak bisa dibatalkan.",
+    "viewRecipe": "Lihat resep",
+    "removeRecipe": "Hapus {{name}} dari daftar",
+    "removeItem": "Hapus {{name}}",
+    "itemsLeft": "{{count}} belum dibeli",
+    "shareTitle": "Daftar belanja Tastebite",
+    "note": "Bahan dikelompokkan per resep karena takarannya tidak selalu bisa dijumlahkan."
   }
 }

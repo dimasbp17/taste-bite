@@ -7,6 +7,7 @@ import {
   FiGlobe,
   FiList,
   FiPrinter,
+  FiShoppingCart,
   FiTag,
   FiYoutube,
 } from 'react-icons/fi';
@@ -19,6 +20,7 @@ import {
 } from '../../lib/api';
 import useFetch from '../../hooks/useFetch';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
+import useShoppingList from '../../hooks/useShoppingList';
 import { useTranslation } from 'react-i18next';
 import useName from '../../i18n/useName';
 import StatusMessage from '../../components/StatusMessage';
@@ -48,7 +50,56 @@ const IngredientImage = ({ name }) => {
   );
 };
 
-const IngredientList = ({ ingredients }) => {
+// Ticked ingredients are ones the cook already has, so only the rest
+// go on the shopping list.
+const AddToShoppingList = ({ meal, ingredients, checked }) => {
+  const { t } = useTranslation();
+  const { hasRecipe, addRecipe } = useShoppingList();
+  const [added, setAdded] = useState(false);
+  const missing = ingredients.filter((_, index) => !checked.has(index));
+  const inList = hasRecipe(meal.idMeal);
+
+  return (
+    <div className="mt-6 border-t border-line pt-6 print:hidden">
+      {missing.length > 0 ? (
+        <>
+          <button
+            type="button"
+            onClick={() => {
+              addRecipe(meal, missing);
+              setAdded(true);
+            }}
+            className="btn-outline w-full"
+          >
+            <FiShoppingCart aria-hidden />
+            {t('shop.addButton', { count: missing.length })}
+          </button>
+          <p className="mt-2 text-sm text-ink-soft">{t('shop.addHint')}</p>
+        </>
+      ) : (
+        <p className="text-sm text-sage">{t('shop.allReady')}</p>
+      )}
+
+      {(added || inList) && (
+        <p
+          role="status"
+          className="mt-3 flex flex-wrap items-center gap-x-2 rounded-xl bg-sage-50 px-4 py-3 text-sm text-sage"
+        >
+          <FiCheck aria-hidden />
+          {added ? t('shop.added') : t('shop.inList')}
+          <Link
+            to="/shopping-list"
+            className="font-semibold underline underline-offset-2"
+          >
+            {t('shop.viewList')}
+          </Link>
+        </p>
+      )}
+    </div>
+  );
+};
+
+const IngredientList = ({ meal, ingredients }) => {
   const { t } = useTranslation();
   const [checked, setChecked] = useState(() => new Set());
 
@@ -109,6 +160,12 @@ const IngredientList = ({ ingredients }) => {
           );
         })}
       </ul>
+
+      <AddToShoppingList
+        meal={meal}
+        ingredients={ingredients}
+        checked={checked}
+      />
     </div>
   );
 };
@@ -288,6 +345,7 @@ const DetailRecipes = () => {
           <div className="lg:sticky lg:top-28">
             <IngredientList
               key={meal.idMeal}
+              meal={meal}
               ingredients={ingredients}
             />
           </div>

@@ -17,7 +17,9 @@
     "savedCount": "Saved recipes ({{count}})",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "logo": "Tastebite home"
+    "logo": "Tastebite home",
+    "shopping": "Shopping",
+    "shoppingCount": "Shopping list ({{count}} left to buy)"
   },
   "layout": {
     "skip": "Skip to content"
@@ -31,7 +33,8 @@
     "saved": "Saved recipes",
     "about": "About us",
     "rights": "© {{year}} Tastebite. All rights reserved.",
-    "dataBy": "Recipe data by"
+    "dataBy": "Recipe data by",
+    "shopping": "Shopping list"
   },
   "search": {
     "label": "Search a dish",
@@ -286,5 +289,36 @@
     "minutes": "{{count}} min",
     "hours": "{{count}} h",
     "hoursMinutes": "{{hours}} h {{minutes}} min"
+  },
+  "shop": {
+    "addButton_one": "Add {{count}} item to shopping list",
+    "addButton_other": "Add {{count}} items to shopping list",
+    "addHint": "Ingredients you haven't ticked will be added to your shopping list.",
+    "allReady": "You have every ingredient — nothing to buy.",
+    "added": "Added to your shopping list.",
+    "inList": "This recipe is on your shopping list.",
+    "viewList": "View list",
+    "docTitle": "Shopping list",
+    "eyebrow": "Ready to shop",
+    "title": "Shopping list",
+    "summary": "{{remaining}} of {{total}} items left to buy",
+    "allBought": "Everything is bought. Happy cooking!",
+    "emptyTitle": "Your shopping list is empty",
+    "emptyText": "Open a recipe and tap “Add to shopping list” to collect the ingredients you still need.",
+    "browse": "Find recipes",
+    "share": "Share",
+    "copy": "Copy list",
+    "copied": "List copied — paste it into any chat.",
+    "copyFailed": "Couldn't copy. Try printing the list instead.",
+    "print": "Print",
+    "clearBought": "Remove bought items",
+    "clearAll": "Remove all",
+    "confirmClear": "Remove the whole shopping list? This cannot be undone.",
+    "viewRecipe": "View recipe",
+    "removeRecipe": "Remove {{name}} from list",
+    "removeItem": "Remove {{name}}",
+    "itemsLeft": "{{count}} left",
+    "shareTitle": "Tastebite shopping list",
+    "note": "Items are grouped by recipe because measures can't always be added together."
   }
 }

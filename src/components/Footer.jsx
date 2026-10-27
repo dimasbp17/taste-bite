@@ -8,6 +8,7 @@ const exploreLinks = [
   { to: '/recipes', label: 'footer.allRecipes' },
   { to: '/cook-with-ingredients', label: 'footer.byIngredient' },
   { to: '/saved', label: 'footer.saved' },
+  { to: '/shopping-list', label: 'footer.shopping' },
   { to: '/about', label: 'footer.about' },
 ];
 

@@ -1,70 +1,30 @@
 import { useCallback, useSyncExternalStore } from 'react';
+import createLocalStore from '../lib/createLocalStore';
 
-// Saved recipes live in localStorage (there are no accounts). A tiny store
-// keeps every component — and every open tab — in sync.
-const STORAGE_KEY = 'tastebite:favorites';
-const listeners = new Set();
-
-const read = () => {
-  try {
-    const value = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    return Array.isArray(value) ? value : [];
-  } catch {
-    return [];
-  }
-};
-
-let favorites = read();
-
-const write = (next) => {
-  favorites = next;
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-  } catch {
-    // Storage can be full or blocked (private mode); keep the in-memory copy.
-  }
-  listeners.forEach((listener) => listener());
-};
-
-const subscribe = (listener) => {
-  const onStorage = (e) => {
-    if (e.key !== STORAGE_KEY) return;
-    favorites = read();
-    listener();
-  };
-  listeners.add(listener);
-  window.addEventListener('storage', onStorage);
-  return () => {
-    listeners.delete(listener);
-    window.removeEventListener('storage', onStorage);
-  };
-};
-
-const getSnapshot = () => favorites;
+// Saved recipes live in localStorage (there are no accounts).
+const store = createLocalStore('tastebite:favorites', []);
 
 const useFavorites = () => {
-  const list = useSyncExternalStore(subscribe, getSnapshot);
+  const favorites = useSyncExternalStore(store.subscribe, store.get);
 
   const isFavorite = useCallback(
-    (id) => list.some((item) => item.idMeal === id),
-    [list]
+    (id) => favorites.some((item) => item.idMeal === id),
+    [favorites]
   );
 
   const toggle = useCallback((meal) => {
-    if (favorites.some((item) => item.idMeal === meal.idMeal)) {
-      write(favorites.filter((item) => item.idMeal !== meal.idMeal));
-      return;
-    }
-    const { idMeal, strMeal, strMealThumb, strCategory, strArea } = meal;
-    write([
-      { idMeal, strMeal, strMealThumb, strCategory, strArea, savedAt: Date.now() },
-      ...favorites,
-    ]);
+    store.set((list) => {
+      if (list.some((item) => item.idMeal === meal.idMeal)) {
+        return list.filter((item) => item.idMeal !== meal.idMeal);
+      }
+      const { idMeal, strMeal, strMealThumb, strCategory, strArea } = meal;
+      return [{ idMeal, strMeal, strMealThumb, strCategory, strArea, savedAt: Date.now() }, ...list];
+    });
   }, []);
 
-  const clear = useCallback(() => write([]), []);
+  const clear = useCallback(() => store.set([]), []);
 
-  return { favorites: list, isFavorite, toggle, clear };
+  return { favorites, isFavorite, toggle, clear };
 };
 
 export default useFavorites;

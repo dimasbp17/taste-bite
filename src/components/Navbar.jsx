@@ -1,11 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { FiMenu, FiSearch, FiX } from 'react-icons/fi';
+import { FiMenu, FiSearch, FiShoppingCart, FiX } from 'react-icons/fi';
 import { FaRegHeart } from 'react-icons/fa';
 import SearchDialog from './SearchDialog';
 import LanguageSwitch from './LanguageSwitch';
 import useFavorites from '../hooks/useFavorites';
+import useShoppingList from '../hooks/useShoppingList';
 import { useTranslation } from 'react-i18next';
+
+// Labels hide at lg, where the main links take the space, and return at xl.
+const labelClass = 'hidden sm:inline lg:hidden xl:inline';
+
+const IconLink = ({ to, icon: Icon, label, ariaLabel, count }) => (
+  <NavLink
+    to={to}
+    className={({ isActive }) =>
+      `btn relative px-3 sm:px-4 ${isActive ? 'bg-brand-50 text-brand' : 'text-ink hover:bg-cream-dark'}`
+    }
+    aria-label={ariaLabel}
+  >
+    <Icon className="text-lg" />
+    <span className={labelClass}>{label}</span>
+    {count > 0 && (
+      <span className="absolute -right-0.5 top-0.5 flex min-w-[1.25rem] items-center justify-center rounded-full bg-brand px-1 text-xs font-semibold leading-5 text-white sm:static sm:bg-brand-100 sm:text-brand lg:absolute lg:bg-brand lg:text-white xl:static xl:bg-brand-100 xl:text-brand">
+        {count}
+      </span>
+    )}
+  </NavLink>
+);
 
 const links = [
   { to: '/', label: 'nav.home' },
@@ -24,6 +46,7 @@ const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const { pathname } = useLocation();
   const { favorites } = useFavorites();
+  const { remaining } = useShoppingList();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -70,25 +93,22 @@ const Navbar = () => {
             aria-label={t('nav.searchRecipes')}
           >
             <FiSearch className="text-lg" />
-            <span className="hidden sm:inline">{t('nav.search')}</span>
+            <span className={labelClass}>{t('nav.search')}</span>
           </button>
-          <NavLink
+          <IconLink
             to="/saved"
-            className={({ isActive }) =>
-              `btn relative px-3 sm:px-4 ${
-                isActive ? 'bg-brand-50 text-brand' : 'text-ink hover:bg-cream-dark'
-              }`
-            }
-            aria-label={t('nav.savedCount', { count: favorites.length })}
-          >
-            <FaRegHeart className="text-lg" />
-            <span className="hidden sm:inline">{t('nav.saved')}</span>
-            {favorites.length > 0 && (
-              <span className="absolute -right-0.5 top-0.5 flex min-w-[1.25rem] items-center justify-center rounded-full bg-brand px-1 text-xs font-semibold leading-5 text-white sm:static sm:bg-brand-100 sm:text-brand">
-                {favorites.length}
-              </span>
-            )}
-          </NavLink>
+            icon={FaRegHeart}
+            label={t('nav.saved')}
+            ariaLabel={t('nav.savedCount', { count: favorites.length })}
+            count={favorites.length}
+          />
+          <IconLink
+            to="/shopping-list"
+            icon={FiShoppingCart}
+            label={t('nav.shopping')}
+            ariaLabel={t('nav.shoppingCount', { count: remaining })}
+            count={remaining}
+          />
           <LanguageSwitch className="ml-1 hidden lg:inline-flex" />
           <button
             type="button"

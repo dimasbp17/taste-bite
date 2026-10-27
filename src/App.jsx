@@ -6,6 +6,7 @@ import RecipesPage from './pages/recipes/RecipesPage';
 import DetailRecipes from './pages/recipes/DetailRecipes';
 import CookWithIngredients from './pages/ingredients/CookWithIngredients';
 import SavedRecipes from './pages/saved/SavedRecipes';
+import ShoppingList from './pages/shopping/ShoppingList';
 import About from './pages/about/About';
 import CategoriesMeals from './pages/categories/CategoriesMeals';
 import CategoriesByArea from './pages/categories/CategoriesByArea';
@@ -32,6 +33,10 @@ const App = () => {
           <Route
             path="/saved"
             element={<SavedRecipes />}
+          />
+          <Route
+            path="/shopping-list"
+            element={<ShoppingList />}
           />
           <Route
             path="/about"
